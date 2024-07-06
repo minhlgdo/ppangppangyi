@@ -1,25 +1,34 @@
 import {Box, Button, Stack, Typography} from '@mui/material';
-import {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+
+interface FilterParams {
+  setSearchCategory: React.Dispatch<React.SetStateAction<string>>;
+}
 
 const parentCategories = ['경형', '대형', '소형', '스포츠카', '준대형', '준중형', '중형'];
 const subCategories = [
-  {parent: '경형', subs: ['RV', 'SUV', '벤', '세단', '왜건', '컨버티블', '트럭', '해치백']},
-  {parent: '대형', subs: ['RV', 'SUV', '밴', '세단', '왜건', '컨버터블', '쿠페', '트럭']},
-  {parent: '소형', subs: ['RV', 'SUV', '밴', '세단', '왜건', '컨버터블', '쿠페', '트럭', '해치백']},
-  {parent: '스포츠카', subs: ['스포츠카', '왜건', '컨버터블', '쿠페', '해치백']},
-  {parent: '준대형', subs: ['RV', 'SUV', '세단', '왜건', '컨버터블', '쿠페', '트럭', '해치백']},
-  {parent: '준중형', subs: ['RV', 'SUV', '밴', '세단', '왜건', '컨버터블', '쿠페', '트럭', '해치백']},
-  {parent: '중형', subs: ['RV', 'SUV', '밴', '세단', '왜건', '컨버터블', '쿠페', '트럭', '해치백']},
+  {parent: '경형', subs: ['전체', 'RV', 'SUV', '벤', '세단', '왜건', '컨버티블', '트럭', '해치백']},
+  {parent: '대형', subs: ['전체', 'RV', 'SUV', '밴', '세단', '왜건', '컨버터블', '쿠페', '트럭']},
+  {parent: '소형', subs: ['전체', 'RV', 'SUV', '밴', '세단', '왜건', '컨버터블', '쿠페', '트럭', '해치백']},
+  {parent: '스포츠카', subs: ['전체', '스포츠카', '왜건', '컨버터블', '쿠페', '해치백']},
+  {parent: '준대형', subs: ['전체', 'RV', 'SUV', '세단', '왜건', '컨버터블', '쿠페', '트럭', '해치백']},
+  {parent: '준중형', subs: ['전체', 'RV', 'SUV', '밴', '세단', '왜건', '컨버터블', '쿠페', '트럭', '해치백']},
+  {parent: '중형', subs: ['전체', 'RV', 'SUV', '밴', '세단', '왜건', '컨버터블', '쿠페', '트럭', '해치백']},
 ];
 
-const Filter = () => {
+const Filter: React.FC<FilterParams> = ({setSearchCategory}) => {
   const [parentCategory, setParentCategory] = useState('경형');
-  const [childCategory, setChildCategory] = useState('');
+  const [childCategory, setChildCategory] = useState('전체');
   const onParentCategoryChange = (category: string) => {
     setParentCategory(category);
-    setChildCategory('');
+    setChildCategory('전체');
   };
   const childCategories = subCategories.find((sub) => sub.parent === parentCategory)?.subs || [];
+
+  useEffect(() => {
+    const keyword = childCategory === '전체' ? parentCategory : parentCategory + ' ' + childCategory;
+    setSearchCategory(keyword);
+  }, [parentCategory, childCategory, setSearchCategory]);
 
   return (
     <Box>
