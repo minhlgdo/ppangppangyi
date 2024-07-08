@@ -18,12 +18,12 @@ const CarContentCard: React.FC<CarContentCardParams> = ({id, name, brand, year, 
   const isCompared = compareCars.some((car) => car.carId === id);
 
   const onCardClick = () => {
-    console.log(id);
+    // console.log(id);
     navigate(`/details/${id}`);
   };
 
   const onCompareClick = () => {
-    console.log(`Car ${id} is clicked`);
+    // console.log(`Car ${id} is clicked`);
     if (isCompared) {
       handleDeleteCar(id);
     } else {
