@@ -1,7 +1,8 @@
 import {Divider, Drawer, List, ListItem, ListItemText, Toolbar} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 
-const drawerWidth = 240;
+const DRAWER_WIDTH = 240;
+
 export default function NavigationBar() {
   const navigate = useNavigate();
   const onNavigationItem = (itemName: string) => {
@@ -27,10 +28,10 @@ export default function NavigationBar() {
   return (
     <Drawer
       sx={{
-        width: drawerWidth,
+        width: DRAWER_WIDTH,
         flexShrink: 0,
         '& .MuiDrawer-paper': {
-          width: drawerWidth,
+          width: DRAWER_WIDTH,
           boxSizing: 'border-box',
         },
       }}
