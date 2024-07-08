@@ -4,6 +4,8 @@ import Filter from '../../components/user/Filter.tsx';
 import {useState} from 'react';
 import {CompareContextProvider} from '../../context/CompareContext.tsx';
 import CompareBottomSheet from '../../components/user/CompareBottomSheet.tsx';
+import {useHome} from '../../context/HomeContext.tsx';
+import HomeContextProvider from '../../context/HomeContext.tsx';
 
 const dummyCarList = [
   {
@@ -51,22 +53,24 @@ const dummyCarList = [
 ];
 
 export default function Homepage() {
-  const [searchCategory, setSearchCategory] = useState('경형');
+  const searchCategory = useHome();
   const [carList, setCarList] = useState([]);
 
   // loading carlist here
 
   return (
     <CompareContextProvider>
-      <Stack
-        spacing={4}
-        sx={{ml: 2, mr: 2, p: 2, marginTop: 4, marginBottom: 20}}
-      >
-        <Typography variant={'h4'}>오늘 어떤 모델을 찾고 계시나요?</Typography>
-        <Filter setSearchCategory={setSearchCategory} />
-        <CarContentList items={dummyCarList} />
-        <CompareBottomSheet />
-      </Stack>
+      <HomeContextProvider>
+        <Stack
+          spacing={4}
+          sx={{ml: 2, mr: 2, p: 2, marginTop: 4, marginBottom: 20}}
+        >
+          <Typography variant={'h4'}>오늘 어떤 모델을 찾고 계시나요?</Typography>
+          <Filter />
+          <CarContentList items={dummyCarList} />
+          <CompareBottomSheet />
+        </Stack>
+      </HomeContextProvider>
     </CompareContextProvider>
   );
 }

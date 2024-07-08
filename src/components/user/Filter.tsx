@@ -1,9 +1,6 @@
 import {Box, Button, Stack, Typography} from '@mui/material';
-import React, {useEffect, useState} from 'react';
-
-interface FilterParams {
-  setSearchCategory: React.Dispatch<React.SetStateAction<string>>;
-}
+import React, {useState} from 'react';
+import {useHome} from '../../context/HomeContext.tsx';
 
 const parentCategories = ['경형', '대형', '소형', '스포츠카', '준대형', '준중형', '중형'];
 const subCategories = [
@@ -16,19 +13,22 @@ const subCategories = [
   {parent: '중형', subs: ['전체', 'RV', 'SUV', '밴', '세단', '왜건', '컨버터블', '쿠페', '트럭', '해치백']},
 ];
 
-const Filter: React.FC<FilterParams> = ({setSearchCategory}) => {
+const Filter = () => {
+  const {setSearchCategory} = useHome();
   const [parentCategory, setParentCategory] = useState(subCategories[0].parent);
   const [childCategory, setChildCategory] = useState('전체');
   const onParentCategoryChange = (category: string) => {
     setParentCategory(category);
     setChildCategory('전체');
+    setSearchCategory(category);
   };
   const childCategories = subCategories.find((sub) => sub.parent === parentCategory)?.subs || [];
 
-  useEffect(() => {
-    const keyword = childCategory === '전체' ? parentCategory : parentCategory + ' ' + childCategory;
+  const onChildCategoryChange = (category: string) => {
+    setChildCategory(category);
+    const keyword = category === '전체' ? parentCategory : parentCategory + ' ' + category;
     setSearchCategory(keyword);
-  }, [parentCategory, childCategory, setSearchCategory]);
+  };
 
   return (
     <Box>
@@ -81,7 +81,7 @@ const Filter: React.FC<FilterParams> = ({setSearchCategory}) => {
               key={category}
               color={childCategory === category ? 'primary' : 'inherit'}
               variant={childCategory === category ? 'contained' : 'text'}
-              onClick={() => setChildCategory(category)}
+              onClick={() => onChildCategoryChange(category)}
             >
               {category}
             </Button>
