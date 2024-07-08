@@ -17,7 +17,7 @@ const subCategories = [
 ];
 
 const Filter: React.FC<FilterParams> = ({setSearchCategory}) => {
-  const [parentCategory, setParentCategory] = useState('경형');
+  const [parentCategory, setParentCategory] = useState(subCategories[0].parent);
   const [childCategory, setChildCategory] = useState('전체');
   const onParentCategoryChange = (category: string) => {
     setParentCategory(category);
