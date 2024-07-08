@@ -1,9 +1,9 @@
 import {Stack, Typography} from '@mui/material';
-import CarContentList from '../components/CarContentList.tsx';
-import Filter from '../components/Filter.tsx';
+import CarContentList from '../../components/user/CarContentList.tsx';
+import Filter from '../../components/user/Filter.tsx';
 import {useState} from 'react';
-import {CompareContextProvider} from '../context/CompareContext.tsx';
-import CompareBottomSheet from '../components/CompareBottomSheet.tsx';
+import {CompareContextProvider} from '../../context/CompareContext.tsx';
+import CompareBottomSheet from '../../components/user/CompareBottomSheet.tsx';
 
 const dummyCarList = [
   {

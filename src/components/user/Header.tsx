@@ -1,5 +1,5 @@
 import {AppBar, Box, Button, Toolbar} from '@mui/material';
-import SearchBar from './SearchBar';
+import SearchBar from './SearchBar.tsx';
 
 export default function Header() {
   return (

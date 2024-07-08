@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
-import Root from './pages/Root.tsx';
-import ErrorPage from './pages/ErrorPage.tsx';
-import Homepage from './pages/Homepage.tsx';
-import DetailPage from './pages/DetailPage.tsx';
+import Root from './pages/user/Root.tsx';
+import ErrorPage from './pages/user/ErrorPage.tsx';
+import Homepage from './pages/user/Homepage.tsx';
+import DetailPage from './pages/user/DetailPage.tsx';
 
 const router = createBrowserRouter([
   {
