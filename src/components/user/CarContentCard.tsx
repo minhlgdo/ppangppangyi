@@ -1,6 +1,7 @@
 import React from 'react';
 import {Box, Button, Card, CardActions, CardContent, CardMedia, Divider, Typography} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
+import {useCompare} from '../../context/CompareContext.tsx';
 
 interface CarContentCardParams {
   id: number;
@@ -8,14 +9,24 @@ interface CarContentCardParams {
   brand: string;
   year: number;
   imageSrc: string;
-  toCompare: boolean;
+  // toCompare: boolean;
 }
 
-const CarContentCard: React.FC<CarContentCardParams> = ({id, name, brand, year, imageSrc, toCompare}) => {
+const CarContentCard: React.FC<CarContentCardParams> = ({id, name, brand, year, imageSrc}) => {
   const navigate = useNavigate();
+  const {compareCars, handleAddCar, handleDeleteCar} = useCompare();
+  const isCompared = compareCars.some((car) => car.carId === id);
+
   const onCardClick = () => {
-    console.log(id);
     navigate(`/details/${id}`);
+  };
+
+  const onCompareClick = () => {
+    if (isCompared) {
+      handleDeleteCar(id);
+    } else {
+      handleAddCar({id, imageSrc});
+    }
   };
 
   return (
@@ -24,7 +35,7 @@ const CarContentCard: React.FC<CarContentCardParams> = ({id, name, brand, year, 
     >
       <CardMedia
         component={'img'}
-        height={'194'}
+        height={'200'}
         image={imageSrc}
       />
       <CardContent
@@ -49,9 +60,10 @@ const CarContentCard: React.FC<CarContentCardParams> = ({id, name, brand, year, 
       <CardActions sx={{p: 2}}>
         <Button
           sx={{width: 1}}
-          variant={toCompare ? 'contained' : 'outlined'}
+          variant={isCompared ? 'contained' : 'outlined'}
+          onClick={() => onCompareClick()}
         >
-          {toCompare ? '추가함' : '비교하기'}
+          {isCompared ? '추가함' : '비교하기'}
         </Button>
       </CardActions>
     </Card>

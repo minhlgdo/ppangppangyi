@@ -28,7 +28,6 @@ const CarContentList: React.FC<CarContentListParams> = ({items}) => {
               brand={item.brandName}
               year={item.year}
               imageSrc={item.image}
-              toCompare={false}
             />
           </Grid>
         ))}
