@@ -1,5 +1,5 @@
 import {FC} from 'react';
-import {Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText} from '@mui/material';
+import {Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography} from '@mui/material';
 import {DeleteRounded, Edit} from '@mui/icons-material';
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
@@ -25,6 +25,10 @@ const BrandList: FC<BrandListProps> = ({brands}) => {
     setItemToDelete(id);
     setDeletePopup(true);
   };
+
+  if (brands.length == 0) {
+    return <Typography>Loading...</Typography>;
+  }
 
   return (
     <List>
