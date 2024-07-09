@@ -15,9 +15,9 @@ const DeleteDialog: FC<DeleteDialogProps> = ({isOpened, handleClose, handleDelet
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{'항목을 삭제하고 십습니까?'}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{'삭제 경고'}</DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">취소할 수 없습니다.</DialogContentText>
+        <DialogContentText id="alert-dialog-description">선택한 항목이 삭제됩니다.</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>취소</Button>
