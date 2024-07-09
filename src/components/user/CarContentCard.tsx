@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box, Button, Card, CardActions, CardContent, CardMedia, Divider, Typography} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
-import {useCompare} from '../../context/CompareContext.tsx';
+import {useCompare} from '@src/context/CompareContext.tsx';
 
 interface CarContentCardParams {
   id: number;

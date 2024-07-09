@@ -1,6 +1,6 @@
 import {Box, Button, Stack, Typography} from '@mui/material';
 import React, {useState} from 'react';
-import {useHome} from '../../context/HomeContext.tsx';
+import {useHome} from '@src/context/HomeContext.tsx';
 
 const parentCategories = ['경형', '대형', '소형', '스포츠카', '준대형', '준중형', '중형'];
 const subCategories = [

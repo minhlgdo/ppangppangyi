@@ -1,11 +1,11 @@
 import {Stack, Typography} from '@mui/material';
-import CarContentList from '../../components/user/CarContentList.tsx';
-import Filter from '../../components/user/Filter.tsx';
+import CarContentList from '@src/components/user/CarContentList.tsx';
+import Filter from '@src/components/user/Filter.tsx';
 import {useState} from 'react';
-import {CompareContextProvider} from '../../context/CompareContext.tsx';
-import CompareBottomSheet from '../../components/user/CompareBottomSheet.tsx';
-import {useHome} from '../../context/HomeContext.tsx';
-import HomeContextProvider from '../../context/HomeContext.tsx';
+import {CompareContextProvider} from '@src/context/CompareContext.tsx';
+import CompareBottomSheet from '@src/components/user/CompareBottomSheet.tsx';
+import {useHome} from '@src/context/HomeContext.tsx';
+import HomeContextProvider from '@src/context/HomeContext.tsx';
 
 const dummyCarList = [
   {

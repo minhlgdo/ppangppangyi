@@ -1,8 +1,8 @@
 import {Box, Button, Stack, TextField, Typography} from '@mui/material';
 import {useNavigate, useParams} from 'react-router-dom';
 import {useState} from 'react';
-import ResponseDialog from '../../components/admin/ResponseDialog.tsx';
-import {EDIT_RESULT_ITEMS, EditResultKey, RESPONSES, ResponseType} from '../../common/common.ts';
+import ResponseDialog from '@src/components/admin/ResponseDialog.tsx';
+import {EDIT_RESULT_ITEMS, EditResultKey, RESPONSES, ResponseType} from '@src/common/common.ts';
 
 export default function EditBrandPage() {
   const {brandId} = useParams();

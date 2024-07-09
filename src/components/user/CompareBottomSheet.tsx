@@ -1,5 +1,5 @@
 import React from 'react';
-import {useCompare} from '../../context/CompareContext.tsx';
+import {useCompare} from '@src/context/CompareContext.tsx';
 import {Box, Button, Drawer, Stack} from '@mui/material';
 import CompareCarItem from './CompareCarItem.tsx';
 

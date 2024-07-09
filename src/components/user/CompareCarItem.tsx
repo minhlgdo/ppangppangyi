@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Card, CardActions, CardMedia} from '@mui/material';
-import {useCompare} from '../../context/CompareContext.tsx';
+import {useCompare} from '@src/context/CompareContext.tsx';
 
 interface CompareCarComponentParams {
   id: number;

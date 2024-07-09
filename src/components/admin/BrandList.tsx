@@ -3,7 +3,7 @@ import {Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemTe
 import {DeleteRounded, Edit} from '@mui/icons-material';
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useAdminBrand} from '../../context/AdminBrandContext.tsx';
+import {useAdminBrand} from '@src/context/AdminBrandContext.tsx';
 
 interface Brand {
   brandId: number;

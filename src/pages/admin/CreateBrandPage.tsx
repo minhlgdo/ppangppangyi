@@ -1,8 +1,8 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {CREATE_RESULT_ITEMS, CreateResultKey, RESPONSES, ResponseType} from '../../common/common.ts';
+import {CREATE_RESULT_ITEMS, CreateResultKey, RESPONSES, ResponseType} from '@src/common/common.ts';
 import {Box, Button, Stack, TextField, Typography} from '@mui/material';
-import ResponseDialog from '../../components/admin/ResponseDialog.tsx';
+import ResponseDialog from '@src/components/admin/ResponseDialog.tsx';
 
 const MAIN_BRAND_PAGE = `/admin/brand`;
 

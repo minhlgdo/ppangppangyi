@@ -1,8 +1,8 @@
 import {Box, Button, Pagination, Stack, Typography} from '@mui/material';
 import React, {ChangeEvent, useState} from 'react';
-import BrandList from '../../components/admin/BrandList.tsx';
-import AdminBrandContextProvider, {useAdminBrand} from '../../context/AdminBrandContext.tsx';
-import DeleteDialog from '../../components/admin/DeleteDialog.tsx';
+import BrandList from '@src/components/admin/BrandList.tsx';
+import AdminBrandContextProvider, {useAdminBrand} from '@src/context/AdminBrandContext.tsx';
+import DeleteDialog from '@src/components/admin/DeleteDialog.tsx';
 import {useNavigate} from 'react-router-dom';
 
 function BrandPageContent() {
