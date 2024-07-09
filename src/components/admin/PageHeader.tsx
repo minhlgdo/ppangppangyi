@@ -1,4 +1,4 @@
-import {AdminPageTypes} from '@src/common/common.ts';
+import {AdminPageTypes} from '@src/common/constants.ts';
 import {Button, Stack, Typography} from '@mui/material';
 import React, {FC} from 'react';
 

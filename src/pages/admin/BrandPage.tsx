@@ -7,7 +7,7 @@ import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {GET_BRANDS_ENDPOINT} from '@src/common/api.ts';
 import {PageHeader} from '@src/components/admin/PageHeader.tsx';
-import {AdminPageTypes} from '@src/common/common.ts';
+import {AdminPageTypes} from '@src/common/constants.ts';
 
 function BrandPageContent() {
   const [totalItems, setTotalItems] = useState(0);
