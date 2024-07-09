@@ -12,17 +12,17 @@ interface HomeProviderProps {
 }
 
 // Initial state
-const initialCategoryState = '경형';
+const INITIAL_CATEGORY_STATE = '경형';
 
 const HomeContext = createContext<HomeContextValue>({
-  searchCategory: initialCategoryState,
+  searchCategory: INITIAL_CATEGORY_STATE,
   setSearchCategory: () => {},
 });
 
 export const useHome = () => useContext(HomeContext);
 
 const HomeContextProvider: FC<HomeProviderProps> = ({children}) => {
-  const [searchCategory, setSearchCategory] = useState(initialCategoryState);
+  const [searchCategory, setSearchCategory] = useState(INITIAL_CATEGORY_STATE);
 
   return (
     <HomeContext.Provider value={{searchCategory: searchCategory, setSearchCategory: setSearchCategory}}>{children}</HomeContext.Provider>
