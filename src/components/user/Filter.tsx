@@ -17,6 +17,7 @@ const Filter = () => {
   const {setSearchCategory} = useHome();
   const [parentCategory, setParentCategory] = useState(subCategories[0].parent);
   const [childCategory, setChildCategory] = useState('전체');
+
   const onParentCategoryChange = (category: string) => {
     setParentCategory(category);
     setChildCategory('전체');
@@ -29,6 +30,11 @@ const Filter = () => {
     const keyword = category === '전체' ? parentCategory : parentCategory + ' ' + category;
     setSearchCategory(keyword);
   };
+
+  const getButtonProps = (selectedCategory: string, category: string) => ({
+    color: selectedCategory === category ? 'primary' : 'inherit',
+    variant: selectedCategory === category ? 'contained' : 'text',
+  });
 
   return (
     <Box>
@@ -51,8 +57,7 @@ const Filter = () => {
           {parentCategories.map((category) => (
             <Button
               key={category}
-              color={parentCategory === category ? 'primary' : 'inherit'}
-              variant={parentCategory === category ? 'contained' : 'text'}
+              {...getButtonProps(parentCategory, category)}
               onClick={() => onParentCategoryChange(category)}
             >
               {category}
@@ -79,8 +84,7 @@ const Filter = () => {
           {childCategories.map((category) => (
             <Button
               key={category}
-              color={childCategory === category ? 'primary' : 'inherit'}
-              variant={childCategory === category ? 'contained' : 'text'}
+              {...getButtonProps(childCategory, category)}
               onClick={() => onChildCategoryChange(category)}
             >
               {category}
