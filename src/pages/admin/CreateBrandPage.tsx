@@ -4,6 +4,7 @@ import {AdminPageTypes, CREATE_RESULT_ITEMS, CreateResultKey, RESPONSES, Respons
 import {Box, Button, Stack, TextField, Typography} from '@mui/material';
 import ResponseDialog from '@src/components/admin/ResponseDialog.tsx';
 import {PageHeader} from '@src/components/admin/PageHeader.tsx';
+import SaveComponent from '@src/components/admin/SaveComponent.tsx';
 
 const MAIN_BRAND_PAGE = `/admin/brand`;
 
@@ -48,23 +49,10 @@ export default function CreateBrandPage() {
           label={'필수'}
         />
       </Stack>
-      <Stack
-        direction={'row'}
-        spacing={2}
-      >
-        <Button
-          variant={'contained'}
-          onClick={onSaveClick}
-        >
-          저장
-        </Button>
-        <Button
-          variant={'outlined'}
-          onClick={onCancelClick}
-        >
-          취소
-        </Button>
-      </Stack>
+      <SaveComponent
+        onSave={onSaveClick}
+        onCancel={onCancelClick}
+      />
       <ResponseDialog
         isOpened={openDialog}
         text={getMessage(result as CreateResultKey)}

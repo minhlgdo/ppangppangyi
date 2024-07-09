@@ -4,6 +4,7 @@ import {useState} from 'react';
 import ResponseDialog from '@src/components/admin/ResponseDialog.tsx';
 import {AdminPageTypes, EDIT_RESULT_ITEMS, EditResultKey, RESPONSES, ResponseType} from '@src/common/common.ts';
 import {PageHeader} from '@src/components/admin/PageHeader.tsx';
+import SaveComponent from '@src/components/admin/SaveComponent.tsx';
 
 export default function EditBrandPage() {
   const {brandId} = useParams();
@@ -46,23 +47,11 @@ export default function EditBrandPage() {
           defaultValue={brandName}
         />
       </Stack>
-      <Stack
-        direction={'row'}
-        spacing={2}
-      >
-        <Button
-          variant={'contained'}
-          onClick={onSaveClick}
-        >
-          저장
-        </Button>
-        <Button
-          variant={'outlined'}
-          onClick={onCancelClick}
-        >
-          취소
-        </Button>
-      </Stack>
+      <SaveComponent
+        onSave={onSaveClick}
+        onCancel={onCancelClick}
+      />
+
       <ResponseDialog
         isOpened={openDialog}
         text={getMessage(result as EditResultKey)}
