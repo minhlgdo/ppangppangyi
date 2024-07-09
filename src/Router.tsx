@@ -7,6 +7,7 @@ import AdminRoot from './pages/admin/AdminRoot.tsx';
 import BrandPage from './pages/admin/BrandPage.tsx';
 import React from 'react';
 import AdminPage from './pages/admin/AdminPage.tsx';
+import EditBrandPage from './pages/admin/EditBrandPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: '/admin/brand',
         element: <BrandPage />,
+      },
+      {
+        path: '/admin/brand/:brandId',
+        element: <EditBrandPage />,
       },
     ],
   },
