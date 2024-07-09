@@ -9,6 +9,9 @@ import React from 'react';
 import AdminPage from './pages/admin/AdminPage.tsx';
 import EditBrandPage from './pages/admin/EditBrandPage.tsx';
 import CreateBrandPage from './pages/admin/CreateBrandPage.tsx';
+import FuelPage from '@src/pages/admin/FuelPage.tsx';
+import EditFuelPage from '@src/pages/admin/EditFuelPage.tsx';
+import CreateFuelPage from '@src/pages/admin/CreateFuelPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +48,18 @@ const router = createBrowserRouter([
       {
         path: '/admin/brand/create',
         element: <CreateBrandPage />,
+      },
+      {
+        path: '/admin/fuel',
+        element: <FuelPage />,
+      },
+      {
+        path: '/admin/fuel/:fuelId',
+        element: <EditFuelPage />,
+      },
+      {
+        path: '/admin/fuel/create',
+        element: <CreateFuelPage />,
       },
     ],
   },
