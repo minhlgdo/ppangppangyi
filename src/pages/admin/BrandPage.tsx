@@ -1,8 +1,9 @@
 import {Box, Button, Stack, Typography} from '@mui/material';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import BrandList from '../../components/admin/BrandList.tsx';
 import AdminBrandContextProvider, {useAdminBrand} from '../../context/AdminBrandContext.tsx';
 import DeleteDialog from '../../components/admin/DeleteDialog.tsx';
+import {useNavigate} from 'react-router-dom';
 
 function BrandPageContent() {
   const [totalItems, setTotalItems] = useState(0);
@@ -11,6 +12,11 @@ function BrandPageContent() {
     {brandId: 2, brandName: 'Hyundai'},
   ]);
   const {itemToDelete, setItemToDelete, deletePopup, setDeletePopup} = useAdminBrand();
+  const navigate = useNavigate();
+
+  const onCreateClick = () => {
+    navigate('/admin/brand/create');
+  };
 
   const handleClose = () => {
     setItemToDelete(undefined);
@@ -30,7 +36,12 @@ function BrandPageContent() {
         spacing={6}
       >
         <Typography variant={'h4'}>Brand</Typography>
-        <Button variant={'contained'}>추가</Button>
+        <Button
+          variant={'contained'}
+          onClick={onCreateClick}
+        >
+          추가
+        </Button>
       </Stack>
       <Typography>Total: {totalItems} brands</Typography>
       <BrandList brands={brandList} />
