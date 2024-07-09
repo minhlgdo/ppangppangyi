@@ -1,8 +1,9 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {CREATE_RESULT_ITEMS, CreateResultKey, RESPONSES, ResponseType} from '@src/common/common.ts';
+import {AdminPageTypes, CREATE_RESULT_ITEMS, CreateResultKey, RESPONSES, ResponseType} from '@src/common/common.ts';
 import {Box, Button, Stack, TextField, Typography} from '@mui/material';
 import ResponseDialog from '@src/components/admin/ResponseDialog.tsx';
+import {PageHeader} from '@src/components/admin/PageHeader.tsx';
 
 const MAIN_BRAND_PAGE = `/admin/brand`;
 
@@ -35,7 +36,7 @@ export default function CreateBrandPage() {
 
   return (
     <Box sx={{m: 4, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', gap: 4}}>
-      <Typography variant={'h4'}>Create</Typography>
+      <PageHeader pageType={AdminPageTypes.Create} />
       <Stack
         direction={'row'}
         spacing={4}

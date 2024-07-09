@@ -17,3 +17,9 @@ export const CREATE_RESULT_ITEMS = {
 export type CreateResultKey = keyof typeof CREATE_RESULT_ITEMS;
 
 export const ITEMS_PER_PAGE = 10;
+
+export enum AdminPageTypes {
+  Create = 'Create',
+  Edit = 'Edit',
+  General = 'GENERAL',
+}

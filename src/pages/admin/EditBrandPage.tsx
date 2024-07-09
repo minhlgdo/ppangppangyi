@@ -2,7 +2,8 @@ import {Box, Button, Stack, TextField, Typography} from '@mui/material';
 import {useNavigate, useParams} from 'react-router-dom';
 import {useState} from 'react';
 import ResponseDialog from '@src/components/admin/ResponseDialog.tsx';
-import {EDIT_RESULT_ITEMS, EditResultKey, RESPONSES, ResponseType} from '@src/common/common.ts';
+import {AdminPageTypes, EDIT_RESULT_ITEMS, EditResultKey, RESPONSES, ResponseType} from '@src/common/common.ts';
+import {PageHeader} from '@src/components/admin/PageHeader.tsx';
 
 export default function EditBrandPage() {
   const {brandId} = useParams();
@@ -32,7 +33,7 @@ export default function EditBrandPage() {
 
   return (
     <Box sx={{m: 4, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', gap: 4}}>
-      <Typography variant={'h4'}>Edit</Typography>
+      <PageHeader pageType={AdminPageTypes.Edit} />
       <Stack
         direction={'row'}
         spacing={4}
