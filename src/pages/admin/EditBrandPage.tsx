@@ -2,7 +2,7 @@ import {Box} from '@mui/material';
 import {useNavigate, useParams} from 'react-router-dom';
 import {useState} from 'react';
 import ResponseDialog from '@src/components/admin/ResponseDialog.tsx';
-import {AdminPageTypes, EDIT_RESULT_ITEMS, EditResultKey, RESPONSES, ResponseType} from '@src/common/constants.ts';
+import {AdminPageTypes, EDIT_RESULT_ITEMS, ResponseTypes, ResponseTypeValue} from '@src/common/constants.ts';
 import {PageHeader} from '@src/components/admin/PageHeader.tsx';
 import SaveComponent from '@src/components/admin/SaveComponent.tsx';
 import InputFields, {FieldType} from '@src/components/admin/InputFields.tsx';
@@ -11,7 +11,7 @@ export default function EditBrandPage() {
   const {brandId} = useParams();
   const [brandName, setBrandName] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
-  const [result, setResult] = useState<ResponseType>('UNKNOWN');
+  const [result, setResult] = useState(ResponseTypes.Unknown);
   const navigate = useNavigate();
 
   const REQUIRED_INPUTS = [
@@ -29,8 +29,9 @@ export default function EditBrandPage() {
     // TODO: handle update call here
     // TODO: depending on the result value, show the response
     setOpenDialog(true);
-    setResult(RESPONSES[0]);
+    setResult(ResponseTypes.Failure);
   };
+
   const onCancelClick = () => {
     navigate(`/admin/brand`); // go back to the main page
   };
@@ -38,7 +39,7 @@ export default function EditBrandPage() {
     setOpenDialog(false);
   };
 
-  const getMessage = (key: EditResultKey): string => {
+  const getMessage = (key: ResponseTypeValue): string => {
     return EDIT_RESULT_ITEMS[key];
   };
 
@@ -53,7 +54,7 @@ export default function EditBrandPage() {
 
       <ResponseDialog
         isOpened={openDialog}
-        text={getMessage(result as EditResultKey)}
+        text={getMessage(result)}
         handleClose={handleDialogClose}
       />
     </Box>
