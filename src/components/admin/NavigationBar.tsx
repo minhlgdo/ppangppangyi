@@ -3,25 +3,23 @@ import {useNavigate} from 'react-router-dom';
 
 const DRAWER_WIDTH = 240;
 
+const NAVIGATION_ITEMS = ['Brand', 'Fuel', 'Category', 'Model', 'Car'];
+type NavigationItemType = (typeof NAVIGATION_ITEMS)[number];
+
+const NAVIGATION_PATHS: Record<NavigationItemType, string> = {
+  Brand: '/admin/brand',
+  Fuel: '/admin/fuel',
+  Category: '/admin/category',
+  Model: '/admin/model',
+  Car: '/admin/car',
+};
+
 export default function NavigationBar() {
   const navigate = useNavigate();
-  const onNavigationItem = (itemName: string) => {
-    switch (itemName) {
-      case 'Brand':
-        navigate(`/admin/brand/`);
-        break;
-      case 'Fuel':
-        navigate(`/admin/fuel/`);
-        break;
-      case 'Category':
-        navigate(`/admin/category/`);
-        break;
-      case 'Model':
-        navigate(`/admin/model/`);
-        break;
-      case 'Car':
-        navigate(`/admin/car`);
-        break;
+  const onNavigationItem = (itemName: NavigationItemType) => {
+    const path = NAVIGATION_PATHS[itemName];
+    if (path) {
+      navigate(path);
     }
   };
 
@@ -41,7 +39,7 @@ export default function NavigationBar() {
       <Toolbar />
       <Divider />
       <List component={'nav'}>
-        {['Brand', 'Fuel', 'Category', 'Model', 'Car'].map((item) => (
+        {NAVIGATION_ITEMS.map((item) => (
           <ListItem
             key={item}
             onClick={() => onNavigationItem(item)}
