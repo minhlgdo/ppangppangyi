@@ -1,5 +1,5 @@
-import {Divider, Drawer, List, ListItem, ListItemButton, ListItemText, Toolbar} from '@mui/material';
-import {NavLink, useNavigate} from 'react-router-dom';
+import {Divider, Drawer, List, ListItemButton, ListItemText, Toolbar} from '@mui/material';
+import {NavLink} from 'react-router-dom';
 
 const DRAWER_WIDTH = 240;
 
