@@ -10,6 +10,7 @@ interface DeleteDialogProps {
 const DeleteDialog: FC<DeleteDialogProps> = ({isOpened, handleClose, handleDelete}) => {
   return (
     <Dialog
+      fullWidth
       open={isOpened}
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"

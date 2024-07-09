@@ -35,7 +35,7 @@ export default function CreateBrandPage() {
 
   return (
     <Box sx={{m: 4, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', gap: 4}}>
-      <Typography variant={'h4'}>Edit</Typography>
+      <Typography variant={'h4'}>Create</Typography>
       <Stack
         direction={'row'}
         spacing={4}
