@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {AdminPageTypes, CREATE_RESULT_ITEMS, CreateResultKey, RESPONSES, ResponseType} from '@src/common/constants.ts';
+import {AdminPageTypes, CREATE_RESULT_ITEMS, ResponseTypes, ResponseTypeValue} from '@src/common/constants.ts';
 import {Box} from '@mui/material';
 import ResponseDialog from '@src/components/admin/ResponseDialog.tsx';
 import {PageHeader} from '@src/components/admin/PageHeader.tsx';
@@ -11,7 +11,7 @@ const MAIN_BRAND_PAGE = `/admin/brand`;
 
 export default function CreateBrandPage() {
   const [openDialog, setOpenDialog] = useState(false);
-  const [result, setResult] = useState<ResponseType>('UNKNOWN');
+  const [result, setResult] = useState(ResponseTypes.Unknown);
   const navigate = useNavigate();
 
   const REQUIRED_INPUTS = [
@@ -25,7 +25,7 @@ export default function CreateBrandPage() {
   const onSaveClick = () => {
     // TODO: Handle save result
     // TODO: Depending on the result, save the corresponding result
-    setResult(RESPONSES[0]);
+    setResult(ResponseTypes.Success);
     setOpenDialog(true);
   };
 
@@ -35,12 +35,12 @@ export default function CreateBrandPage() {
 
   const handleDialogClose = () => {
     setOpenDialog(false);
-    if (result === 'SUCCESS') {
+    if (result === ResponseTypes.Success) {
       navigate(MAIN_BRAND_PAGE);
     }
   };
 
-  const getMessage = (key: CreateResultKey): string => {
+  const getMessage = (key: ResponseTypeValue): string => {
     return CREATE_RESULT_ITEMS[key];
   };
 
@@ -54,7 +54,7 @@ export default function CreateBrandPage() {
       />
       <ResponseDialog
         isOpened={openDialog}
-        text={getMessage(result as CreateResultKey)}
+        text={getMessage(result)}
         handleClose={handleDialogClose}
       />
     </Box>
