@@ -26,7 +26,7 @@ const BrandList: FC<BrandListProps> = ({brands}) => {
     setDeletePopup(true);
   };
 
-  if (brands.length == 0) {
+  if (brands.length === 0) {
     return <Typography>Loading...</Typography>;
   }
 
