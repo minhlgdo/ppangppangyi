@@ -2,15 +2,13 @@ import {Box, Button, Stack, TextField, Typography} from '@mui/material';
 import {useNavigate, useParams} from 'react-router-dom';
 import {useState} from 'react';
 import ResponseDialog from '../../components/admin/ResponseDialog.tsx';
-
-const RESULT_ITEMS = ['수정이 완료되었습니다.', '수정이 실패되었습니다. 다시 시도하십시오.'];
-type ResultItemType = (typeof RESULT_ITEMS)[number];
+import {EDIT_RESULT_ITEMS, EditResultKey, RESPONSES, ResponseType} from '../../common/common.ts';
 
 export default function EditBrandPage() {
   const {brandId} = useParams();
   const [brandName, setBrandName] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
-  const [result, setResult] = useState<ResultItemType>('');
+  const [result, setResult] = useState<ResponseType>('UNKNOWN');
   const navigate = useNavigate();
 
   // TODO: load brand name
@@ -19,13 +17,17 @@ export default function EditBrandPage() {
     // TODO: handle update call here
     // TODO: depending on the result value, show the response
     setOpenDialog(true);
-    setResult(RESULT_ITEMS[0]);
+    setResult(RESPONSES[0]);
   };
   const onCancelClick = () => {
     navigate(`/admin/brand`); // go back to the main page
   };
   const handleDialogClose = () => {
     setOpenDialog(false);
+  };
+
+  const getMessage = (key: EditResultKey): string => {
+    return EDIT_RESULT_ITEMS[key];
   };
 
   return (
@@ -62,7 +64,7 @@ export default function EditBrandPage() {
       </Stack>
       <ResponseDialog
         isOpened={openDialog}
-        text={result}
+        text={getMessage(result as EditResultKey)}
         handleClose={handleDialogClose}
       />
     </Box>
