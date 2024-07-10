@@ -22,21 +22,22 @@ export const CREATE_RESULT_ITEMS = {
 
 export const ITEMS_PER_PAGE = 10;
 
-export enum AdminPageTypes {
-  Create = 'Create',
-  Edit = 'Edit',
-  General = 'GENERAL',
-}
+export const AdminPageTypes = {
+  Create: '등록',
+  Edit: '수정',
+  General: '전체',
+} as const;
 
-export enum FieldType {
-  Text = 'TEXT',
-  Image = 'IMAGE',
-}
+export const FieldTypes = {
+  Text: 'TEXT',
+  Image: 'IMAGE',
+} as const;
+export type FieldTypesType = (typeof FieldTypes)[keyof typeof FieldTypes];
 
-interface RequiredFieldInterface {
-  name: string;
-  required: boolean;
-  type: FieldType;
-  defaultValue?: string;
-}
-export type RequiredFieldType = RequiredFieldInterface;
+export const PageNames = {
+  Brand: '브랜드',
+  Fuel: '연류',
+  Category: '분류',
+  Model: '차종',
+  Car: '자동차',
+} as const;
