@@ -1,6 +1,6 @@
 import {useParams} from 'react-router-dom';
 import {useState} from 'react';
-import {AdminPageTypes, FieldTypes} from '@src/common/constants.ts';
+import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
 import {RequiredFieldType} from '@src/common/types.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 
@@ -24,6 +24,7 @@ export default function EditBrandPage() {
 
   return (
     <CreateEditLayout
+      subject={Subjects.Brand}
       requiredFields={REQUIRED_INPUTS}
       view={AdminPageTypes.Edit}
       handleSendData={handleSendData}

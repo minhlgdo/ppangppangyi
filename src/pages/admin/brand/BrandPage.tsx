@@ -4,7 +4,7 @@ import {GET_BRANDS_ENDPOINT} from '@src/common/api.ts';
 import AdminContextProvider from '@src/context/AdminContext.tsx';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {BRAND_CREATE_PATH, BRAND_MAIN_PATH} from '@src/common/navigation.ts';
-import {PageNames} from '@src/common/constants.ts';
+import {Subjects} from '@src/common/constants.ts';
 import {Brand, BrandsType} from '@src/common/types.ts';
 
 function BrandPageContent() {
@@ -38,7 +38,7 @@ function BrandPageContent() {
 
   return (
     <GeneralLayout<Brand>
-      pageName={PageNames.Brand}
+      pageName={Subjects.Brand}
       createPagePath={BRAND_CREATE_PATH}
       totalItems={totalItems}
       items={brandList}

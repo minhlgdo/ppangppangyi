@@ -1,12 +1,12 @@
 import {FC} from 'react';
 import {Button, Stack, styled, TextField, Typography} from '@mui/material';
 import {CloudUpload} from '@mui/icons-material';
-import {FieldTypes, FieldTypesType} from '@src/common/constants.ts';
+import {FieldTypes, FieldType} from '@src/common/constants.ts';
 
 interface InputField {
   name: string;
   required: boolean;
-  type: FieldTypesType;
+  type: FieldType;
   defaultValue?: string;
 }
 

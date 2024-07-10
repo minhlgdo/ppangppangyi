@@ -1,14 +1,14 @@
 import {Box, Pagination, Typography} from '@mui/material';
 import {PageHeader} from '@src/components/admin/PageHeader.tsx';
 import {useNavigate} from 'react-router-dom';
-import {AdminPageTypes, PageNameType} from '@src/common/constants.ts';
+import {AdminPageTypes, SubjectType} from '@src/common/constants.ts';
 import React, {ChangeEvent} from 'react';
 import ListItems from '@src/components/admin/ListItems.tsx';
 import DeleteDialog from '@src/components/admin/DeleteDialog.tsx';
 import {useAdminContext} from '@src/context/AdminContext.tsx';
 
 interface GeneralLayoutProps<T> {
-  pageName: PageNameType;
+  pageName: SubjectType;
   createPagePath: string;
   totalItems: number;
   items: T[];
@@ -61,7 +61,7 @@ export default function GeneralLayout<T>({
   return (
     <Box sx={{m: 4, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', gap: 4}}>
       <PageHeader
-        text={pageName}
+        subject={pageName}
         onCreateClick={handleCreateClick}
         pageType={AdminPageTypes.General}
       />

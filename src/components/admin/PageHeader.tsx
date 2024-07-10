@@ -1,21 +1,21 @@
-import {AdminPageType, AdminPageTypes, PageNameType} from '@src/common/constants.ts';
+import {AdminPageType, AdminPageTypes, SubjectType} from '@src/common/constants.ts';
 import {Button, Stack, Typography} from '@mui/material';
 import React from 'react';
 
 interface PageHeaderProps {
-  text?: PageNameType;
+  subject: SubjectType;
   onCreateClick?: () => void;
   pageType: AdminPageType;
 }
 
-export function PageHeader({text, onCreateClick, pageType}: PageHeaderProps) {
+export function PageHeader({subject, onCreateClick, pageType}: PageHeaderProps) {
   if (pageType === AdminPageTypes.General) {
     return (
       <Stack
         direction={'row'}
         spacing={4}
       >
-        <Typography variant={'h4'}>{text}</Typography>
+        <Typography variant={'h4'}>{subject}</Typography>
         <Button
           variant={'contained'}
           onClick={onCreateClick}
@@ -25,6 +25,10 @@ export function PageHeader({text, onCreateClick, pageType}: PageHeaderProps) {
       </Stack>
     );
   } else {
-    return <Typography variant={'h4'}>{pageType}</Typography>;
+    return (
+      <Typography variant={'h4'}>
+        {subject} {pageType}
+      </Typography>
+    );
   }
 }

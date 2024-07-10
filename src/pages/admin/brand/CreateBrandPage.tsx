@@ -1,4 +1,4 @@
-import {AdminPageTypes, FieldTypes} from '@src/common/constants.ts';
+import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import {RequiredFieldType} from '@src/common/types.ts';
 
@@ -16,6 +16,7 @@ export default function CreateBrandPage() {
 
   return (
     <CreateEditLayout
+      subject={Subjects.Brand}
       requiredFields={REQUIRED_INPUTS}
       view={AdminPageTypes.Create}
       handleSendData={handleSendData}

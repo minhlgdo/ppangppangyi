@@ -35,11 +35,11 @@ export const FieldTypes = {
 } as const;
 export type FieldType = (typeof FieldTypes)[keyof typeof FieldTypes];
 
-export const PageNames = {
+export const Subjects = {
   Brand: '브랜드',
   Fuel: '연류',
   Category: '분류',
   Model: '차종',
   Car: '자동차',
 } as const;
-export type PageNameType = (typeof PageNames)[keyof typeof PageNames];
+export type SubjectType = (typeof Subjects)[keyof typeof Subjects];
