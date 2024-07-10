@@ -1,5 +1,5 @@
-import {Divider, Drawer, List, ListItem, ListItemText, Toolbar} from '@mui/material';
-import {useNavigate} from 'react-router-dom';
+import {Divider, Drawer, List, ListItemButton, ListItemText, Toolbar} from '@mui/material';
+import {NavLink} from 'react-router-dom';
 
 const DRAWER_WIDTH = 240;
 
@@ -15,14 +15,6 @@ const NAVIGATION_PATHS: Record<NavigationItemType, string> = {
 };
 
 export default function NavigationBar() {
-  const navigate = useNavigate();
-  const onNavigationItem = (itemName: NavigationItemType) => {
-    const path = NAVIGATION_PATHS[itemName];
-    if (path) {
-      navigate(path);
-    }
-  };
-
   return (
     <Drawer
       sx={{
@@ -40,12 +32,14 @@ export default function NavigationBar() {
       <Divider />
       <List component={'nav'}>
         {NAVIGATION_ITEMS.map((item) => (
-          <ListItem
+          <ListItemButton
             key={item}
-            onClick={() => onNavigationItem(item)}
+            component={NavLink}
+            to={NAVIGATION_PATHS[item]}
+            sx={{'&.active': {background: 'lightgrey'}}}
           >
             <ListItemText primary={item} />
-          </ListItem>
+          </ListItemButton>
         ))}
       </List>
     </Drawer>

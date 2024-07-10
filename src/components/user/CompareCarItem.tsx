@@ -1,13 +1,13 @@
 import React from 'react';
 import {Button, Card, CardActions, CardMedia} from '@mui/material';
-import {useCompare} from '../../context/CompareContext.tsx';
+import {useCompare} from '@src/context/CompareContext.tsx';
 
-interface CompareCarComponentParams {
+interface CompareCarComponentProps {
   id: number;
   image: string;
 }
 
-const CompareCarItem: React.FC<CompareCarComponentParams> = ({id, image}) => {
+function CompareCarItem({id, image}: CompareCarComponentProps) {
   const {handleDeleteCar} = useCompare();
   return (
     <Card>
@@ -27,6 +27,6 @@ const CompareCarItem: React.FC<CompareCarComponentParams> = ({id, image}) => {
       </CardActions>
     </Card>
   );
-};
+}
 
 export default CompareCarItem;

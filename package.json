@@ -14,6 +14,11 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.21",
     "@mui/material": "^5.15.21",
+    "@remix-run/router": "^1.17.1",
+    "@types/node": "^20.14.10",
+    "axios": "^1.7.2",
+    "axios-mock-adapter": "^1.22.0",
+    "module-alias": "^2.2.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.24.0"
@@ -30,5 +35,8 @@
     "typescript": "^5.2.2",
     "vite": "^5.3.1"
   },
-  "prettier": "@hmg-fe/prettier-config-itsd"
+  "prettier": "@hmg-fe/prettier-config-itsd",
+  "_moduleAliases": {
+    "@src": "dist"
+  }
 }

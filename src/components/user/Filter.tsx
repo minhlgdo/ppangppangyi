@@ -1,6 +1,6 @@
 import {Box, Button, Stack, Typography} from '@mui/material';
 import React, {useState} from 'react';
-import {useHome} from '../../context/HomeContext.tsx';
+import {useHome} from '@src/context/HomeContext.tsx';
 
 const parentCategories = ['경형', '대형', '소형', '스포츠카', '준대형', '준중형', '중형'];
 const subCategories = [
@@ -13,7 +13,7 @@ const subCategories = [
   {parent: '중형', subs: ['전체', 'RV', 'SUV', '밴', '세단', '왜건', '컨버터블', '쿠페', '트럭', '해치백']},
 ];
 
-const Filter = () => {
+function Filter() {
   const {setSearchCategory} = useHome();
   const [parentCategory, setParentCategory] = useState(subCategories[0].parent);
   const [childCategory, setChildCategory] = useState('전체');
@@ -94,6 +94,6 @@ const Filter = () => {
       </Stack>
     </Box>
   );
-};
+}
 
 export default Filter;
