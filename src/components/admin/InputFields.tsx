@@ -1,12 +1,12 @@
 import {FC} from 'react';
 import {Button, Stack, styled, TextField, Typography} from '@mui/material';
 import {CloudUpload} from '@mui/icons-material';
-import {FieldType} from '@src/common/constants.ts';
+import {FieldTypes, FieldTypesType} from '@src/common/constants.ts';
 
 interface InputField {
   name: string;
   required: boolean;
-  type: FieldType;
+  type: FieldTypesType;
   defaultValue?: string;
 }
 
@@ -39,7 +39,7 @@ const InputFields: FC<InputFieldsProps> = ({fields, inputValues, errors, onChang
           alignItems={'center'}
         >
           <Typography>{field.name}</Typography>
-          {field.type === FieldType.Text ? (
+          {field.type === FieldTypes.Text ? (
             <TextField
               required={field.required}
               label={field.required ? '필수' : ''}
