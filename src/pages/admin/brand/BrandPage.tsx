@@ -38,7 +38,7 @@ function BrandPageContent() {
 
   return (
     <GeneralLayout<Brand>
-      pageName={Subjects.Brand}
+      subject={Subjects.Brand}
       createPagePath={BRAND_CREATE_PATH}
       totalItems={totalItems}
       items={brandList}

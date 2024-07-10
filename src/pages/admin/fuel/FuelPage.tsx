@@ -44,7 +44,7 @@ function FuelPageContent() {
 
   return (
     <GeneralLayout<Fuel>
-      pageName={Subjects.Fuel}
+      subject={Subjects.Fuel}
       createPagePath={FUEL_CREATE_PATH}
       totalItems={totalItems}
       items={fuelList}

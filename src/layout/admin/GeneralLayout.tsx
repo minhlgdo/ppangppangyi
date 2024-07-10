@@ -8,7 +8,7 @@ import DeleteDialog from '@src/components/admin/DeleteDialog.tsx';
 import {useAdminContext} from '@src/context/AdminContext.tsx';
 
 interface GeneralLayoutProps<T> {
-  pageName: SubjectType;
+  subject: SubjectType;
   createPagePath: string;
   totalItems: number;
   items: T[];
@@ -25,7 +25,7 @@ interface GeneralLayoutProps<T> {
 }
 
 export default function GeneralLayout<T>({
-  pageName,
+  subject,
   createPagePath,
   totalItems,
   items,
@@ -61,7 +61,7 @@ export default function GeneralLayout<T>({
   return (
     <Box sx={{m: 4, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', gap: 4}}>
       <PageHeader
-        subject={pageName}
+        subject={subject}
         onCreateClick={handleCreateClick}
         pageType={AdminPageTypes.General}
       />
