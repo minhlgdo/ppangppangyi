@@ -5,7 +5,7 @@ import React from 'react';
 interface PageHeaderProps {
   text?: string;
   onCreateClick?: () => void;
-  pageType: string;
+  pageType: AdminPageTypes;
 }
 
 export function PageHeader({text, onCreateClick, pageType}: PageHeaderProps) {
