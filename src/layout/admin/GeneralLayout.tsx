@@ -13,8 +13,8 @@ interface GeneralLayoutProps<T> {
   totalItems: number;
   items: T[];
   itemKey: keyof T;
-  itemPrimaryText: keyof T; // Primary text to display on the item list
-  itemSecondaryText?: keyof T; // Secondary text on the item list. Usually used in items having multiple attributes like Cars
+  itemPrimaryText: keyof T; // Primary text to "identify" the item (e.g., brand name, car name, etc.)
+  itemSecondaryText?: keyof T; // Secondary text on the item list. Usually used in items having multiple attributes like Cars. Show the secondary first if exists,
   basePagePath: string;
   totalPages: number;
   page: number;
