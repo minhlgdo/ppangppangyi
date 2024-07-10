@@ -1,4 +1,3 @@
-import {FC} from 'react';
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@mui/material';
 
 interface DeleteDialogProps {
@@ -7,7 +6,7 @@ interface DeleteDialogProps {
   handleDelete: () => void;
 }
 
-const DeleteDialog: FC<DeleteDialogProps> = ({isOpened, handleClose, handleDelete}) => {
+function DeleteDialog({isOpened, handleClose, handleDelete}: DeleteDialogProps) {
   return (
     <Dialog
       fullWidth
@@ -31,6 +30,6 @@ const DeleteDialog: FC<DeleteDialogProps> = ({isOpened, handleClose, handleDelet
       </DialogActions>
     </Dialog>
   );
-};
+}
 
 export default DeleteDialog;

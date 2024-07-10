@@ -1,5 +1,4 @@
-import {FC} from 'react';
-import {Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography} from '@mui/material';
+import {Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import {DeleteRounded, Edit} from '@mui/icons-material';
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
@@ -14,7 +13,7 @@ interface BrandListProps {
   brands: Brand[];
 }
 
-const BrandList: FC<BrandListProps> = ({brands}) => {
+function BrandList({brands}: BrandListProps) {
   const {setItemToDelete, setDeletePopup} = useAdminBrand();
   const navigate = useNavigate();
   const onBrandClick = (id: number) => {
@@ -26,9 +25,9 @@ const BrandList: FC<BrandListProps> = ({brands}) => {
     setDeletePopup(true);
   };
 
-  if (brands.length === 0) {
-    return <Typography>Loading...</Typography>;
-  }
+  // if (brands.length === 0) {
+  //   return <Typography>Loading...</Typography>;
+  // }
 
   return (
     <List>
@@ -62,6 +61,6 @@ const BrandList: FC<BrandListProps> = ({brands}) => {
       ))}
     </List>
   );
-};
+}
 
 export default BrandList;

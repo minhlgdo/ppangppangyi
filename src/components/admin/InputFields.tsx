@@ -17,7 +17,7 @@ interface InputFieldsProps {
   fields: InputField[];
 }
 
-const InputFields: FC<InputFieldsProps> = ({fields}) => {
+function InputFields({fields}: InputFieldsProps) {
   return (
     <Stack spacing={4}>
       {fields.map((field) => (
@@ -37,6 +37,6 @@ const InputFields: FC<InputFieldsProps> = ({fields}) => {
       ))}
     </Stack>
   );
-};
+}
 
 export default InputFields;

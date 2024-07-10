@@ -7,7 +7,7 @@ import CompareCarItem from './CompareCarItem.tsx';
 //   compareItems: {carId: number; image: string}[];
 // }
 
-const CompareBottomSheet = () => {
+function CompareBottomSheet() {
   const {compareCars, handleResetList} = useCompare();
   const onCompareClick = () => {
     // only navigate to the compare page when the number of compared items are between 2 and 3
@@ -48,6 +48,6 @@ const CompareBottomSheet = () => {
       </Box>
     </Drawer>
   );
-};
+}
 
 export default CompareBottomSheet;
