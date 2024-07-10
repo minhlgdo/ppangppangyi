@@ -1,15 +1,17 @@
-import {Box, Typography} from '@mui/material';
-import {PageHeader} from '@src/components/admin/PageHeader.tsx';
-import {AdminPageTypes} from '@src/common/constants.ts';
-import {useNavigate} from 'react-router-dom';
-import {FUEL_CREATE_NAV} from '@src/common/navigation.ts';
-import React, {useState} from 'react';
-import FuelList from '@src/components/admin/FuelList.tsx';
-import AdminFuelContextProvider, {useAdminFuel} from '@src/context/AdminFuelContext.tsx';
-import {useAdminBrand} from '@src/context/AdminBrandContext.tsx';
-import DeleteDialog from '@src/components/admin/DeleteDialog.tsx';
+import {PageNames} from '@src/common/constants.ts';
+import {FUEL_CREATE_PATH, FUEL_MAIN_PATH} from '@src/common/navigation.ts';
+import React, {ChangeEvent, useState} from 'react';
+import AdminContextProvider from '@src/context/AdminContext.tsx';
+import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 
-const DUMMY_FUELS = [
+interface Fuel {
+  fuelId: number;
+  fuelName: string;
+}
+
+type FuelsType = Fuel[];
+
+const DUMMY_FUELS: FuelsType = [
   {
     fuelId: 1,
     fuelName: '가솔린',
@@ -29,50 +31,44 @@ const DUMMY_FUELS = [
 ];
 
 function FuelPageContent() {
-  const navigate = useNavigate();
-  const onCreateClick = () => {
-    navigate(FUEL_CREATE_NAV);
-  };
-
   // Variables
-  const [fuels, setFuels] = useState(DUMMY_FUELS);
+  const [fuelList, setFuelList] = useState(DUMMY_FUELS);
   const [totalItems, setTotalItems] = useState(DUMMY_FUELS.length);
-  const {itemToDelete, setItemToDelete, deletePopup, setDeletePopup} = useAdminFuel();
+  const [totalPages, setTotalPages] = useState(1);
+  const [page, setPage] = useState(1);
 
-  const handleClose = () => {
-    setItemToDelete(undefined);
-    setDeletePopup(false);
+  const handleDeleteItem = (id: number) => {
+    console.log(`Delete item ${id}`);
+    // TODO: Call the items here
   };
 
-  const handleDelete = () => {
-    // handle delete item here
-    handleClose();
+  const handlePageChange = (event: ChangeEvent<unknown>, page: number) => {
+    setPage(page);
   };
 
   // TODO: Load the real fuel list here
 
   return (
-    <Box sx={{m: 4, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', gap: 4}}>
-      <PageHeader
-        pageType={AdminPageTypes.General}
-        text={'Fuel'}
-        onCreateClick={onCreateClick}
-      />
-      <Typography>Total: {totalItems} fuels</Typography>
-      <FuelList items={fuels} />
-      <DeleteDialog
-        isOpened={deletePopup}
-        handleClose={handleClose}
-        handleDelete={handleDelete}
-      />
-    </Box>
+    <GeneralLayout<Fuel>
+      pageName={PageNames.Fuel}
+      createPagePath={FUEL_CREATE_PATH}
+      totalItems={totalItems}
+      items={fuelList}
+      itemKey={'fuelId'}
+      itemPrimaryText={'fuelName'}
+      basePagePath={FUEL_MAIN_PATH}
+      totalPages={totalPages}
+      page={page}
+      handlePageChange={handlePageChange}
+      handleDeleteItem={handleDeleteItem}
+    />
   );
 }
 
 export default function FuelPage() {
   return (
-    <AdminFuelContextProvider>
+    <AdminContextProvider>
       <FuelPageContent />
-    </AdminFuelContextProvider>
+    </AdminContextProvider>
   );
 }

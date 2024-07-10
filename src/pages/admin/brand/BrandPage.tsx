@@ -1,34 +1,26 @@
-import {Box, Pagination, Typography} from '@mui/material';
 import React, {ChangeEvent, useEffect, useState} from 'react';
-import BrandList from '@src/components/admin/BrandList.tsx';
-import AdminBrandContextProvider, {useAdminBrand} from '@src/context/AdminBrandContext.tsx';
-import DeleteDialog from '@src/components/admin/DeleteDialog.tsx';
-import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {GET_BRANDS_ENDPOINT} from '@src/common/api.ts';
-import {PageHeader} from '@src/components/admin/PageHeader.tsx';
-import {AdminPageTypes} from '@src/common/constants.ts';
+import AdminContextProvider from '@src/context/AdminContext.tsx';
+import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
+import {BRAND_CREATE_PATH, BRAND_MAIN_PATH} from '@src/common/navigation.ts';
+import {PageNames} from '@src/common/constants.ts';
+
+interface Brand {
+  brandId: number;
+  brandName: number;
+}
+type BrandsType = Brand[];
 
 function BrandPageContent() {
   const [totalItems, setTotalItems] = useState(0);
-  const [brandList, setBrandList] = useState([]);
-  const {itemToDelete, setItemToDelete, deletePopup, setDeletePopup} = useAdminBrand();
-  const navigate = useNavigate();
+  const [brandList, setBrandList] = useState<BrandsType>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
 
-  const onCreateClick = () => {
-    navigate('/admin/brand/create');
-  };
-
-  const handleClose = () => {
-    setItemToDelete(undefined);
-    setDeletePopup(false);
-  };
-
-  const handleDelete = () => {
-    // handle delete item here
-    handleClose();
+  const handleDeleteItem = (id: number) => {
+    console.log(`Delete item ${id}`);
+    // TODO: Call the items here
   };
 
   const handlePageChange = (event: ChangeEvent<unknown>, page: number) => {
@@ -50,33 +42,26 @@ function BrandPageContent() {
   }, [page]);
 
   return (
-    <Box sx={{m: 4, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', gap: 4}}>
-      <PageHeader
-        text={'Brands'}
-        onCreateClick={onCreateClick}
-        pageType={AdminPageTypes.General}
-      />
-      <Typography>Total: {totalItems} brands</Typography>
-      <BrandList brands={brandList} />
-      <Pagination
-        count={totalPages}
-        page={page}
-        onChange={handlePageChange}
-        color={'primary'}
-      />
-      <DeleteDialog
-        isOpened={deletePopup}
-        handleClose={handleClose}
-        handleDelete={handleDelete}
-      />
-    </Box>
+    <GeneralLayout<Brand>
+      pageName={PageNames.Brand}
+      createPagePath={BRAND_CREATE_PATH}
+      totalItems={totalItems}
+      items={brandList}
+      itemKey={'brandId'}
+      itemPrimaryText={'brandName'}
+      basePagePath={BRAND_MAIN_PATH}
+      totalPages={totalPages}
+      page={page}
+      handlePageChange={handlePageChange}
+      handleDeleteItem={handleDeleteItem}
+    />
   );
 }
 
 export default function BrandPage() {
   return (
-    <AdminBrandContextProvider>
+    <AdminContextProvider>
       <BrandPageContent />
-    </AdminBrandContextProvider>
+    </AdminContextProvider>
   );
 }
