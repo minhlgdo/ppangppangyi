@@ -5,12 +5,7 @@ import AdminContextProvider from '@src/context/AdminContext.tsx';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {BRAND_CREATE_PATH, BRAND_MAIN_PATH} from '@src/common/navigation.ts';
 import {PageNames} from '@src/common/constants.ts';
-
-interface Brand {
-  brandId: number;
-  brandName: number;
-}
-type BrandsType = Brand[];
+import {Brand, BrandsType} from '@src/common/types.ts';
 
 function BrandPageContent() {
   const [totalItems, setTotalItems] = useState(0);

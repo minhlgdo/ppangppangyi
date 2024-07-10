@@ -3,13 +3,7 @@ import {FUEL_CREATE_PATH, FUEL_MAIN_PATH} from '@src/common/navigation.ts';
 import React, {ChangeEvent, useState} from 'react';
 import AdminContextProvider from '@src/context/AdminContext.tsx';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
-
-interface Fuel {
-  fuelId: number;
-  fuelName: string;
-}
-
-type FuelsType = Fuel[];
+import {Fuel, FuelsType} from '@src/common/types.ts';
 
 const DUMMY_FUELS: FuelsType = [
   {
