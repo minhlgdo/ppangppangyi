@@ -13,14 +13,13 @@ interface GeneralLayoutProps<T> {
   totalItems: number;
   items: T[];
   itemKey: keyof T;
-  itemPrimaryText: keyof T;
-  itemSecondaryText?: keyof T;
+  itemPrimaryText: keyof T; // Primary text to display on the item list
+  itemSecondaryText?: keyof T; // Secondary text on the item list. Usually used in items having multiple attributes like Cars
   basePagePath: string;
   totalPages: number;
   page: number;
   handlePageChange: (event: ChangeEvent<unknown>, page: number) => void;
   handleDeleteItem: (id: number) => void;
-  // handleDeleteItem: () => {};
 }
 
 export default function GeneralLayout<T>({

@@ -1,5 +1,5 @@
 import {RequiredFieldType} from '@src/common/types.ts';
-import {AdminPageTypes, CREATE_RESULT_ITEMS, ResponseTypes, ResponseTypeValue} from '@src/common/constants.ts';
+import {AdminPageTypes, CREATE_RESULT_ITEMS, EDIT_RESULT_ITEMS, ResponseTypes, ResponseTypeValue} from '@src/common/constants.ts';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {isFormValid, validateFields} from '@src/common/validation-utils.ts';
@@ -53,7 +53,10 @@ export default function CreateEditLayout({requiredFields, view, handleSendData}:
 
   // Get response message depending on the response result
   const getMessage = (key: ResponseTypeValue): string => {
-    return CREATE_RESULT_ITEMS[key];
+    if (view === AdminPageTypes.Create) {
+      return CREATE_RESULT_ITEMS[key];
+    }
+    return EDIT_RESULT_ITEMS[key];
   };
 
   return (
