@@ -13,7 +13,7 @@ const subCategories = [
   {parent: '중형', subs: ['전체', 'RV', 'SUV', '밴', '세단', '왜건', '컨버터블', '쿠페', '트럭', '해치백']},
 ];
 
-const Filter = () => {
+function Filter() {
   const {setSearchCategory} = useHome();
   const [parentCategory, setParentCategory] = useState(subCategories[0].parent);
   const [childCategory, setChildCategory] = useState('전체');
@@ -94,6 +94,6 @@ const Filter = () => {
       </Stack>
     </Box>
   );
-};
+}
 
 export default Filter;

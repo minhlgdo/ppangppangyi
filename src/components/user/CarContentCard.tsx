@@ -3,16 +3,15 @@ import {Box, Button, Card, CardActions, CardContent, CardMedia, Divider, Typogra
 import {useNavigate} from 'react-router-dom';
 import {useCompare} from '@src/context/CompareContext.tsx';
 
-interface CarContentCardParams {
+interface CarContentCardProps {
   id: number;
   name: string;
   brand: string;
   year: number;
   imageSrc: string;
-  // toCompare: boolean;
 }
 
-const CarContentCard: React.FC<CarContentCardParams> = ({id, name, brand, year, imageSrc}) => {
+function CarContentCard({id, name, brand, year, imageSrc}: CarContentCardProps) {
   const navigate = useNavigate();
   const {compareCars, handleAddCar, handleDeleteCar} = useCompare();
   const isCompared = compareCars.some((car) => car.carId === id);
@@ -68,6 +67,6 @@ const CarContentCard: React.FC<CarContentCardParams> = ({id, name, brand, year, 
       </CardActions>
     </Card>
   );
-};
+}
 
 export default CarContentCard;

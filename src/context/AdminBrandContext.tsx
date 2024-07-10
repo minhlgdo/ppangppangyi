@@ -14,10 +14,9 @@ interface AdminBrandProviderProps {
 
 // initial state
 const INITIAL_DELETE_POPUP_STATE = false;
-const INITIAL_ITEM_TO_DELETE = undefined;
 
 const AdminBrandContext = createContext<AdminBrandContextValue>({
-  itemToDelete: INITIAL_ITEM_TO_DELETE,
+  itemToDelete: undefined,
   setItemToDelete: () => {},
   deletePopup: INITIAL_DELETE_POPUP_STATE,
   setDeletePopup: () => {},

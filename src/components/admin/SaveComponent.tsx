@@ -1,4 +1,3 @@
-import {FC} from 'react';
 import {Button, Stack} from '@mui/material';
 
 interface SaveComponentProps {
@@ -6,7 +5,7 @@ interface SaveComponentProps {
   onCancel: () => void;
 }
 
-const SaveComponent: FC<SaveComponentProps> = ({onSave, onCancel}) => {
+function SaveComponent({onSave, onCancel}: SaveComponentProps) {
   return (
     <Stack
       direction={'row'}
@@ -26,6 +25,6 @@ const SaveComponent: FC<SaveComponentProps> = ({onSave, onCancel}) => {
       </Button>
     </Stack>
   );
-};
+}
 
 export default SaveComponent;

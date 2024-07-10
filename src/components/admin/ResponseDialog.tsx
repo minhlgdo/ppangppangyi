@@ -7,7 +7,7 @@ interface ResponseDialogProps {
   handleClose: () => void;
 }
 
-const ResponseDialog: FC<ResponseDialogProps> = ({isOpened, text, handleClose}) => {
+function ResponseDialog({isOpened, text, handleClose}: ResponseDialogProps) {
   return (
     <Dialog
       fullWidth
@@ -30,6 +30,6 @@ const ResponseDialog: FC<ResponseDialogProps> = ({isOpened, text, handleClose}) 
       </DialogContent>
     </Dialog>
   );
-};
+}
 
 export default ResponseDialog;

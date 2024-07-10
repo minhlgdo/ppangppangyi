@@ -1,14 +1,14 @@
 import {AdminPageTypes} from '@src/common/constants.ts';
 import {Button, Stack, Typography} from '@mui/material';
-import React, {FC} from 'react';
+import React from 'react';
 
 interface PageHeaderProps {
   text?: string;
   onCreateClick?: () => void;
-  pageType: string;
+  pageType: AdminPageTypes;
 }
 
-export const PageHeader: FC<PageHeaderProps> = ({text, onCreateClick, pageType}) => {
+export function PageHeader({text, onCreateClick, pageType}: PageHeaderProps) {
   if (pageType === AdminPageTypes.General) {
     return (
       <Stack
@@ -27,4 +27,4 @@ export const PageHeader: FC<PageHeaderProps> = ({text, onCreateClick, pageType})
   } else {
     return <Typography variant={'h4'}>{pageType}</Typography>;
   }
-};
+}

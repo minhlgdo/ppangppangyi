@@ -2,11 +2,11 @@ import React from 'react';
 import {Box, Grid} from '@mui/material';
 import CarContentCard from './CarContentCard.tsx';
 
-interface CarContentListParams {
+interface CarContentListProps {
   items: {carId: number; image: string; year: number; brandName: string; modelName: string}[];
 }
 
-const CarContentList: React.FC<CarContentListParams> = ({items}) => {
+function CarContentList({items}: CarContentListProps) {
   return (
     <Box sx={{flexGrow: 1}}>
       <Grid
@@ -34,6 +34,6 @@ const CarContentList: React.FC<CarContentListParams> = ({items}) => {
       </Grid>
     </Box>
   );
-};
+}
 
 export default CarContentList;
