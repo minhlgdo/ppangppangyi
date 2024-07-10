@@ -1,20 +1,22 @@
 import {Box, Pagination, Typography} from '@mui/material';
 import {PageHeader} from '@src/components/admin/PageHeader.tsx';
 import {useNavigate} from 'react-router-dom';
-import {AdminPageTypes} from '@src/common/constants.ts';
+import {AdminPageTypes, PageNameType} from '@src/common/constants.ts';
 import React, {ChangeEvent} from 'react';
 import ListItems from '@src/components/admin/ListItems.tsx';
 import DeleteDialog from '@src/components/admin/DeleteDialog.tsx';
 import {useAdminContext} from '@src/context/AdminContext.tsx';
 
 interface GeneralLayoutProps<T> {
-  pageName: string;
+  pageName: PageNameType;
   createPagePath: string;
   totalItems: number;
   items: T[];
   itemKey: keyof T;
-  itemPrimaryText: keyof T; // Primary text to display on the item list
-  itemSecondaryText?: keyof T; // Secondary text on the item list. Usually used in items having multiple attributes like Cars
+  // Primary text to "identify" the item, e.g., brand name, model name.
+  itemPrimaryText: keyof T;
+  // Secondary text on the item list. Usually used in items having multiple attributes like Cars. if exists, show before primary text
+  itemSecondaryText?: keyof T;
   basePagePath: string;
   totalPages: number;
   page: number;

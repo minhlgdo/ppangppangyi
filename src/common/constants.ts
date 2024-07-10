@@ -27,12 +27,13 @@ export const AdminPageTypes = {
   Edit: '수정',
   General: '전체',
 } as const;
+export type AdminPageType = (typeof AdminPageTypes)[keyof typeof AdminPageTypes];
 
 export const FieldTypes = {
   Text: 'TEXT',
   Image: 'IMAGE',
 } as const;
-export type FieldTypesType = (typeof FieldTypes)[keyof typeof FieldTypes];
+export type FieldType = (typeof FieldTypes)[keyof typeof FieldTypes];
 
 export const PageNames = {
   Brand: '브랜드',
@@ -41,3 +42,4 @@ export const PageNames = {
   Model: '차종',
   Car: '자동차',
 } as const;
+export type PageNameType = (typeof PageNames)[keyof typeof PageNames];

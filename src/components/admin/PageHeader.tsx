@@ -1,11 +1,11 @@
-import {AdminPageTypes} from '@src/common/constants.ts';
+import {AdminPageType, AdminPageTypes, PageNameType} from '@src/common/constants.ts';
 import {Button, Stack, Typography} from '@mui/material';
 import React from 'react';
 
 interface PageHeaderProps {
-  text?: string;
+  text?: PageNameType;
   onCreateClick?: () => void;
-  pageType: AdminPageTypes;
+  pageType: AdminPageType;
 }
 
 export function PageHeader({text, onCreateClick, pageType}: PageHeaderProps) {
