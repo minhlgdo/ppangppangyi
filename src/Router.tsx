@@ -18,6 +18,20 @@ import CreateCategoryPage from '@src/pages/admin/category/CreateCategoryPage.tsx
 import ModelPage from '@src/pages/admin/model/ModelPage.tsx';
 import EditModelPage from '@src/pages/admin/model/EditModelPage.tsx';
 import CreateModelPage from '@src/pages/admin/model/CreateModelPage.tsx';
+import {
+  BRAND_CREATE_PATH,
+  BRAND_EDIT_PATH,
+  BRAND_MAIN_PATH,
+  CATEGORY_CREATE_PATH,
+  CATEGORY_EDIT_PATH,
+  CATEGORY_MAIN_PATH,
+  FUEL_CREATE_PATH,
+  FUEL_EDIT_PATH,
+  FUEL_MAIN_PATH,
+  MODEL_CREATE_PATH,
+  MODEL_EDIT_PATH,
+  MODEL_MAIN_PATH,
+} from '@src/common/navigation.ts';
 
 const router = createBrowserRouter([
   {
@@ -44,51 +58,51 @@ const router = createBrowserRouter([
         element: <AdminPage />,
       },
       {
-        path: '/admin/brand',
+        path: BRAND_MAIN_PATH,
         element: <BrandPage />,
       },
       {
-        path: '/admin/brand/:brandId',
+        path: BRAND_EDIT_PATH,
         element: <EditBrandPage />,
       },
       {
-        path: '/admin/brand/create',
+        path: BRAND_CREATE_PATH,
         element: <CreateBrandPage />,
       },
       {
-        path: '/admin/fuel',
+        path: FUEL_MAIN_PATH,
         element: <FuelPage />,
       },
       {
-        path: '/admin/fuel/:fuelId',
+        path: FUEL_EDIT_PATH,
         element: <EditFuelPage />,
       },
       {
-        path: '/admin/fuel/create',
+        path: FUEL_CREATE_PATH,
         element: <CreateFuelPage />,
       },
       {
-        path: '/admin/category',
+        path: CATEGORY_MAIN_PATH,
         element: <CategoryPage />,
       },
       {
-        path: '/admin/category/:categoryId',
+        path: CATEGORY_EDIT_PATH,
         element: <EditCategoryPage />,
       },
       {
-        path: '/admin/category/create',
+        path: CATEGORY_CREATE_PATH,
         element: <CreateCategoryPage />,
       },
       {
-        path: '/admin/model',
+        path: MODEL_MAIN_PATH,
         element: <ModelPage />,
       },
       {
-        path: '/admin/model/:modelId',
+        path: MODEL_EDIT_PATH,
         element: <EditModelPage />,
       },
       {
-        path: '/admin/model/create',
+        path: MODEL_CREATE_PATH,
         element: <CreateModelPage />,
       },
     ],
