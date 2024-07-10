@@ -27,3 +27,16 @@ export enum AdminPageTypes {
   Edit = 'Edit',
   General = 'GENERAL',
 }
+
+export enum FieldType {
+  Text = 'TEXT',
+  Image = 'IMAGE',
+}
+
+interface RequiredFieldInterface {
+  name: string;
+  required: boolean;
+  type: FieldType;
+  defaultValue?: string;
+}
+export type RequiredFieldType = RequiredFieldInterface;
