@@ -12,6 +12,12 @@ import CreateBrandPage from './pages/admin/brand/CreateBrandPage.tsx';
 import FuelPage from '@src/pages/admin/fuel/FuelPage.tsx';
 import EditFuelPage from '@src/pages/admin/fuel/EditFuelPage.tsx';
 import CreateFuelPage from '@src/pages/admin/fuel/CreateFuelPage.tsx';
+import CategoryPage from '@src/pages/admin/category/CategoryPage.tsx';
+import EditCategoryPage from '@src/pages/admin/category/EditCategoryPage.tsx';
+import CreateCategoryPage from '@src/pages/admin/category/CreateCategoryPage.tsx';
+import ModelPage from '@src/pages/admin/model/ModelPage.tsx';
+import EditModelPage from '@src/pages/admin/model/EditModelPage.tsx';
+import CreateModelPage from '@src/pages/admin/model/CreateModelPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -60,6 +66,30 @@ const router = createBrowserRouter([
       {
         path: '/admin/fuel/create',
         element: <CreateFuelPage />,
+      },
+      {
+        path: '/admin/category',
+        element: <CategoryPage />,
+      },
+      {
+        path: '/admin/category/:categoryId',
+        element: <EditCategoryPage />,
+      },
+      {
+        path: '/admin/category/create',
+        element: <CreateCategoryPage />,
+      },
+      {
+        path: '/admin/model',
+        element: <ModelPage />,
+      },
+      {
+        path: '/admin/model/:modelId',
+        element: <EditModelPage />,
+      },
+      {
+        path: '/admin/model/create',
+        element: <CreateModelPage />,
       },
     ],
   },
