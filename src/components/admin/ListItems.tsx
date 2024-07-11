@@ -31,7 +31,7 @@ export default function ListItems<T>({items, itemKey, itemPrimaryText, itemSecon
         <React.Fragment key={item[itemKey] as number}>
           <ListItem>
             <ListItemText
-              primary={itemSecondaryText ? `${item[itemPrimaryText]} ${item[itemSecondaryText]}` : `${item[itemPrimaryText]}`}
+              primary={itemSecondaryText ? `${item[itemSecondaryText]} ${item[itemPrimaryText]}` : `${item[itemPrimaryText]}`}
               secondary={item[itemKey] as string}
             />
             <ListItemSecondaryAction>

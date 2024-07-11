@@ -14,6 +14,7 @@ export interface Brand {
   brandId: number;
   brandName: number;
 }
+
 export type BrandsType = Brand[];
 
 export interface Fuel {
@@ -22,3 +23,19 @@ export interface Fuel {
 }
 
 export type FuelsType = Fuel[];
+
+export interface Category {
+  parentId: number | null;
+  categoryId: number;
+  categoryName: string;
+}
+
+export type CategoriesType = Category[];
+
+export interface Model {
+  modelId: number;
+  modelName: string;
+  brandName: string;
+}
+
+export type ModelsType = Model[];
