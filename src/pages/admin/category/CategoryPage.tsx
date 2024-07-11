@@ -1,5 +1,5 @@
 import AdminContextProvider from '@src/context/AdminContext.tsx';
-import {CategoriesType, ExtendedCategoriesType} from '@src/common/types.ts';
+import {CategoriesType} from '@src/common/types.ts';
 import {ChangeEvent, useState} from 'react';
 import {mapParentCategoryNames} from '@src/common/mapping-utils.ts';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';

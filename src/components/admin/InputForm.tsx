@@ -1,17 +1,10 @@
-import {FC} from 'react';
 import {Button, Stack, styled, TextField, Typography} from '@mui/material';
 import {CloudUpload} from '@mui/icons-material';
-import {FieldTypes, FieldType} from '@src/common/constants.ts';
+import {FieldTypes} from '@src/common/constants.ts';
+import {RequiredFieldType} from '@src/common/types.ts';
 
-interface InputField {
-  name: string;
-  required: boolean;
-  type: FieldType;
-  defaultValue?: string;
-}
-
-interface InputFieldsProps {
-  fields: InputField[];
+interface InputFormProps {
+  fields: RequiredFieldType[];
   inputValues: {[key: string]: string};
   errors: {[key: string]: string};
   onChange: (name: string, value: string) => void;
@@ -28,7 +21,7 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-const InputFields: FC<InputFieldsProps> = ({fields, inputValues, errors, onChange}) => {
+function InputForm({fields, inputValues, errors, onChange}: InputFormProps) {
   return (
     <Stack spacing={4}>
       {fields.map((field) => (
@@ -64,6 +57,6 @@ const InputFields: FC<InputFieldsProps> = ({fields, inputValues, errors, onChang
       ))}
     </Stack>
   );
-};
+}
 
-export default InputFields;
+export default InputForm;
