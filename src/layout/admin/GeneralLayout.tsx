@@ -1,20 +1,22 @@
 import {Box, Pagination, Typography} from '@mui/material';
 import {PageHeader} from '@src/components/admin/PageHeader.tsx';
 import {useNavigate} from 'react-router-dom';
-import {AdminPageTypes} from '@src/common/constants.ts';
+import {AdminPageTypes, SubjectType} from '@src/common/constants.ts';
 import React, {ChangeEvent} from 'react';
 import ListItems from '@src/components/admin/ListItems.tsx';
 import DeleteDialog from '@src/components/admin/DeleteDialog.tsx';
 import {useAdminContext} from '@src/context/AdminContext.tsx';
 
 interface GeneralLayoutProps<T> {
-  pageName: string;
+  subject: SubjectType;
   createPagePath: string;
   totalItems: number;
   items: T[];
   itemKey: keyof T;
-  itemPrimaryText: keyof T; // Primary text to "identify" the item (e.g., brand name, car name, etc.)
-  itemSecondaryText?: keyof T; // Secondary text on the item list. Usually used in items having multiple attributes like Cars. Show the secondary first if exists,
+  // Primary text to "identify" the item, e.g., brand name, model name.
+  itemPrimaryText: keyof T;
+  // Secondary text on the item list. Usually used in items having multiple attributes like Cars. if exists, show before primary text
+  itemSecondaryText?: keyof T;
   basePagePath: string;
   totalPages: number;
   page: number;
@@ -23,7 +25,7 @@ interface GeneralLayoutProps<T> {
 }
 
 export default function GeneralLayout<T>({
-  pageName,
+  subject,
   createPagePath,
   totalItems,
   items,
@@ -59,7 +61,7 @@ export default function GeneralLayout<T>({
   return (
     <Box sx={{m: 4, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', gap: 4}}>
       <PageHeader
-        text={pageName}
+        subject={subject}
         onCreateClick={handleCreateClick}
         pageType={AdminPageTypes.General}
       />

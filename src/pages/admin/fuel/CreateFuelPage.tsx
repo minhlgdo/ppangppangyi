@@ -1,6 +1,6 @@
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import {RequiredFieldType} from '@src/common/types.ts';
-import {AdminPageTypes, FieldTypes} from '@src/common/constants.ts';
+import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
 
 export default function CreateFuelPage() {
   const REQUIRED_FIELDS: RequiredFieldType[] = [
@@ -16,6 +16,7 @@ export default function CreateFuelPage() {
 
   return (
     <CreateEditLayout
+      subject={Subjects.Fuel}
       requiredFields={REQUIRED_FIELDS}
       view={AdminPageTypes.Create}
       handleSendData={handleSendData}

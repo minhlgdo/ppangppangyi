@@ -1,5 +1,12 @@
 import {RequiredFieldType} from '@src/common/types.ts';
-import {AdminPageTypes, CREATE_RESULT_ITEMS, EDIT_RESULT_ITEMS, ResponseTypes, ResponseTypeValue} from '@src/common/constants.ts';
+import {
+  AdminPageTypes,
+  CREATE_RESULT_ITEMS,
+  EDIT_RESULT_ITEMS,
+  SubjectType,
+  ResponseTypes,
+  ResponseTypeValue,
+} from '@src/common/constants.ts';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {isFormValid, validateFields} from '@src/common/validation-utils.ts';
@@ -10,12 +17,13 @@ import SaveComponent from '@src/components/admin/SaveComponent.tsx';
 import ResponseDialog from '@src/components/admin/ResponseDialog.tsx';
 
 interface CreateEditLayoutProps {
+  subject: SubjectType;
   requiredFields: RequiredFieldType[];
   view: typeof AdminPageTypes.Create | typeof AdminPageTypes.Edit;
   handleSendData: () => void; // TODO: fix the type later
 }
 
-export default function CreateEditLayout({requiredFields, view, handleSendData}: CreateEditLayoutProps) {
+export default function CreateEditLayout({subject, requiredFields, view, handleSendData}: CreateEditLayoutProps) {
   const [openDialog, setOpenDialog] = useState(false);
   const [result, setResult] = useState<ResponseTypeValue>(ResponseTypes.Unknown);
   const navigate = useNavigate();
@@ -61,7 +69,10 @@ export default function CreateEditLayout({requiredFields, view, handleSendData}:
 
   return (
     <Box sx={{m: 4, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', gap: 4}}>
-      <PageHeader pageType={view} />
+      <PageHeader
+        subject={subject}
+        pageType={view}
+      />
       <InputFields
         fields={requiredFields}
         inputValues={inputValues}

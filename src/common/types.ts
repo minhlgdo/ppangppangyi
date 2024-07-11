@@ -1,9 +1,9 @@
-import {FieldTypesType} from '@src/common/constants.ts';
+import {FieldType} from '@src/common/constants.ts';
 
 interface RequiredFieldInterface {
   name: string;
   required: boolean;
-  type: FieldTypesType;
+  type: FieldType;
   defaultValue?: string;
 }
 

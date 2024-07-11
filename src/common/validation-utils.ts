@@ -1,4 +1,4 @@
-import {RequiredFieldType} from '@src/common/constants.ts';
+import {RequiredFieldType} from '@src/common/types.ts';
 
 export const validateFields = (inputFields: RequiredFieldType[], values: {[key: string]: string}) => {
   const errors: {[key: string]: string} = {};

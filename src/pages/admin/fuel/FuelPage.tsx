@@ -1,4 +1,4 @@
-import {PageNames} from '@src/common/constants.ts';
+import {Subjects} from '@src/common/constants.ts';
 import {FUEL_CREATE_PATH, FUEL_MAIN_PATH} from '@src/common/navigation.ts';
 import React, {ChangeEvent, useState} from 'react';
 import AdminContextProvider from '@src/context/AdminContext.tsx';
@@ -44,7 +44,7 @@ function FuelPageContent() {
 
   return (
     <GeneralLayout<Fuel>
-      pageName={PageNames.Fuel}
+      subject={Subjects.Fuel}
       createPagePath={FUEL_CREATE_PATH}
       totalItems={totalItems}
       items={fuelList}
