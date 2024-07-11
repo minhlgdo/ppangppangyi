@@ -2,7 +2,7 @@ import AdminContextProvider from '@src/context/AdminContext.tsx';
 import {ChangeEvent, useState} from 'react';
 import {Model, ModelsType} from '@src/common/types.ts';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
-import {PageNames} from '@src/common/constants.ts';
+import {Subjects} from '@src/common/constants.ts';
 import {MODEL_CREATE_PATH, MODEL_MAIN_PATH} from '@src/common/navigation.ts';
 
 const DUMMY_MODELS: ModelsType = [
@@ -41,7 +41,7 @@ function ModelPageContent() {
 
   return (
     <GeneralLayout<Model>
-      pageName={PageNames.Model}
+      subject={Subjects.Model}
       createPagePath={MODEL_CREATE_PATH}
       totalItems={totalItems}
       items={modelList}
