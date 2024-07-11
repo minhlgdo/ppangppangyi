@@ -1,4 +1,4 @@
-import {RequiredFieldType} from '@src/common/types.ts';
+import {InputValuesType, RequiredFieldType} from '@src/common/types.ts';
 import {
   AdminPageTypes,
   CREATE_RESULT_ITEMS,
@@ -20,17 +20,29 @@ interface CreateEditLayoutProps {
   subject: SubjectType;
   requiredFields: RequiredFieldType[];
   view: typeof AdminPageTypes.Create | typeof AdminPageTypes.Edit;
-  handleSendData: (data: {[key: string]: string}) => void; // TODO: fix the type later
+  handleSendData: (data: InputValuesType) => void; // TODO: fix the type later
 }
+
+// Helper function to initialize input values with default values
+const initializeInputValues = (fields: RequiredFieldType[]): InputValuesType => {
+  const initialValues: InputValuesType = {};
+  fields.forEach((field) => {
+    if (field.defaultValue) {
+      initialValues[field.name] = field.defaultValue;
+    }
+  });
+  return initialValues;
+};
 
 export default function CreateEditLayout({subject, requiredFields, view, handleSendData}: CreateEditLayoutProps) {
   const [openDialog, setOpenDialog] = useState(false);
   const [result, setResult] = useState<ResponseTypeValue>(ResponseTypes.Unknown);
   const navigate = useNavigate();
-  const [inputValues, setInputValues] = useState<{[key: string]: string}>({});
+  const [inputValues, setInputValues] = useState<InputValuesType>(() => initializeInputValues(requiredFields));
   const [inputErrors, setInputErrors] = useState<{[key: string]: string}>({});
 
   const handleSaveClick = () => {
+    //
     // Validate before sending the result
     const validationErrors = validateFields(requiredFields, inputValues);
     setInputErrors(validationErrors);
@@ -55,7 +67,7 @@ export default function CreateEditLayout({subject, requiredFields, view, handleS
     }
   };
 
-  const handleInputChange = (name: string, value: string) => {
+  const handleInputChange = (name: string, value: string | number) => {
     setInputValues({...inputValues, [name]: value});
   };
 

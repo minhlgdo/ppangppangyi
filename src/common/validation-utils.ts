@@ -1,10 +1,10 @@
-import {RequiredFieldType} from '@src/common/types.ts';
+import {InputValuesType, RequiredFieldType} from '@src/common/types.ts';
 
-export const validateFields = (inputFields: RequiredFieldType[], values: {[key: string]: string}) => {
+export const validateFields = (inputFields: RequiredFieldType[], values: InputValuesType) => {
   const errors: {[key: string]: string} = {};
 
   inputFields.forEach((field) => {
-    if (field.required && !values[field.name]) {
+    if (field.required && (!values[field.name] || values[field.name] === '')) {
       errors[field.name] = '필수 항목입니다.';
     }
   });

@@ -5,11 +5,15 @@ interface RequiredFieldInterface {
   label: string; // label text
   required: boolean;
   type: FieldType;
-  defaultValue?: string | number; // string for text values
+  defaultValue?: string | number; // string for text values, number for dropdown
   selections?: CategoriesType; // for dropdown types
 }
 
 export type RequiredFieldType = RequiredFieldInterface;
+
+export interface InputValuesType {
+  [key: string]: string | number;
+}
 
 // Object structures
 export interface Brand {

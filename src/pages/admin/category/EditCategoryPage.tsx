@@ -1,4 +1,4 @@
-import {RequiredFieldType} from '@src/common/types.ts';
+import {InputValuesType, RequiredFieldType} from '@src/common/types.ts';
 import {AdminPageTypes, FieldTypes, PARENT_CATEGORIES, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import {useParams} from 'react-router-dom';
@@ -7,11 +7,9 @@ import {useState} from 'react';
 export default function EditCategoryPage() {
   const {categoryId} = useParams();
   const [parentId, setParentId] = useState(1);
-  const [categoryName, setCategoryName] = useState('asdfasdfasd');
+  const [categoryName, setCategoryName] = useState('');
 
   // TODO: Load actual information here
-
-  // TODO: Match the parent name
 
   const REQUIRED_FIELDS: RequiredFieldType[] = [
     {
@@ -32,7 +30,7 @@ export default function EditCategoryPage() {
   ];
 
   // TODO: Handle sending data
-  const handleSendData = (data: {[key: string]: string | number}) => {
+  const handleSendData = (data: InputValuesType) => {
     // Test input data
     console.log(data);
   };

@@ -1,13 +1,13 @@
-import {RequiredFieldType} from '@src/common/types.ts';
+import {InputValuesType, RequiredFieldType} from '@src/common/types.ts';
 import {FieldTypes} from '@src/common/constants.ts';
 import {Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, styled, TextField} from '@mui/material';
 import {CloudUpload} from '@mui/icons-material';
 
 interface InputFieldComponentProps {
   field: RequiredFieldType;
-  inputValues: {[key: string]: string};
+  inputValues: InputValuesType;
   errors: {[key: string]: string};
-  handleChange: (name: string, value: string) => void;
+  handleChange: (name: string, value: string | number) => void;
 }
 
 const VisuallyHiddenInput = styled('input')({
@@ -31,7 +31,7 @@ export default function InputFieldComponent({field, inputValues, errors, handleC
         label={field.required ? '필수' : '선택'}
         error={!!errors[field.name]}
         helperText={errors[field.name]}
-        value={inputValues[field.name] || ''}
+        value={inputValues[field.name] || field.defaultValue || ''}
         onChange={(e) => handleChange(field.name, e.target.value)}
       />
     );
@@ -60,12 +60,12 @@ export default function InputFieldComponent({field, inputValues, errors, handleC
         <Select
           displayEmpty
           labelId={field.required ? 'demo-simple-select-required' : 'demo-simple-select-filled-label'}
-          value={inputValues[field.name] || ''}
+          value={inputValues[field.name] || field.defaultValue?.toString() || ''}
           onChange={(e) => handleChange(field.name, e.target.value)}
         >
           {field.selections?.map((selection) => (
             <MenuItem
-              selected={field.defaultValue === selection.parentId}
+              // selected={field.defaultValue === selection.parentId}
               key={selection.categoryId}
               value={selection.categoryId}
             >

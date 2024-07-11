@@ -1,4 +1,4 @@
-import {RequiredFieldType} from '@src/common/types.ts';
+import {InputValuesType, RequiredFieldType} from '@src/common/types.ts';
 import {AdminPageTypes, FieldTypes, PARENT_CATEGORIES, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 
@@ -20,7 +20,7 @@ export default function CreateCategoryPage() {
   ];
 
   // TODO: Handle sending data
-  const handleSendData = (data: {[key: string]: string}) => {
+  const handleSendData = (data: InputValuesType) => {
     // Test input data
     console.log(data);
   };

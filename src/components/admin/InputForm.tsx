@@ -1,12 +1,12 @@
 import {Stack, Typography} from '@mui/material';
-import {RequiredFieldType} from '@src/common/types.ts';
+import {InputValuesType, RequiredFieldType} from '@src/common/types.ts';
 import InputFieldComponent from '@src/components/admin/InputFieldComponent.tsx';
 
 interface InputFormProps {
   fields: RequiredFieldType[];
-  inputValues: {[key: string]: string};
+  inputValues: InputValuesType;
   errors: {[key: string]: string};
-  handleChange: (name: string, value: string) => void;
+  handleChange: (name: string, value: string | number) => void;
 }
 
 function InputForm({fields, inputValues, errors, handleChange}: InputFormProps) {
