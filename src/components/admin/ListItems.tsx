@@ -7,12 +7,12 @@ import {useAdminContext} from '@src/context/AdminContext.tsx';
 interface ListProps<T> {
   items: T[];
   itemKey: keyof T;
-  itemPrimaryText: keyof T;
-  itemSecondaryText?: keyof T;
+  itemPrimaryText: Array<keyof T>;
+  // itemSecondaryText?: Array<keyof T>;
   baseItemUrl: string;
 }
 
-export default function ListItems<T>({items, itemKey, itemPrimaryText, itemSecondaryText, baseItemUrl}: ListProps<T>) {
+export default function ListItems<T>({items, itemKey, itemPrimaryText, baseItemUrl}: ListProps<T>) {
   const navigate = useNavigate();
   const {setItemToDelete, setDeletePopup} = useAdminContext();
 
@@ -31,7 +31,7 @@ export default function ListItems<T>({items, itemKey, itemPrimaryText, itemSecon
         <React.Fragment key={item[itemKey] as number}>
           <ListItem>
             <ListItemText
-              primary={itemSecondaryText ? `${item[itemSecondaryText]} ${item[itemPrimaryText]}` : `${item[itemPrimaryText]}`}
+              primary={`${itemPrimaryText.map((key) => item[key]).join(' ')}`}
               secondary={item[itemKey] as string}
             />
             <ListItemSecondaryAction>

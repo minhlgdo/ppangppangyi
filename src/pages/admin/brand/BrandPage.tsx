@@ -43,7 +43,7 @@ function BrandPageContent() {
       totalItems={totalItems}
       items={brandList}
       itemKey={'brandId'}
-      itemPrimaryText={'brandName'}
+      itemPrimaryText={['brandName']}
       basePagePath={BRAND_MAIN_PATH}
       totalPages={totalPages}
       page={page}

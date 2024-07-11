@@ -61,7 +61,7 @@ const DUMMY_CATEGORIES: CategoriesType = [
 
 function CategoryPageContent() {
   // Variables
-  const [categoryList, setCategoryList] = useState<CategoriesType>(DUMMY_CATEGORIES);
+  const [categories, setCategories] = useState<CategoriesType>(DUMMY_CATEGORIES);
   const [totalItems, setTotalItems] = useState(DUMMY_CATEGORIES.length);
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
@@ -69,7 +69,7 @@ function CategoryPageContent() {
   // TODO: Load the real category list here
 
   // Map the parent's category name for display
-  const displayCategoryList = mapParentCategoryNames(categoryList);
+  const displayCategoryList = mapParentCategoryNames(categories);
 
   const handleDeleteItem = (id: number) => {
     console.log(`Delete item ${id}`);
@@ -88,8 +88,7 @@ function CategoryPageContent() {
       totalItems={totalItems}
       items={displayCategoryList}
       itemKey={'categoryId'}
-      itemPrimaryText={'categoryName'}
-      itemSecondaryText={'parentCategoryName'}
+      itemPrimaryText={['parentCategoryName', 'categoryName']}
       basePagePath={CATEGORY_MAIN_PATH}
       totalPages={totalPages}
       page={page}

@@ -46,8 +46,7 @@ function ModelPageContent() {
       totalItems={totalItems}
       items={modelList}
       itemKey={'modelId'}
-      itemPrimaryText={'modelName'}
-      itemSecondaryText={'brandName'}
+      itemPrimaryText={['brandName', 'modelName']}
       basePagePath={MODEL_MAIN_PATH}
       totalPages={totalPages}
       page={page}

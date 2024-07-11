@@ -49,7 +49,7 @@ function FuelPageContent() {
       totalItems={totalItems}
       items={fuelList}
       itemKey={'fuelId'}
-      itemPrimaryText={'fuelName'}
+      itemPrimaryText={['fuelName']}
       basePagePath={FUEL_MAIN_PATH}
       totalPages={totalPages}
       page={page}

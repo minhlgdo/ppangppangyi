@@ -13,10 +13,8 @@ interface GeneralLayoutProps<T> {
   totalItems: number;
   items: T[];
   itemKey: keyof T;
-  // Primary text to "identify" the item, e.g., brand name, model name.
-  itemPrimaryText: keyof T;
-  // Secondary text on the item list. Usually used in items having multiple attributes like Cars. if exists, show before primary text
-  itemSecondaryText?: keyof T;
+  // A list to show the order of attributes in human-readable form
+  itemPrimaryText: Array<keyof T>;
   basePagePath: string;
   totalPages: number;
   page: number;
@@ -31,7 +29,6 @@ export default function GeneralLayout<T>({
   items,
   itemKey,
   itemPrimaryText,
-  itemSecondaryText,
   basePagePath,
   totalPages,
   page,
@@ -70,7 +67,6 @@ export default function GeneralLayout<T>({
         items={items}
         itemKey={itemKey}
         itemPrimaryText={itemPrimaryText}
-        itemSecondaryText={itemSecondaryText}
         baseItemUrl={basePagePath}
       />
       <Pagination
