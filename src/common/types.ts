@@ -1,10 +1,11 @@
 import {FieldType} from '@src/common/constants.ts';
 
 interface RequiredFieldInterface {
-  name: string;
+  name: string; // display text
   required: boolean;
   type: FieldType;
-  defaultValue?: string;
+  defaultValue?: string; // for text values
+  selections?: CategoriesType; // for dropdown types
 }
 
 export type RequiredFieldType = RequiredFieldInterface;

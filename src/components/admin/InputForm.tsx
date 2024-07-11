@@ -1,27 +1,15 @@
-import {Button, Stack, styled, TextField, Typography} from '@mui/material';
-import {CloudUpload} from '@mui/icons-material';
-import {FieldTypes} from '@src/common/constants.ts';
+import {Stack, Typography} from '@mui/material';
 import {RequiredFieldType} from '@src/common/types.ts';
+import InputFieldComponent from '@src/components/admin/InputFieldComponent.tsx';
 
 interface InputFormProps {
   fields: RequiredFieldType[];
   inputValues: {[key: string]: string};
   errors: {[key: string]: string};
-  onChange: (name: string, value: string) => void;
+  handleChange: (name: string, value: string) => void;
 }
 
-const VisuallyHiddenInput = styled('input')({
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1,
-});
-
-function InputForm({fields, inputValues, errors, onChange}: InputFormProps) {
+function InputForm({fields, inputValues, errors, handleChange}: InputFormProps) {
   return (
     <Stack spacing={4}>
       {fields.map((field) => (
@@ -32,27 +20,12 @@ function InputForm({fields, inputValues, errors, onChange}: InputFormProps) {
           alignItems={'center'}
         >
           <Typography>{field.name}</Typography>
-          {field.type === FieldTypes.Text ? (
-            <TextField
-              required={field.required}
-              label={field.required ? '필수' : ''}
-              defaultValue={field.defaultValue}
-              error={!!errors[field.name]}
-              helperText={errors[field.name]}
-              value={inputValues[field.name] || ''}
-              onChange={(e) => onChange(field.name, e.target.value)}
-            />
-          ) : (
-            <Button
-              component={'label'}
-              variant={'contained'}
-              tabIndex={-1}
-              startIcon={<CloudUpload />}
-            >
-              이미지 업로드
-              <VisuallyHiddenInput type="image" />
-            </Button>
-          )}
+          <InputFieldComponent
+            field={field}
+            inputValues={inputValues}
+            errors={errors}
+            handleChange={handleChange}
+          />
         </Stack>
       ))}
     </Stack>

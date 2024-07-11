@@ -12,7 +12,7 @@ import {useNavigate} from 'react-router-dom';
 import {isFormValid, validateFields} from '@src/common/validation-utils.ts';
 import {Box} from '@mui/material';
 import {PageHeader} from '@src/components/admin/PageHeader.tsx';
-import InputFields from '@src/components/admin/InputFields.tsx';
+import InputForm from '@src/components/admin/InputForm.tsx';
 import SaveComponent from '@src/components/admin/SaveComponent.tsx';
 import ResponseDialog from '@src/components/admin/ResponseDialog.tsx';
 
@@ -20,7 +20,7 @@ interface CreateEditLayoutProps {
   subject: SubjectType;
   requiredFields: RequiredFieldType[];
   view: typeof AdminPageTypes.Create | typeof AdminPageTypes.Edit;
-  handleSendData: () => void; // TODO: fix the type later
+  handleSendData: (data: {[key: string]: string}) => void; // TODO: fix the type later
 }
 
 export default function CreateEditLayout({subject, requiredFields, view, handleSendData}: CreateEditLayoutProps) {
@@ -37,7 +37,7 @@ export default function CreateEditLayout({subject, requiredFields, view, handleS
 
     if (isFormValid(validationErrors)) {
       // TODO: Send the received data to the server
-      handleSendData();
+      handleSendData(inputValues);
       // TODO: Depending on the receiving result, save the corresponding result
       setResult(ResponseTypes.Success);
       setOpenDialog(true);
@@ -73,11 +73,11 @@ export default function CreateEditLayout({subject, requiredFields, view, handleS
         subject={subject}
         pageType={view}
       />
-      <InputFields
+      <InputForm
         fields={requiredFields}
         inputValues={inputValues}
         errors={inputErrors}
-        onChange={handleInputChange}
+        handleChange={handleInputChange}
       />
       <SaveComponent
         onSave={handleSaveClick}
