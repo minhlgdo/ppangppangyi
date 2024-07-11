@@ -1,6 +1,6 @@
 import {Divider, Drawer, List, ListItemButton, ListItemText, Toolbar} from '@mui/material';
 import {NavLink} from 'react-router-dom';
-import {BRAND_MAIN_PATH, CAR_MAIN_PATH, CATEGORY_MAIN_PATH, FUEL_MAIN_PATH, MODEL_MAIN_PATH} from '@src/common/navigation.ts';
+import {BRAND_MAIN_PATH, CAR_MAIN_PATH, CATEGORY_MAIN_PATH, FUEL_MAIN_PATH, MODEL_MAIN_PATH} from '@src/Router.tsx';
 
 const DRAWER_WIDTH = 240;
 
