@@ -22,6 +22,9 @@ import {
   BRAND_CREATE_PATH,
   BRAND_EDIT_PATH,
   BRAND_MAIN_PATH,
+  CAR_CREATE_PATH,
+  CAR_EDIT_PATH,
+  CAR_MAIN_PATH,
   CATEGORY_CREATE_PATH,
   CATEGORY_EDIT_PATH,
   CATEGORY_MAIN_PATH,
@@ -32,6 +35,9 @@ import {
   MODEL_EDIT_PATH,
   MODEL_MAIN_PATH,
 } from '@src/common/navigation.ts';
+import CreateCarPage from '@src/pages/admin/car/CreateCarPage.tsx';
+import EditCarPage from '@src/pages/admin/car/EditCarPage.tsx';
+import CarPage from '@src/pages/admin/car/CarPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -57,6 +63,7 @@ const router = createBrowserRouter([
         path: '/admin',
         element: <AdminPage />,
       },
+      //   Brand page
       {
         path: BRAND_MAIN_PATH,
         element: <BrandPage />,
@@ -69,6 +76,7 @@ const router = createBrowserRouter([
         path: BRAND_CREATE_PATH,
         element: <CreateBrandPage />,
       },
+      //   Fuel
       {
         path: FUEL_MAIN_PATH,
         element: <FuelPage />,
@@ -81,6 +89,7 @@ const router = createBrowserRouter([
         path: FUEL_CREATE_PATH,
         element: <CreateFuelPage />,
       },
+      //   Category
       {
         path: CATEGORY_MAIN_PATH,
         element: <CategoryPage />,
@@ -93,6 +102,7 @@ const router = createBrowserRouter([
         path: CATEGORY_CREATE_PATH,
         element: <CreateCategoryPage />,
       },
+      //   Model
       {
         path: MODEL_MAIN_PATH,
         element: <ModelPage />,
@@ -104,6 +114,19 @@ const router = createBrowserRouter([
       {
         path: MODEL_CREATE_PATH,
         element: <CreateModelPage />,
+      },
+      // Car
+      {
+        path: CAR_MAIN_PATH,
+        element: <CarPage />,
+      },
+      {
+        path: CAR_EDIT_PATH,
+        element: <EditCarPage />,
+      },
+      {
+        path: CAR_CREATE_PATH,
+        element: <CreateCarPage />,
       },
     ],
   },
