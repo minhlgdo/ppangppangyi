@@ -3,9 +3,9 @@ import axios from 'axios';
 import {GET_BRANDS_ENDPOINT} from '@src/common/api.ts';
 import AdminContextProvider from '@src/context/AdminContext.tsx';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
+import {BRAND_CREATE_PATH, BRAND_MAIN_PATH} from '@src/common/navigation.ts';
 import {PageNames} from '@src/common/constants.ts';
 import {Brand, BrandsType} from '@src/common/types.ts';
-import {BRAND_CREATE_PATH, BRAND_MAIN_PATH} from '@src/Router.tsx';
 
 function BrandPageContent() {
   const [totalItems, setTotalItems] = useState(0);

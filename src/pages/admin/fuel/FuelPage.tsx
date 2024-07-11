@@ -1,9 +1,9 @@
 import {PageNames} from '@src/common/constants.ts';
+import {FUEL_CREATE_PATH, FUEL_MAIN_PATH} from '@src/common/navigation.ts';
 import React, {ChangeEvent, useState} from 'react';
 import AdminContextProvider from '@src/context/AdminContext.tsx';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {Fuel, FuelsType} from '@src/common/types.ts';
-import {FUEL_CREATE_PATH, FUEL_MAIN_PATH} from '@src/Router.tsx';
 
 const DUMMY_FUELS: FuelsType = [
   {
