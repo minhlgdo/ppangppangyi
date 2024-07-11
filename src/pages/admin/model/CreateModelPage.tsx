@@ -1,5 +1,5 @@
 import {RequiredFieldType} from '@src/common/types.ts';
-import {AdminPageTypes, FieldTypes} from '@src/common/constants.ts';
+import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 
 export default function CreateModelPage() {
@@ -21,6 +21,7 @@ export default function CreateModelPage() {
 
   return (
     <CreateEditLayout
+      subject={Subjects.Model}
       requiredFields={REQUIRED_INPUTS}
       view={AdminPageTypes.Create}
       handleSendData={handleSendData}
