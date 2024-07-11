@@ -4,11 +4,14 @@ import ErrorPage from './pages/user/ErrorPage.tsx';
 import Homepage from './pages/user/Homepage.tsx';
 import DetailPage from './pages/user/DetailPage.tsx';
 import AdminRoot from './pages/admin/AdminRoot.tsx';
-import BrandPage from './pages/admin/BrandPage.tsx';
+import BrandPage from './pages/admin/brand/BrandPage.tsx';
 import React from 'react';
 import AdminPage from './pages/admin/AdminPage.tsx';
-import EditBrandPage from './pages/admin/EditBrandPage.tsx';
-import CreateBrandPage from './pages/admin/CreateBrandPage.tsx';
+import EditBrandPage from './pages/admin/brand/EditBrandPage.tsx';
+import CreateBrandPage from './pages/admin/brand/CreateBrandPage.tsx';
+import FuelPage from '@src/pages/admin/fuel/FuelPage.tsx';
+import EditFuelPage from '@src/pages/admin/fuel/EditFuelPage.tsx';
+import CreateFuelPage from '@src/pages/admin/fuel/CreateFuelPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +48,18 @@ const router = createBrowserRouter([
       {
         path: '/admin/brand/create',
         element: <CreateBrandPage />,
+      },
+      {
+        path: '/admin/fuel',
+        element: <FuelPage />,
+      },
+      {
+        path: '/admin/fuel/:fuelId',
+        element: <EditFuelPage />,
+      },
+      {
+        path: '/admin/fuel/create',
+        element: <CreateFuelPage />,
       },
     ],
   },

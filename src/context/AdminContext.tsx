@@ -1,6 +1,6 @@
 import {createContext, FC, ReactNode, useContext, useState} from 'react';
 
-interface AdminBrandContextValue {
+interface AdminContextValue {
   itemToDelete?: number;
   setItemToDelete: (item: number | undefined) => void;
   deletePopup: boolean;
@@ -8,29 +8,28 @@ interface AdminBrandContextValue {
 }
 
 // props for context provider
-interface AdminBrandProviderProps {
+interface AdminProviderProps {
   children: ReactNode;
 }
 
 // initial state
 const INITIAL_DELETE_POPUP_STATE = false;
-const INITIAL_ITEM_TO_DELETE = undefined;
 
-const AdminBrandContext = createContext<AdminBrandContextValue>({
-  itemToDelete: INITIAL_ITEM_TO_DELETE,
+const AdminContext = createContext<AdminContextValue>({
+  itemToDelete: undefined,
   setItemToDelete: () => {},
   deletePopup: INITIAL_DELETE_POPUP_STATE,
   setDeletePopup: () => {},
 });
 
-export const useAdminBrand = () => useContext(AdminBrandContext);
+export const useAdminContext = () => useContext(AdminContext);
 
-const AdminBrandContextProvider: FC<AdminBrandProviderProps> = ({children}) => {
+const AdminContextProvider: FC<AdminProviderProps> = ({children}) => {
   const [deletePopup, setDeletePopup] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<number | undefined>(undefined);
 
   return (
-    <AdminBrandContext.Provider
+    <AdminContext.Provider
       value={{
         itemToDelete: itemToDelete,
         setItemToDelete: setItemToDelete,
@@ -39,8 +38,8 @@ const AdminBrandContextProvider: FC<AdminBrandProviderProps> = ({children}) => {
       }}
     >
       {children}
-    </AdminBrandContext.Provider>
+    </AdminContext.Provider>
   );
 };
 
-export default AdminBrandContextProvider;
+export default AdminContextProvider;

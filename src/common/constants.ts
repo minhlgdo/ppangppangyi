@@ -22,8 +22,24 @@ export const CREATE_RESULT_ITEMS = {
 
 export const ITEMS_PER_PAGE = 10;
 
-export enum AdminPageTypes {
-  Create = 'Create',
-  Edit = 'Edit',
-  General = 'GENERAL',
-}
+export const AdminPageTypes = {
+  Create: '등록',
+  Edit: '수정',
+  General: '전체',
+} as const;
+export type AdminPageType = (typeof AdminPageTypes)[keyof typeof AdminPageTypes];
+
+export const FieldTypes = {
+  Text: 'TEXT',
+  Image: 'IMAGE',
+} as const;
+export type FieldType = (typeof FieldTypes)[keyof typeof FieldTypes];
+
+export const Subjects = {
+  Brand: '브랜드',
+  Fuel: '연류',
+  Category: '분류',
+  Model: '차종',
+  Car: '자동차',
+} as const;
+export type SubjectType = (typeof Subjects)[keyof typeof Subjects];

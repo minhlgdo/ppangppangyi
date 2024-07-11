@@ -1,5 +1,4 @@
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@mui/material';
-import {FC} from 'react';
 
 interface ResponseDialogProps {
   isOpened: boolean;
