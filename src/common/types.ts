@@ -5,7 +5,7 @@ interface RequiredFieldInterface {
   label: string; // label text
   required: boolean;
   type: FieldType;
-  defaultValue?: string; // for text values
+  defaultValue?: string | number; // string for text values
   selections?: CategoriesType; // for dropdown types
 }
 

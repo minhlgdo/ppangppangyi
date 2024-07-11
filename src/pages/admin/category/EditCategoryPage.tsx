@@ -1,3 +1,48 @@
+import {RequiredFieldType} from '@src/common/types.ts';
+import {AdminPageTypes, FieldTypes, PARENT_CATEGORIES, Subjects} from '@src/common/constants.ts';
+import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
+import {useParams} from 'react-router-dom';
+import {useState} from 'react';
+
 export default function EditCategoryPage() {
-  return <></>;
+  const {categoryId} = useParams();
+  const [parentId, setParentId] = useState(1);
+  const [categoryName, setCategoryName] = useState('asdfasdfasd');
+
+  // TODO: Load actual information here
+
+  // TODO: Match the parent name
+
+  const REQUIRED_FIELDS: RequiredFieldType[] = [
+    {
+      name: 'parentId',
+      label: '부모 분류',
+      required: true,
+      type: FieldTypes.Dropdown,
+      selections: PARENT_CATEGORIES,
+      defaultValue: parentId,
+    },
+    {
+      name: 'categoryName',
+      label: '분류',
+      required: true,
+      type: FieldTypes.Text,
+      defaultValue: categoryName,
+    },
+  ];
+
+  // TODO: Handle sending data
+  const handleSendData = (data: {[key: string]: string | number}) => {
+    // Test input data
+    console.log(data);
+  };
+
+  return (
+    <CreateEditLayout
+      subject={Subjects.Category}
+      requiredFields={REQUIRED_FIELDS}
+      view={AdminPageTypes.Edit}
+      handleSendData={handleSendData}
+    />
+  );
 }

@@ -26,9 +26,9 @@ export default function InputFieldComponent({field, inputValues, errors, handleC
     // Text field
     return (
       <TextField
+        variant={'filled'}
         required={field.required}
-        label={field.required ? '필수' : ''}
-        defaultValue={field.defaultValue}
+        label={field.required ? '필수' : '선택'}
         error={!!errors[field.name]}
         helperText={errors[field.name]}
         value={inputValues[field.name] || ''}
@@ -52,10 +52,11 @@ export default function InputFieldComponent({field, inputValues, errors, handleC
     // Display dropdown form
     return (
       <FormControl
+        variant={'filled'}
         sx={{m: 1, minWidth: 120}}
         error={!!errors[field.name]}
       >
-        <InputLabel>{field.label}</InputLabel>
+        <InputLabel>{field.required ? '필수 *' : '선택'}</InputLabel>
         <Select
           displayEmpty
           labelId={field.required ? 'demo-simple-select-required' : 'demo-simple-select-filled-label'}
@@ -64,6 +65,7 @@ export default function InputFieldComponent({field, inputValues, errors, handleC
         >
           {field.selections?.map((selection) => (
             <MenuItem
+              selected={field.defaultValue === selection.parentId}
               key={selection.categoryId}
               value={selection.categoryId}
             >
