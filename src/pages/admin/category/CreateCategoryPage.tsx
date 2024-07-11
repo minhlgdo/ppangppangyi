@@ -5,13 +5,15 @@ import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 export default function CreateCategoryPage() {
   const REQUIRED_FIELDS: RequiredFieldType[] = [
     {
-      name: 'parentCategory',
+      name: 'parentId',
+      label: '부모 분류',
       required: true,
       type: FieldTypes.Dropdown,
       selections: PARENT_CATEGORIES,
     },
     {
       name: 'categoryName',
+      label: '분류',
       required: true,
       type: FieldTypes.Text,
     },

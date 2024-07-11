@@ -10,7 +10,8 @@ export default function EditFuelPage() {
 
   const REQUIRED_INPUTS: RequiredFieldType[] = [
     {
-      name: '연류',
+      name: 'fuelName',
+      label: '연류',
       required: true,
       type: FieldTypes.Text,
       defaultValue: fuelName,

@@ -26,7 +26,6 @@ export default function InputFieldComponent({field, inputValues, errors, handleC
     // Text field
     return (
       <TextField
-        fullWidth
         required={field.required}
         label={field.required ? '필수' : ''}
         defaultValue={field.defaultValue}
@@ -53,10 +52,10 @@ export default function InputFieldComponent({field, inputValues, errors, handleC
     // Display dropdown form
     return (
       <FormControl
-        fullWidth
+        sx={{m: 1, minWidth: 120}}
         error={!!errors[field.name]}
       >
-        <InputLabel>{field.name}</InputLabel>
+        <InputLabel>{field.label}</InputLabel>
         <Select
           displayEmpty
           labelId={field.required ? 'demo-simple-select-required' : 'demo-simple-select-filled-label'}

@@ -10,7 +10,8 @@ export default function EditBrandPage() {
 
   const REQUIRED_INPUTS: RequiredFieldType[] = [
     {
-      name: 'Brand',
+      name: 'brandName',
+      label: '브랜드',
       required: true,
       type: FieldTypes.Text,
       defaultValue: brandName,

@@ -5,12 +5,14 @@ import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 export default function CreateModelPage() {
   const REQUIRED_INPUTS: RequiredFieldType[] = [
     {
-      name: 'Model name',
+      name: 'modelName',
+      label: '모델',
       required: true,
       type: FieldTypes.Text,
     },
     {
-      name: 'Brand name',
+      name: 'brandName',
+      label: '브랜드',
       required: true,
       type: FieldTypes.Text,
     },

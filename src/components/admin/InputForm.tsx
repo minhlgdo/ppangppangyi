@@ -19,7 +19,7 @@ function InputForm({fields, inputValues, errors, handleChange}: InputFormProps) 
           spacing={4}
           alignItems={'center'}
         >
-          <Typography>{field.name}</Typography>
+          <Typography>{field.label}</Typography>
           <InputFieldComponent
             field={field}
             inputValues={inputValues}

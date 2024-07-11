@@ -1,7 +1,8 @@
 import {FieldType} from '@src/common/constants.ts';
 
 interface RequiredFieldInterface {
-  name: string; // display text
+  name: string;
+  label: string; // label text
   required: boolean;
   type: FieldType;
   defaultValue?: string; // for text values

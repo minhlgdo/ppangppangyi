@@ -5,7 +5,8 @@ import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
 export default function CreateFuelPage() {
   const REQUIRED_FIELDS: RequiredFieldType[] = [
     {
-      name: 'Fuel',
+      name: 'fuelName',
+      label: '연류',
       required: true,
       type: FieldTypes.Text,
     },

@@ -11,13 +11,15 @@ export default function EditModelPage() {
 
   const REQUIRED_INPUTS: RequiredFieldType[] = [
     {
-      name: 'Model name',
+      name: 'modelName',
+      label: '모델',
       required: true,
       type: FieldTypes.Text,
       defaultValue: modelName,
     },
     {
-      name: 'Brand name',
+      name: 'brandName',
+      label: '브랜드',
       required: true,
       type: FieldTypes.Text,
       defaultValue: brandName,
