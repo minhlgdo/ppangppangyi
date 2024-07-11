@@ -32,6 +32,12 @@ export interface Category {
 
 export type CategoriesType = Category[];
 
+export interface ExtendedCategory extends Category {
+  parentCategoryName: string;
+}
+
+export type ExtendedCategoriesType = ExtendedCategory[];
+
 export interface Model {
   modelId: number;
   modelName: string;
