@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import axios from 'axios';
 import {GET_BRANDS_ENDPOINT} from '@src/common/api.ts';
-import AdminContextProvider from '@src/context/AdminContext.tsx';
+import AdminGeneralContextProvider from '@src/context/AdminGeneralContext.tsx';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {BRAND_CREATE_PATH, BRAND_MAIN_PATH} from '@src/common/navigation.ts';
 import {Subjects} from '@src/common/constants.ts';
@@ -55,8 +55,8 @@ function BrandPageContent() {
 
 export default function BrandPage() {
   return (
-    <AdminContextProvider>
+    <AdminGeneralContextProvider>
       <BrandPageContent />
-    </AdminContextProvider>
+    </AdminGeneralContextProvider>
   );
 }

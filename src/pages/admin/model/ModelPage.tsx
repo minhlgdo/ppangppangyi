@@ -1,4 +1,4 @@
-import AdminContextProvider from '@src/context/AdminContext.tsx';
+import AdminGeneralContextProvider from '@src/context/AdminGeneralContext.tsx';
 import {ChangeEvent, useState} from 'react';
 import {Model, ModelsType} from '@src/common/types.ts';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
@@ -58,8 +58,8 @@ function ModelPageContent() {
 
 export default function ModelPage() {
   return (
-    <AdminContextProvider>
+    <AdminGeneralContextProvider>
       <ModelPageContent />
-    </AdminContextProvider>
+    </AdminGeneralContextProvider>
   );
 }

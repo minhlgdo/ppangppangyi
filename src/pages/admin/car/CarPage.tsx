@@ -1,6 +1,6 @@
 import {ChangeEvent, useState} from 'react';
 import {Car, CarsType} from '@src/common/types.ts';
-import AdminContextProvider from '@src/context/AdminContext.tsx';
+import AdminGeneralContextProvider from '@src/context/AdminGeneralContext.tsx';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {Subjects} from '@src/common/constants.ts';
 import {CAR_CREATE_PATH, CAR_MAIN_PATH} from '@src/common/navigation.ts';
@@ -61,8 +61,8 @@ function CarPageContent() {
 
 export default function CarPage() {
   return (
-    <AdminContextProvider>
+    <AdminGeneralContextProvider>
       <CarPageContent />
-    </AdminContextProvider>
+    </AdminGeneralContextProvider>
   );
 }

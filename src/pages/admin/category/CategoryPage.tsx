@@ -1,4 +1,4 @@
-import AdminContextProvider from '@src/context/AdminContext.tsx';
+import AdminGeneralContextProvider from '@src/context/AdminGeneralContext.tsx';
 import {CategoriesType} from '@src/common/types.ts';
 import {ChangeEvent, useState} from 'react';
 import {mapParentCategoryNames} from '@src/common/mapping-utils.ts';
@@ -100,8 +100,8 @@ function CategoryPageContent() {
 
 export default function CategoryPage() {
   return (
-    <AdminContextProvider>
+    <AdminGeneralContextProvider>
       <CategoryPageContent />
-    </AdminContextProvider>
+    </AdminGeneralContextProvider>
   );
 }

@@ -2,7 +2,7 @@ import {useNavigate} from 'react-router-dom';
 import {Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import React from 'react';
 import {DeleteRounded, Edit} from '@mui/icons-material';
-import {useAdminContext} from '@src/context/AdminContext.tsx';
+import {useAdminContext} from '@src/context/AdminGeneralContext.tsx';
 
 interface ListProps<T> {
   items: T[];

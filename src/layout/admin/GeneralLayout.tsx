@@ -5,7 +5,7 @@ import {AdminPageTypes, SubjectType} from '@src/common/constants.ts';
 import React, {ChangeEvent} from 'react';
 import ListItems from '@src/components/admin/ListItems.tsx';
 import DeleteDialog from '@src/components/admin/DeleteDialog.tsx';
-import {useAdminContext} from '@src/context/AdminContext.tsx';
+import {useAdminContext} from '@src/context/AdminGeneralContext.tsx';
 
 interface GeneralLayoutProps<T> {
   subject: SubjectType;

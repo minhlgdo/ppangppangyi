@@ -8,28 +8,28 @@ interface AdminContextValue {
 }
 
 // props for context provider
-interface AdminProviderProps {
+interface AdminGeneralProviderProps {
   children: ReactNode;
 }
 
 // initial state
 const INITIAL_DELETE_POPUP_STATE = false;
 
-const AdminContext = createContext<AdminContextValue>({
+const AdminGeneralContext = createContext<AdminContextValue>({
   itemToDelete: undefined,
   setItemToDelete: () => {},
   deletePopup: INITIAL_DELETE_POPUP_STATE,
   setDeletePopup: () => {},
 });
 
-export const useAdminContext = () => useContext(AdminContext);
+export const useAdminContext = () => useContext(AdminGeneralContext);
 
-const AdminContextProvider: FC<AdminProviderProps> = ({children}) => {
+const AdminGeneralContextProvider: FC<AdminGeneralProviderProps> = ({children}) => {
   const [deletePopup, setDeletePopup] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<number | undefined>(undefined);
 
   return (
-    <AdminContext.Provider
+    <AdminGeneralContext.Provider
       value={{
         itemToDelete: itemToDelete,
         setItemToDelete: setItemToDelete,
@@ -38,8 +38,8 @@ const AdminContextProvider: FC<AdminProviderProps> = ({children}) => {
       }}
     >
       {children}
-    </AdminContext.Provider>
+    </AdminGeneralContext.Provider>
   );
 };
 
-export default AdminContextProvider;
+export default AdminGeneralContextProvider;
