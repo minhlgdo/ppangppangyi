@@ -3,8 +3,8 @@ import {FieldTypes} from '@src/common/constants.ts';
 import {Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, styled, TextField} from '@mui/material';
 import {CloudUpload} from '@mui/icons-material';
 
-interface InputFieldComponentProps {
-  field: RequiredFieldType;
+interface InputFieldComponentProps<T> {
+  field: RequiredFieldType<T>;
   inputValues: InputValuesType;
   errors: {[key: string]: string};
   handleChange: (name: string, value: string | number) => void;
@@ -21,8 +21,8 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-export default function InputFieldComponent({field, inputValues, errors, handleChange}: InputFieldComponentProps) {
-  if (field.type === FieldTypes.Text) {
+export default function InputFieldComponent<T>({field, inputValues, errors, handleChange}: InputFieldComponentProps<T>) {
+  if (field.type === FieldTypes.Text || field.type === FieldTypes.Number) {
     // Text field
     return (
       <TextField
@@ -33,6 +33,7 @@ export default function InputFieldComponent({field, inputValues, errors, handleC
         helperText={errors[field.name]}
         value={inputValues[field.name] || field.defaultValue || ''}
         onChange={(e) => handleChange(field.name, e.target.value)}
+        type={field.type === FieldTypes.Number ? 'number' : 'text'}
       />
     );
   } else if (field.type === FieldTypes.Image) {
@@ -59,17 +60,18 @@ export default function InputFieldComponent({field, inputValues, errors, handleC
         <InputLabel>{field.required ? '필수 *' : '선택'}</InputLabel>
         <Select
           displayEmpty
+          id="demo-simple-select"
           labelId={field.required ? 'demo-simple-select-required' : 'demo-simple-select-filled-label'}
-          value={inputValues[field.name] || field.defaultValue?.toString() || ''}
+          value={inputValues[field.name] || field.defaultValue || ''}
           onChange={(e) => handleChange(field.name, e.target.value)}
         >
           {field.selections?.map((selection) => (
             <MenuItem
               // selected={field.defaultValue === selection.parentId}
-              key={selection.categoryId}
-              value={selection.categoryId}
+              key={selection[field.selectionIndex!] as number}
+              value={selection[field.selectionIndex!] as number}
             >
-              {selection.categoryName}
+              {selection[field.selectionLabel!] as string}
             </MenuItem>
           ))}
         </Select>

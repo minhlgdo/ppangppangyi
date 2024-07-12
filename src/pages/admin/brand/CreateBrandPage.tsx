@@ -3,7 +3,7 @@ import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import {RequiredFieldType} from '@src/common/types.ts';
 
 export default function CreateBrandPage() {
-  const REQUIRED_INPUTS: RequiredFieldType[] = [
+  const REQUIRED_INPUTS: RequiredFieldType<never>[] = [
     {
       name: 'brandName',
       label: '브랜드',

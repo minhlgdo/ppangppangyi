@@ -3,7 +3,7 @@ import {RequiredFieldType} from '@src/common/types.ts';
 import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
 
 export default function CreateFuelPage() {
-  const REQUIRED_FIELDS: RequiredFieldType[] = [
+  const REQUIRED_FIELDS: RequiredFieldType<never>[] = [
     {
       name: 'fuelName',
       label: '연류',

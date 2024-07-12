@@ -1,4 +1,4 @@
-import {InputValuesType, RequiredFieldType} from '@src/common/types.ts';
+import {Category, InputValuesType, RequiredFieldType} from '@src/common/types.ts';
 import {AdminPageTypes, FieldTypes, PARENT_CATEGORIES, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import {useParams} from 'react-router-dom';
@@ -11,7 +11,7 @@ export default function EditCategoryPage() {
 
   // TODO: Load actual information here
 
-  const REQUIRED_FIELDS: RequiredFieldType[] = [
+  const REQUIRED_FIELDS: RequiredFieldType<Category>[] = [
     {
       name: 'parentId',
       label: '부모 분류',
@@ -19,6 +19,8 @@ export default function EditCategoryPage() {
       type: FieldTypes.Dropdown,
       selections: PARENT_CATEGORIES,
       defaultValue: parentId,
+      selectionLabel: 'categoryName',
+      selectionIndex: 'categoryId',
     },
     {
       name: 'categoryName',

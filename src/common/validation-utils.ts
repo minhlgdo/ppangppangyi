@@ -1,6 +1,6 @@
 import {InputValuesType, RequiredFieldType} from '@src/common/types.ts';
 
-export const validateFields = (inputFields: RequiredFieldType[], values: InputValuesType) => {
+export const validateFields = <T>(inputFields: RequiredFieldType<T>[], values: InputValuesType) => {
   const errors: {[key: string]: string} = {};
 
   inputFields.forEach((field) => {

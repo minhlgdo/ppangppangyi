@@ -1,14 +1,14 @@
 import {useParams} from 'react-router-dom';
 import {useState} from 'react';
 import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
-import {RequiredFieldType} from '@src/common/types.ts';
+import {InputValuesType, RequiredFieldType} from '@src/common/types.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 
 export default function EditFuelPage() {
   const {fueldId} = useParams();
   const [fuelName, setFuelName] = useState('');
 
-  const REQUIRED_INPUTS: RequiredFieldType[] = [
+  const REQUIRED_INPUTS: RequiredFieldType<never>[] = [
     {
       name: 'fuelName',
       label: '연류',
@@ -21,7 +21,9 @@ export default function EditFuelPage() {
   // TODO: load fuel name
 
   // TODO: Handle sending data to the API
-  const handleSendData = () => {};
+  const handleSendData = (data: InputValuesType) => {
+    // Test
+  };
 
   return (
     <CreateEditLayout

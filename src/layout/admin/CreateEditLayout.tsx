@@ -16,15 +16,15 @@ import InputForm from '@src/components/admin/InputForm.tsx';
 import SaveComponent from '@src/components/admin/SaveComponent.tsx';
 import ResponseDialog from '@src/components/admin/ResponseDialog.tsx';
 
-interface CreateEditLayoutProps {
+interface CreateEditLayoutProps<T> {
   subject: SubjectType;
-  requiredFields: RequiredFieldType[];
+  requiredFields: RequiredFieldType<T>[];
   view: typeof AdminPageTypes.Create | typeof AdminPageTypes.Edit;
   handleSendData: (data: InputValuesType) => void; // TODO: fix the type later
 }
 
 // Helper function to initialize input values with default values
-const initializeInputValues = (fields: RequiredFieldType[]): InputValuesType => {
+const initializeInputValues = <T,>(fields: RequiredFieldType<T>[]): InputValuesType => {
   const initialValues: InputValuesType = {};
   fields.forEach((field) => {
     if (field.defaultValue) {
@@ -34,7 +34,7 @@ const initializeInputValues = (fields: RequiredFieldType[]): InputValuesType => 
   return initialValues;
 };
 
-export default function CreateEditLayout({subject, requiredFields, view, handleSendData}: CreateEditLayoutProps) {
+export default function CreateEditLayout<T>({subject, requiredFields, view, handleSendData}: CreateEditLayoutProps<T>) {
   const [openDialog, setOpenDialog] = useState(false);
   const [result, setResult] = useState<ResponseTypeValue>(ResponseTypes.Unknown);
   const navigate = useNavigate();

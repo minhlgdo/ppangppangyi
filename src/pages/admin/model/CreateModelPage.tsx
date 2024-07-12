@@ -3,7 +3,7 @@ import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 
 export default function CreateModelPage() {
-  const REQUIRED_INPUTS: RequiredFieldType[] = [
+  const REQUIRED_INPUTS: RequiredFieldType<never>[] = [
     {
       name: 'modelName',
       label: '모델',

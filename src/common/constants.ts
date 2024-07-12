@@ -33,6 +33,7 @@ export type AdminPageType = (typeof AdminPageTypes)[keyof typeof AdminPageTypes]
 
 export const FieldTypes = {
   Text: 'TEXT',
+  Number: 'NUMBER',
   Image: 'IMAGE',
   Dropdown: 'DROPDOWN',
 } as const;

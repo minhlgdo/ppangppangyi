@@ -8,7 +8,7 @@ export default function EditBrandPage() {
   const {brandId} = useParams();
   const [brandName, setBrandName] = useState('');
 
-  const REQUIRED_INPUTS: RequiredFieldType[] = [
+  const REQUIRED_INPUTS: RequiredFieldType<never>[] = [
     {
       name: 'brandName',
       label: '브랜드',

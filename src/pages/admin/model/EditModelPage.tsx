@@ -9,7 +9,7 @@ export default function EditModelPage() {
   const [modelName, setModelName] = useState('');
   const [brandName, setBrandName] = useState('');
 
-  const REQUIRED_INPUTS: RequiredFieldType[] = [
+  const REQUIRED_INPUTS: RequiredFieldType<never>[] = [
     {
       name: 'modelName',
       label: '모델',

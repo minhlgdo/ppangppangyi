@@ -1,15 +1,18 @@
 import {FieldType} from '@src/common/constants.ts';
 
-interface RequiredFieldInterface {
+// Generic interface for required input field, with T being the selection dropdown types, e.g., Category, Fuel
+interface RequiredFieldInterface<T> {
   name: string;
   label: string; // label text
   required: boolean;
   type: FieldType;
   defaultValue?: string | number; // string for text values, number for dropdown
-  selections?: CategoriesType; // for dropdown types
+  selections?: T[]; // for dropdown types
+  selectionIndex?: T extends T ? keyof T : keyof T;
+  selectionLabel?: T extends T ? keyof T : keyof T;
 }
 
-export type RequiredFieldType = RequiredFieldInterface;
+export type RequiredFieldType<T> = RequiredFieldInterface<T>;
 
 export interface InputValuesType {
   [key: string]: string | number;
