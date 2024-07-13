@@ -1,8 +1,9 @@
 import {useParams} from 'react-router-dom';
 import {useState} from 'react';
 import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
-import {RequiredFieldType} from '@src/common/types.ts';
+import {InputValuesType, RequiredFieldType} from '@src/common/types.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
+import AdminCreateEditProvider from '@src/context/AdminCreateEditContext.tsx';
 
 export default function EditBrandPage() {
   const {brandId} = useParams();
@@ -21,14 +22,19 @@ export default function EditBrandPage() {
   // TODO: load brand name
 
   // TODO: Handle sending data to the API
-  const handleSendData = () => {};
+  const handleSendData = (data: InputValuesType) => {
+    // Test
+    console.log(data);
+  };
 
   return (
-    <CreateEditLayout
-      subject={Subjects.Brand}
-      requiredFields={REQUIRED_INPUTS}
-      view={AdminPageTypes.Edit}
-      handleSendData={handleSendData}
-    />
+    <AdminCreateEditProvider>
+      <CreateEditLayout
+        subject={Subjects.Brand}
+        requiredFields={REQUIRED_INPUTS}
+        view={AdminPageTypes.Edit}
+        handleSendData={handleSendData}
+      />
+    </AdminCreateEditProvider>
   );
 }

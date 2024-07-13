@@ -1,6 +1,7 @@
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import {RequiredFieldType} from '@src/common/types.ts';
 import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
+import AdminCreateEditProvider from '@src/context/AdminCreateEditContext.tsx';
 
 export default function CreateFuelPage() {
   const REQUIRED_FIELDS: RequiredFieldType<never>[] = [
@@ -16,11 +17,13 @@ export default function CreateFuelPage() {
   const handleSendData = () => {};
 
   return (
-    <CreateEditLayout
-      subject={Subjects.Fuel}
-      requiredFields={REQUIRED_FIELDS}
-      view={AdminPageTypes.Create}
-      handleSendData={handleSendData}
-    />
+    <AdminCreateEditProvider>
+      <CreateEditLayout
+        subject={Subjects.Fuel}
+        requiredFields={REQUIRED_FIELDS}
+        view={AdminPageTypes.Create}
+        handleSendData={handleSendData}
+      />
+    </AdminCreateEditProvider>
   );
 }

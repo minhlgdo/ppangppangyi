@@ -3,6 +3,7 @@ import {useState} from 'react';
 import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
 import {InputValuesType, RequiredFieldType} from '@src/common/types.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
+import AdminCreateEditProvider from '@src/context/AdminCreateEditContext.tsx';
 
 export default function EditFuelPage() {
   const {fueldId} = useParams();
@@ -23,14 +24,17 @@ export default function EditFuelPage() {
   // TODO: Handle sending data to the API
   const handleSendData = (data: InputValuesType) => {
     // Test
+    console.log(data);
   };
 
   return (
-    <CreateEditLayout
-      subject={Subjects.Fuel}
-      requiredFields={REQUIRED_INPUTS}
-      view={AdminPageTypes.Edit}
-      handleSendData={handleSendData}
-    />
+    <AdminCreateEditProvider>
+      <CreateEditLayout
+        subject={Subjects.Fuel}
+        requiredFields={REQUIRED_INPUTS}
+        view={AdminPageTypes.Edit}
+        handleSendData={handleSendData}
+      />
+    </AdminCreateEditProvider>
   );
 }

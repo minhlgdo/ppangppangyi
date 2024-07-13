@@ -1,6 +1,7 @@
 import {RequiredFieldType} from '@src/common/types.ts';
 import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
+import AdminCreateEditProvider from '@src/context/AdminCreateEditContext.tsx';
 
 export default function CreateModelPage() {
   const REQUIRED_INPUTS: RequiredFieldType<never>[] = [
@@ -22,11 +23,13 @@ export default function CreateModelPage() {
   const handleSendData = () => {};
 
   return (
-    <CreateEditLayout
-      subject={Subjects.Model}
-      requiredFields={REQUIRED_INPUTS}
-      view={AdminPageTypes.Create}
-      handleSendData={handleSendData}
-    />
+    <AdminCreateEditProvider>
+      <CreateEditLayout
+        subject={Subjects.Model}
+        requiredFields={REQUIRED_INPUTS}
+        view={AdminPageTypes.Create}
+        handleSendData={handleSendData}
+      />
+    </AdminCreateEditProvider>
   );
 }

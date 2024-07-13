@@ -1,15 +1,19 @@
 import {Stack, Typography} from '@mui/material';
-import {InputValuesType, RequiredFieldType} from '@src/common/types.ts';
-import InputFieldComponent from '@src/components/admin/InputFieldComponent.tsx';
+import {RequiredFieldType} from '@src/common/types.ts';
+import InputFieldComponent from '@src/components/admin/form/InputFieldComponent.tsx';
+import {useInputValues} from '@src/context/AdminCreateEditContext.tsx';
 
 interface InputFormProps<T> {
   fields: RequiredFieldType<T>[];
-  inputValues: InputValuesType;
-  errors: {[key: string]: string};
-  handleChange: (name: string, value: string | number) => void;
 }
 
-function InputForm<T>({fields, inputValues, errors, handleChange}: InputFormProps<T>) {
+function InputForm<T>({fields}: InputFormProps<T>) {
+  const {inputValues, setInputValues} = useInputValues();
+
+  const handleChange = (name: string, value: string | number) => {
+    setInputValues({...inputValues, [name]: value});
+  };
+
   return (
     <Stack spacing={4}>
       {fields.map((field) => (
@@ -22,8 +26,6 @@ function InputForm<T>({fields, inputValues, errors, handleChange}: InputFormProp
           <Typography>{field.label}</Typography>
           <InputFieldComponent
             field={field}
-            inputValues={inputValues}
-            errors={errors}
             handleChange={handleChange}
           />
         </Stack>

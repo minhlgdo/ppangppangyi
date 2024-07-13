@@ -6,7 +6,7 @@ import {useState} from 'react';
 
 export default function EditCategoryPage() {
   const {categoryId} = useParams();
-  const [parentId, setParentId] = useState(1);
+  const [parentId, setParentId] = useState(0);
   const [categoryName, setCategoryName] = useState('');
 
   // TODO: Load actual information here

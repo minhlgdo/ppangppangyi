@@ -7,7 +7,7 @@ import {
   ResponseTypes,
   ResponseTypeValue,
 } from '@src/common/constants.ts';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {isFormValid, validateFields} from '@src/common/validation-utils.ts';
 import {Box} from '@mui/material';
@@ -15,6 +15,7 @@ import {PageHeader} from '@src/components/admin/PageHeader.tsx';
 import InputForm from '@src/components/admin/InputForm.tsx';
 import SaveComponent from '@src/components/admin/SaveComponent.tsx';
 import ResponseDialog from '@src/components/admin/ResponseDialog.tsx';
+import {useInputErrors, useInputValues} from '@src/context/AdminCreateEditContext.tsx';
 
 interface CreateEditLayoutProps<T> {
   subject: SubjectType;
@@ -38,8 +39,14 @@ export default function CreateEditLayout<T>({subject, requiredFields, view, hand
   const [openDialog, setOpenDialog] = useState(false);
   const [result, setResult] = useState<ResponseTypeValue>(ResponseTypes.Unknown);
   const navigate = useNavigate();
-  const [inputValues, setInputValues] = useState<InputValuesType>(() => initializeInputValues(requiredFields));
-  const [inputErrors, setInputErrors] = useState<{[key: string]: string}>({});
+  const {inputValues, setInputValues} = useInputValues();
+  const {setInputErrors} = useInputErrors();
+
+  // Initialize the values of inputValues using requiredFields. only load when the component mounts
+  useEffect(() => {
+    setInputValues(initializeInputValues(requiredFields));
+    // eslint-disable-next-line
+  }, []);
 
   const handleSaveClick = () => {
     //
@@ -67,10 +74,6 @@ export default function CreateEditLayout<T>({subject, requiredFields, view, hand
     }
   };
 
-  const handleInputChange = (name: string, value: string | number) => {
-    setInputValues({...inputValues, [name]: value});
-  };
-
   // Get response message depending on the response result
   const getMessage = (key: ResponseTypeValue): string => {
     if (view === AdminPageTypes.Create) {
@@ -85,12 +88,7 @@ export default function CreateEditLayout<T>({subject, requiredFields, view, hand
         subject={subject}
         pageType={view}
       />
-      <InputForm
-        fields={requiredFields}
-        inputValues={inputValues}
-        errors={inputErrors}
-        handleChange={handleInputChange}
-      />
+      <InputForm fields={requiredFields} />
       <SaveComponent
         onSave={handleSaveClick}
         onCancel={handleCancelClick}

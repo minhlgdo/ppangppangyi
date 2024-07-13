@@ -1,6 +1,7 @@
 import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
-import {RequiredFieldType} from '@src/common/types.ts';
+import {InputValuesType, RequiredFieldType} from '@src/common/types.ts';
+import AdminCreateEditProvider from '@src/context/AdminCreateEditContext.tsx';
 
 export default function CreateBrandPage() {
   const REQUIRED_INPUTS: RequiredFieldType<never>[] = [
@@ -13,14 +14,19 @@ export default function CreateBrandPage() {
   ];
 
   // TODO: Handle sending data to the API
-  const handleSendData = () => {};
+  const handleSendData = (data: InputValuesType) => {
+    // Test
+    console.log(data);
+  };
 
   return (
-    <CreateEditLayout
-      subject={Subjects.Brand}
-      requiredFields={REQUIRED_INPUTS}
-      view={AdminPageTypes.Create}
-      handleSendData={handleSendData}
-    />
+    <AdminCreateEditProvider>
+      <CreateEditLayout
+        subject={Subjects.Brand}
+        requiredFields={REQUIRED_INPUTS}
+        view={AdminPageTypes.Create}
+        handleSendData={handleSendData}
+      />
+    </AdminCreateEditProvider>
   );
 }

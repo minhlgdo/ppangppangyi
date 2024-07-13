@@ -3,6 +3,7 @@ import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import {useParams} from 'react-router-dom';
 import {useState} from 'react';
+import AdminCreateEditProvider from '@src/context/AdminCreateEditContext.tsx';
 
 export default function EditModelPage() {
   const {modelId} = useParams();
@@ -30,11 +31,13 @@ export default function EditModelPage() {
   const handleSendData = () => {};
 
   return (
-    <CreateEditLayout
-      subject={Subjects.Model}
-      requiredFields={REQUIRED_INPUTS}
-      view={AdminPageTypes.Edit}
-      handleSendData={handleSendData}
-    />
+    <AdminCreateEditProvider>
+      <CreateEditLayout
+        subject={Subjects.Model}
+        requiredFields={REQUIRED_INPUTS}
+        view={AdminPageTypes.Edit}
+        handleSendData={handleSendData}
+      />
+    </AdminCreateEditProvider>
   );
 }
