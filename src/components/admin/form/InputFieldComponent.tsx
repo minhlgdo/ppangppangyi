@@ -23,7 +23,12 @@ export default function InputFieldComponent<T>({field, handleChange}: InputField
         />
       );
     case FieldTypes.Image:
-      return <ImageUploadComponent />;
+      return (
+        <ImageUploadComponent
+          field={field}
+          handleChange={handleChange}
+        />
+      );
     case FieldTypes.Dropdown:
       return (
         <DropdownComponent
