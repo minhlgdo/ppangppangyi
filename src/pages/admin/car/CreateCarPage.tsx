@@ -1,7 +1,22 @@
-import {BrandsType, CategoriesType, Category, Fuel, FuelsType, InputValuesType, RequiredFieldType} from '@src/common/types.ts';
+import {
+  Brand,
+  BrandsType,
+  CategoriesType,
+  Category,
+  ExtendedCategory,
+  Fuel,
+  FuelsType,
+  InputValuesType,
+  Model,
+  ModelsType,
+  RequiredFieldType,
+} from '@src/common/types.ts';
 import {AdminPageTypes, FieldTypes, PARENT_CATEGORIES, Subjects} from '@src/common/constants.ts';
 import {useState} from 'react';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
+import AdminCreateEditProvider, {useInputValues} from '@src/context/AdminCreateEditContext.tsx';
+import {mapParentCategoryNames} from '@src/common/mapping-utils.ts';
+import {useQuery} from '@tanstack/react-query';
 
 const DUMMY_FUELS: FuelsType = [
   {
@@ -22,43 +37,160 @@ const DUMMY_FUELS: FuelsType = [
   },
 ];
 
-type DropdownSelectionTypes = Fuel | Category;
+const DUMMY_CATEGORIES: CategoriesType = [
+  {
+    parentId: null,
+    categoryId: 1,
+    categoryName: '경형',
+  },
+  {
+    parentId: null,
+    categoryId: 2,
+    categoryName: '대형',
+  },
+  {
+    parentId: null,
+    categoryId: 3,
+    categoryName: '소형',
+  },
+  {
+    parentId: null,
+    categoryId: 4,
+    categoryName: '스포츠카',
+  },
+  {
+    parentId: null,
+    categoryId: 5,
+    categoryName: '준대형',
+  },
+  {
+    parentId: null,
+    categoryId: 6,
+    categoryName: '준중형',
+  },
+  {
+    parentId: null,
+    categoryId: 7,
+    categoryName: '중형',
+  },
+  {
+    parentId: 1,
+    categoryId: 8,
+    categoryName: 'RV',
+  },
+  {
+    parentId: 1,
+    categoryId: 9,
+    categoryName: 'SUV',
+  },
+  {
+    parentId: 1,
+    categoryId: 10,
+    categoryName: '밴',
+  },
+];
 
-export default function CreateCarPage() {
-  const [categories, setCategories] = useState<CategoriesType>([]);
-  const [fuels, setFuels] = useState<FuelsType>(DUMMY_FUELS);
+const DUMMY_MODELS: ModelsType = [
+  {
+    modelId: 1,
+    modelName: 'X1',
+    brandName: 'BMW',
+  },
+  {
+    modelId: 2,
+    modelName: '아이오닉',
+    brandName: 'Hyundai',
+  },
+  {
+    modelId: 3,
+    modelName: 'porsche',
+    brandName: 'Porsche',
+  },
+];
+
+type DropdownSelectionTypes = Fuel | ExtendedCategory | Brand | Model;
+
+const DUMMY_BRANDS: BrandsType = [
+  {
+    brandId: 1,
+    brandName: 'Hyundai',
+  },
+  {
+    brandId: 2,
+    brandName: 'Kia',
+  },
+  {
+    brandId: 3,
+    brandName: 'Audi',
+  },
+  {
+    brandId: 4,
+    brandName: 'Porsche',
+  },
+  {
+    brandId: 5,
+    brandName: 'BMW',
+  },
+];
+
+function CreateCarPageContent() {
+  const fuels = DUMMY_FUELS;
+  const {inputValues} = useInputValues();
 
   // TODO: Load categories
 
-  // TODO: Load fuels
+  // TODO: Load actual fuels
+
+  // TODO: Load actual brands
+
+  // TODO: Load the models from the selected brands
+
+  // Map the parent's category name for display
+  const fullCategoryMapping = mapParentCategoryNames(DUMMY_CATEGORIES);
+  const categorySelection = fullCategoryMapping.filter((category) => category.parentId !== null);
 
   const REQUIRED_FIELDS: RequiredFieldType<DropdownSelectionTypes>[] = [
     {
-      name: 'brandName',
-      label: '브랜드',
+      name: 'categoryId',
+      label: '분류',
       required: true,
-      type: FieldTypes.Text,
+      type: FieldTypes.Autocomplete,
+      selections: categorySelection,
+      selectionIndex: 'categoryId',
+      selectionLabel: ['parentCategoryName', 'categoryName'],
     },
     {
-      name: 'modelName',
+      name: 'brandId',
+      label: '브랜드',
+      required: true,
+      type: FieldTypes.Autocomplete,
+      selections: DUMMY_BRANDS,
+      selectionIndex: 'brandId',
+      selectionLabel: ['brandName'],
+    },
+    {
+      name: 'modelId',
       label: '모델',
       required: true,
-      type: FieldTypes.Text,
+      type: FieldTypes.Autocomplete,
+      selections: DUMMY_MODELS,
+      selectionIndex: 'modelId',
+      selectionLabel: ['modelName'],
     },
     {
       name: 'launchedYear',
-      label: '출시녀도',
+      label: '출시년도',
       required: true,
       type: FieldTypes.Number,
     },
     {
       name: 'fuelId',
-      label: '연류',
+      label: '연료',
       required: true,
       type: FieldTypes.Dropdown,
       selections: fuels,
       selectionIndex: 'fuelId',
-      selectionLabel: 'fuelName',
+      selectionLabel: ['fuelName'],
     },
     {
       name: 'price',
@@ -134,7 +266,7 @@ export default function CreateCarPage() {
     },
   ];
 
-  // TODO: Handle sending data
+  // TODO: Handle sending data (using useMutation())
   const handleSendData = (data: InputValuesType) => {
     // Test input data
     console.log(data);
@@ -147,5 +279,13 @@ export default function CreateCarPage() {
       view={AdminPageTypes.Create}
       handleSendData={handleSendData}
     />
+  );
+}
+
+export default function CreateCarPage() {
+  return (
+    <AdminCreateEditProvider>
+      <CreateCarPageContent />
+    </AdminCreateEditProvider>
   );
 }
