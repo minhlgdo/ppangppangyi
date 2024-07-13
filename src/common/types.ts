@@ -9,7 +9,7 @@ interface RequiredFieldInterface<T> {
   defaultValue?: string | number; // string for text values, number for dropdown
   selections?: T[]; // for dropdown types
   selectionIndex?: T extends T ? keyof T : keyof T;
-  selectionLabel?: T extends T ? keyof T : keyof T;
+  selectionLabel?: T extends T ? Array<keyof T> : Array<keyof T>;
 }
 
 export type RequiredFieldType<T> = RequiredFieldInterface<T>;
@@ -21,7 +21,7 @@ export interface InputValuesType {
 // Object structures
 export interface Brand {
   brandId: number;
-  brandName: number;
+  brandName: string;
 }
 
 export type BrandsType = Brand[];
@@ -79,3 +79,10 @@ export interface Car {
 }
 
 export type CarsType = Car[];
+
+interface ApiResponse<T> {
+  statusCode: number;
+  errorCode: number;
+  message: string;
+  result: T;
+}

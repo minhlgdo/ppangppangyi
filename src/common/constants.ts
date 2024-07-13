@@ -36,6 +36,7 @@ export const FieldTypes = {
   Number: 'NUMBER',
   Image: 'IMAGE',
   Dropdown: 'DROPDOWN',
+  Autocomplete: 'AUTOCOMPLETE',
 } as const;
 export type FieldType = (typeof FieldTypes)[keyof typeof FieldTypes];
 
@@ -57,3 +58,5 @@ export const PARENT_CATEGORIES: CategoriesType = [
   {parentId: null, categoryId: 6, categoryName: '준중형'},
   {parentId: null, categoryId: 7, categoryName: '중형'},
 ];
+
+export const BASE_SERVICE_URL = 'rookie-alb-863346530.ap-northeast-2.elb.amazonaws.com';
