@@ -56,13 +56,14 @@ export interface Model {
 export type ModelsType = Model[];
 
 export interface Car {
+  categoryId: number;
   carId: number;
   brandId: number;
-  brandName: string;
+  brandName?: string;
   modelId: number;
-  modelName: string;
+  modelName?: string;
   launchedYear: number;
-  fuels?: FuelsType;
+  fuels?: FuelsType | Fuel;
   imagePath?: string;
   price?: string;
   fuelEfficiency?: string;
@@ -79,10 +80,3 @@ export interface Car {
 }
 
 export type CarsType = Car[];
-
-interface ApiResponse<T> {
-  statusCode: number;
-  errorCode: number;
-  message: string;
-  result: T;
-}
