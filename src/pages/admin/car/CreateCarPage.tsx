@@ -136,7 +136,6 @@ function CreateCarPageContent() {
     queryKey: ['BRANDS'],
     queryFn: () => getBrands(),
   });
-  console.log(brands);
 
   // TODO: Load the models from the selected brands
 
