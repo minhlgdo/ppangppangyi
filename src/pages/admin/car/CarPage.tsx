@@ -1,9 +1,9 @@
-import {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, Suspense, useState} from 'react';
 import AdminGeneralContextProvider from '@src/context/AdminGeneralContext.tsx';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {Subjects} from '@src/common/constants.ts';
 import {CAR_CREATE_PATH, CAR_MAIN_PATH} from '@src/common/navigation.ts';
-import {useSuspenseQuery} from '@tanstack/react-query';
+import {useQuery} from '@tanstack/react-query';
 import {getCars} from '@src/api/admin-api.ts';
 import {mapCars} from '@src/common/mapping-utils.ts';
 
@@ -14,13 +14,18 @@ function CarPageContent() {
   const [page, setPage] = useState(1);
 
   // TODO: Load the real cars
-  const {data: cars, isError} = useSuspenseQuery({
+  const {
+    data: cars,
+    isLoading: isCarLoading,
+    isError: isFetchingError,
+  } = useQuery({
     queryKey: ['cars', page],
     queryFn: () => getCars(),
+    refetchInterval: 3000,
   });
 
   // convert cars
-  const carOptions = mapCars(cars);
+  const carOptions = cars ? mapCars(cars) : [];
 
   const handleDeleteItem = (id: string) => {
     console.log(`Delete item ${id}`);
@@ -37,6 +42,8 @@ function CarPageContent() {
       createPagePath={CAR_CREATE_PATH}
       totalItems={carOptions.length.toString()}
       items={carOptions}
+      isLoadingItems={isCarLoading}
+      isFetchingError={isFetchingError}
       basePagePath={CAR_MAIN_PATH}
       totalPages={totalPages}
       page={page}

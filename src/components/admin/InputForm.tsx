@@ -3,11 +3,11 @@ import {RequiredFieldType} from '@src/common/types.ts';
 import InputFieldComponent from '@src/components/admin/form/InputFieldComponent.tsx';
 import {useInputValues} from '@src/context/AdminCreateEditContext.tsx';
 
-interface InputFormProps<T> {
-  fields: RequiredFieldType<T>[];
+interface InputFormProps {
+  fields: RequiredFieldType[];
 }
 
-function InputForm<T>({fields}: InputFormProps<T>) {
+function InputForm({fields}: InputFormProps) {
   const {inputValues, setInputValues} = useInputValues();
 
   const handleChange = (name: string, value: string | number | string[]) => {

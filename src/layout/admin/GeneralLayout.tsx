@@ -1,4 +1,4 @@
-import {Box, Pagination, Typography} from '@mui/material';
+import {Box, CircularProgress, Pagination, Typography} from '@mui/material';
 import {PageHeader} from '@src/components/admin/PageHeader.tsx';
 import {useNavigate} from 'react-router-dom';
 import {AdminPageTypes, SubjectType} from '@src/common/constants.ts';
@@ -13,6 +13,8 @@ interface GeneralLayoutProps {
   createPagePath: string;
   totalItems: string;
   items: SubjectOptions[];
+  isLoadingItems: boolean;
+  isFetchingError: boolean;
   basePagePath: string;
   totalPages: number;
   page: number;
@@ -25,6 +27,8 @@ export default function GeneralLayout({
   createPagePath,
   totalItems,
   items,
+  isLoadingItems,
+  isFetchingError,
   basePagePath,
   totalPages,
   page,
@@ -59,10 +63,15 @@ export default function GeneralLayout({
         pageType={AdminPageTypes.General}
       />
       <Typography>Total: {totalItems} items</Typography>
-      <ListItems
-        items={items}
-        baseItemUrl={basePagePath}
-      />
+      {isLoadingItems ? (
+        <CircularProgress />
+      ) : (
+        <ListItems
+          items={items}
+          baseItemUrl={basePagePath}
+        />
+      )}
+
       <Pagination
         count={totalPages}
         page={page}

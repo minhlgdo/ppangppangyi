@@ -50,6 +50,8 @@ function ModelPageContent() {
       createPagePath={MODEL_CREATE_PATH}
       totalItems={totalItems.toString()}
       items={modelOptions}
+      isLoadingItems={false}
+      isFetchingError={false}
       basePagePath={MODEL_MAIN_PATH}
       totalPages={totalPages}
       page={page}

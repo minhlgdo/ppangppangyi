@@ -42,7 +42,7 @@ export type FieldType = (typeof FieldTypes)[keyof typeof FieldTypes];
 
 export const Subjects = {
   Brand: '브랜드',
-  Fuel: '연류',
+  Fuel: '연료',
   Category: '분류',
   Model: '차종',
   Car: '자동차',

@@ -50,6 +50,8 @@ function FuelPageContent() {
       createPagePath={FUEL_CREATE_PATH}
       totalItems={fuelOptions.length.toString()}
       items={fuelOptions}
+      isLoadingItems={false}
+      isFetchingError={false}
       basePagePath={FUEL_MAIN_PATH}
       totalPages={totalPages}
       page={page}

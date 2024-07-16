@@ -88,6 +88,8 @@ function CategoryPageContent() {
       createPagePath={CATEGORY_CREATE_PATH}
       totalItems={totalItems}
       items={categoryOptions}
+      isFetchingError={false} // placeholder
+      isLoadingItems={false}
       basePagePath={CATEGORY_MAIN_PATH}
       totalPages={totalPages}
       page={page}
