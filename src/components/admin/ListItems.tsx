@@ -23,8 +23,6 @@ export default function ListItems({items, baseItemUrl}: ListProps) {
     setDeletePopup(true);
   };
 
-  console.log(items);
-
   return (
     <List>
       {items.map((item, index) => (

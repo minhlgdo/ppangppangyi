@@ -4,6 +4,7 @@ import {Model, ModelsType} from '@src/common/types.ts';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {Subjects} from '@src/common/constants.ts';
 import {MODEL_CREATE_PATH, MODEL_MAIN_PATH} from '@src/common/navigation.ts';
+import {mapModels} from '@src/common/mapping-utils.ts';
 
 const DUMMY_MODELS: ModelsType = [
   {
@@ -30,7 +31,11 @@ function ModelPageContent() {
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
 
-  const handleDeleteItem = (id: number) => {
+  // TODO: Load all models
+
+  const modelOptions = mapModels(DUMMY_MODELS);
+
+  const handleDeleteItem = (id: string) => {
     console.log(`Delete item ${id}`);
     // TODO: Call the items here
   };
@@ -40,13 +45,11 @@ function ModelPageContent() {
   };
 
   return (
-    <GeneralLayout<Model>
+    <GeneralLayout
       subject={Subjects.Model}
       createPagePath={MODEL_CREATE_PATH}
-      totalItems={totalItems}
-      items={modelList}
-      itemKey={'modelId'}
-      itemPrimaryText={['brandName', 'modelName']}
+      totalItems={totalItems.toString()}
+      items={modelOptions}
       basePagePath={MODEL_MAIN_PATH}
       totalPages={totalPages}
       page={page}

@@ -4,6 +4,7 @@ import React, {ChangeEvent, useState} from 'react';
 import AdminGeneralContextProvider from '@src/context/AdminGeneralContext.tsx';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {Fuel, FuelsType} from '@src/common/types.ts';
+import {mapFuels} from '@src/common/mapping-utils.ts';
 
 const DUMMY_FUELS: FuelsType = [
   {
@@ -31,7 +32,7 @@ function FuelPageContent() {
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
 
-  const handleDeleteItem = (id: number) => {
+  const handleDeleteItem = (id: string) => {
     console.log(`Delete item ${id}`);
     // TODO: Call the items here
   };
@@ -41,15 +42,14 @@ function FuelPageContent() {
   };
 
   // TODO: Load the real fuel list here
+  const fuelOptions = mapFuels(DUMMY_FUELS);
 
   return (
-    <GeneralLayout<Fuel>
+    <GeneralLayout
       subject={Subjects.Fuel}
       createPagePath={FUEL_CREATE_PATH}
-      totalItems={totalItems}
-      items={fuelList}
-      itemKey={'fuelId'}
-      itemPrimaryText={['fuelName']}
+      totalItems={fuelOptions.length.toString()}
+      items={fuelOptions}
       basePagePath={FUEL_MAIN_PATH}
       totalPages={totalPages}
       page={page}

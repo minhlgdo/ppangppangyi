@@ -1,7 +1,7 @@
 import AdminGeneralContextProvider from '@src/context/AdminGeneralContext.tsx';
 import {CategoriesType} from '@src/common/types.ts';
 import {ChangeEvent, useState} from 'react';
-import {mapParentCategoryNames} from '@src/common/mapping-utils.ts';
+import {mapCategoriesWithParentName, mapParentCategoryNames} from '@src/common/mapping-utils.ts';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {Subjects} from '@src/common/constants.ts';
 import {CATEGORY_CREATE_PATH, CATEGORY_MAIN_PATH} from '@src/common/navigation.ts';
@@ -62,7 +62,7 @@ const DUMMY_CATEGORIES: CategoriesType = [
 function CategoryPageContent() {
   // Variables
   const [categories, setCategories] = useState<CategoriesType>(DUMMY_CATEGORIES);
-  const [totalItems, setTotalItems] = useState(DUMMY_CATEGORIES.length);
+  const [totalItems, setTotalItems] = useState(DUMMY_CATEGORIES.length.toString());
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
 
@@ -70,8 +70,9 @@ function CategoryPageContent() {
 
   // Map the parent's category name for display
   const displayCategoryList = mapParentCategoryNames(categories);
+  const categoryOptions = mapCategoriesWithParentName(displayCategoryList);
 
-  const handleDeleteItem = (id: number) => {
+  const handleDeleteItem = (id: string) => {
     console.log(`Delete item ${id}`);
     // TODO: Call the items here
   };
@@ -86,9 +87,7 @@ function CategoryPageContent() {
       subject={Subjects.Category}
       createPagePath={CATEGORY_CREATE_PATH}
       totalItems={totalItems}
-      items={displayCategoryList}
-      itemKey={'categoryId'}
-      itemPrimaryText={['parentCategoryName', 'categoryName']}
+      items={categoryOptions}
       basePagePath={CATEGORY_MAIN_PATH}
       totalPages={totalPages}
       page={page}

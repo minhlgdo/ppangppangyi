@@ -1,39 +1,28 @@
 import {ChangeEvent, useState} from 'react';
-import {Car, CarsType} from '@src/common/types.ts';
 import AdminGeneralContextProvider from '@src/context/AdminGeneralContext.tsx';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {Subjects} from '@src/common/constants.ts';
 import {CAR_CREATE_PATH, CAR_MAIN_PATH} from '@src/common/navigation.ts';
-
-const DUMMY_CARS: CarsType = [
-  {
-    carId: 1,
-    brandId: 5,
-    brandName: 'BMW',
-    modelId: 1,
-    modelName: 'X7',
-    launchedYear: 2019,
-  },
-  {
-    carId: 2,
-    brandId: 5,
-    brandName: 'BMW',
-    modelId: 1,
-    modelName: 'X7',
-    launchedYear: 2020,
-  },
-];
+import {useSuspenseQuery} from '@tanstack/react-query';
+import {getCars} from '@src/api/admin-api.ts';
+import {mapCars} from '@src/common/mapping-utils.ts';
 
 function CarPageContent() {
   // Variables
-  const [cars, setCars] = useState<CarsType>(DUMMY_CARS);
-  const [totalItems, setTotalItems] = useState(DUMMY_CARS.length);
+  const [totalItems, setTotalItems] = useState('0');
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
 
   // TODO: Load the real cars
+  const {data: cars, isError} = useSuspenseQuery({
+    queryKey: ['cars', page],
+    queryFn: () => getCars(),
+  });
 
-  const handleDeleteItem = (id: number) => {
+  // convert cars
+  const carOptions = mapCars(cars);
+
+  const handleDeleteItem = (id: string) => {
     console.log(`Delete item ${id}`);
     // TODO: Call the items here
   };
@@ -43,13 +32,11 @@ function CarPageContent() {
   };
 
   return (
-    <GeneralLayout<Car>
+    <GeneralLayout
       subject={Subjects.Car}
       createPagePath={CAR_CREATE_PATH}
-      totalItems={totalItems}
-      items={cars}
-      itemKey={'carId'}
-      itemPrimaryText={['brandName', 'modelName', 'launchedYear']}
+      totalItems={carOptions.length.toString()}
+      items={carOptions}
       basePagePath={CAR_MAIN_PATH}
       totalPages={totalPages}
       page={page}

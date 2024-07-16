@@ -6,35 +6,31 @@ import React, {ChangeEvent} from 'react';
 import ListItems from '@src/components/admin/ListItems.tsx';
 import DeleteDialog from '@src/components/admin/DeleteDialog.tsx';
 import {useAdminContext} from '@src/context/AdminGeneralContext.tsx';
+import {SubjectOptions} from '@src/common/types.ts';
 
-interface GeneralLayoutProps<T> {
+interface GeneralLayoutProps {
   subject: SubjectType;
   createPagePath: string;
-  totalItems: number;
-  items: T[];
-  itemKey: keyof T;
-  // A list to show the order of attributes in human-readable form
-  itemPrimaryText: Array<keyof T>;
+  totalItems: string;
+  items: SubjectOptions[];
   basePagePath: string;
   totalPages: number;
   page: number;
   handlePageChange: (event: ChangeEvent<unknown>, page: number) => void;
-  handleDeleteItem: (id: number) => void;
+  handleDeleteItem: (id: string) => void;
 }
 
-export default function GeneralLayout<T>({
+export default function GeneralLayout({
   subject,
   createPagePath,
   totalItems,
   items,
-  itemKey,
-  itemPrimaryText,
   basePagePath,
   totalPages,
   page,
   handlePageChange,
   handleDeleteItem,
-}: GeneralLayoutProps<T>) {
+}: GeneralLayoutProps) {
   const navigate = useNavigate();
   const {itemToDelete, setItemToDelete, deletePopup, setDeletePopup} = useAdminContext();
 
@@ -49,7 +45,7 @@ export default function GeneralLayout<T>({
 
   const handleDelete = async () => {
     // call handle delete from the main page?!
-    if (typeof itemToDelete === 'number') {
+    if (itemToDelete) {
       handleDeleteItem(itemToDelete);
     }
     handleClose();
@@ -65,8 +61,6 @@ export default function GeneralLayout<T>({
       <Typography>Total: {totalItems} items</Typography>
       <ListItems
         items={items}
-        itemKey={itemKey}
-        itemPrimaryText={itemPrimaryText}
         baseItemUrl={basePagePath}
       />
       <Pagination
