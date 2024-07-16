@@ -12,7 +12,7 @@ import {
   SubjectOptions,
 } from '@src/common/types.ts';
 import AdminCreateEditProvider, {useInputValues} from '@src/context/AdminCreateEditContext.tsx';
-import {mapParentCategoryNames} from '@src/common/mapping-utils.ts';
+import {mapBrands, mapCategoriesWithParentName, mapFuels, mapModels, mapParentCategoryNames} from '@src/common/mapping-utils.ts';
 import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import {useParams} from 'react-router-dom';
@@ -157,36 +157,11 @@ function EditCarPageContent() {
 
   // Map the parent's category name for display
   // Map the parent's category name for display
-  const fullCategoryMapping = mapParentCategoryNames(DUMMY_CATEGORIES);
-  const categoryOptions: SubjectOptions[] = fullCategoryMapping
-    .filter((category) => category.parentId !== null)
-    .map((cat) => {
-      return {
-        key: cat.categoryId,
-        name: `${cat.parentCategoryName} ${cat.categoryName}`,
-      };
-    });
-
-  const brandOptions: SubjectOptions[] = DUMMY_BRANDS.map((brand) => {
-    return {
-      key: brand.brandId,
-      name: `${brand.brandName}`,
-    };
-  });
-
-  const modelOptions: SubjectOptions[] = DUMMY_MODELS.map((model) => {
-    return {
-      key: model.modelId,
-      name: `${model.modelName}`,
-    };
-  });
-
-  const fuelOptions: SubjectOptions[] = DUMMY_FUELS.map((fuel) => {
-    return {
-      key: fuel.fuelId,
-      name: fuel.fuelName,
-    };
-  });
+  const fullCategoryMapping = mapParentCategoryNames(DUMMY_CATEGORIES).filter((category) => category.parentId !== null);
+  const categoryOptions = mapCategoriesWithParentName(fullCategoryMapping);
+  const brandOptions = mapBrands(DUMMY_BRANDS);
+  const modelOptions = mapModels(DUMMY_MODELS);
+  const fuelOptions = mapFuels(DUMMY_FUELS);
 
   const REQUIRED_FIELDS: RequiredFieldType[] = [
     {

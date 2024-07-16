@@ -2,7 +2,7 @@ import {BrandsType, CategoriesType, FuelsType, InputValuesType, ModelsType, Requ
 import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import AdminCreateEditProvider, {useInputValues} from '@src/context/AdminCreateEditContext.tsx';
-import {mapParentCategoryNames} from '@src/common/mapping-utils.ts';
+import {mapBrands, mapCategoriesWithParentName, mapFuels, mapModels, mapParentCategoryNames} from '@src/common/mapping-utils.ts';
 import {useQuery, useSuspenseQuery} from '@tanstack/react-query';
 import {getBrands} from '@src/api/admin-api.ts';
 
@@ -141,36 +141,14 @@ function CreateCarPageContent() {
   // TODO: Load the models from the selected brands
 
   // Map the parent's category name for display
-  const fullCategoryMapping = mapParentCategoryNames(DUMMY_CATEGORIES);
-  const categoryOptions: SubjectOptions[] = fullCategoryMapping
-    .filter((category) => category.parentId !== null)
-    .map((cat) => {
-      return {
-        key: cat.categoryId,
-        name: `${cat.parentCategoryName} ${cat.categoryName}`,
-      };
-    });
+  const fullCategoryMapping = mapParentCategoryNames(DUMMY_CATEGORIES).filter((category) => category.parentId !== null);
+  const categoryOptions = mapCategoriesWithParentName(fullCategoryMapping);
 
-  const brandOptions: SubjectOptions[] = brands.map((brand) => {
-    return {
-      key: brand.brandId,
-      name: `${brand.brandName}`,
-    };
-  });
+  const brandOptions = mapBrands(DUMMY_BRANDS);
 
-  const modelOptions: SubjectOptions[] = DUMMY_MODELS.map((model) => {
-    return {
-      key: model.modelId,
-      name: `${model.modelName}`,
-    };
-  });
+  const modelOptions = mapModels(DUMMY_MODELS);
 
-  const fuelOptions: SubjectOptions[] = DUMMY_FUELS.map((fuel) => {
-    return {
-      key: fuel.fuelId,
-      name: fuel.fuelName,
-    };
-  });
+  const fuelOptions = mapFuels(DUMMY_FUELS);
 
   const REQUIRED_FIELDS: RequiredFieldType[] = [
     {
