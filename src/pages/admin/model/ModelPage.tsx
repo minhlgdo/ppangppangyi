@@ -1,6 +1,6 @@
 import AdminGeneralContextProvider from '@src/context/AdminGeneralContext.tsx';
 import {ChangeEvent, useState} from 'react';
-import {Model, ModelsType} from '@src/common/types.ts';
+import {ModelsType} from '@src/common/types.ts';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {Subjects} from '@src/common/constants.ts';
 import {MODEL_CREATE_PATH, MODEL_MAIN_PATH} from '@src/common/navigation.ts';
