@@ -1,41 +1,45 @@
 import {FieldType} from '@src/common/constants.ts';
 
 // Generic interface for required input field, with T being the selection dropdown types, e.g., Category, Fuel
-interface RequiredFieldInterface<T> {
+interface RequiredFieldInterface {
   name: string;
   label: string; // label text
   required: boolean;
   type: FieldType;
-  defaultValue?: string | number; // string for text values, number for dropdown
-  selections?: T[]; // for dropdown types
-  selectionIndex?: T extends T ? keyof T : keyof T;
-  selectionLabel?: T extends T ? Array<keyof T> : Array<keyof T>;
+  defaultValue?: string | number | SubjectOptions[]; // string for text values, number for dropdown
+  options?: SubjectOptions[];
+  multipleOptions?: boolean;
 }
 
-export type RequiredFieldType<T> = RequiredFieldInterface<T>;
+export type RequiredFieldType = RequiredFieldInterface;
+
+export interface SubjectOptions {
+  key: string;
+  name: string;
+}
 
 export interface InputValuesType {
-  [key: string]: string | number;
+  [key: string]: string | number | string[];
 }
 
 // Object structures
 export interface Brand {
-  brandId: number;
+  brandId: string;
   brandName: string;
 }
 
 export type BrandsType = Brand[];
 
 export interface Fuel {
-  fuelId: number;
+  fuelId: string;
   fuelName: string;
 }
 
 export type FuelsType = Fuel[];
 
 export interface Category {
-  parentId: number | null;
-  categoryId: number;
+  parentId: string | null;
+  categoryId: string;
   categoryName: string;
 }
 
@@ -48,7 +52,7 @@ export interface ExtendedCategory extends Category {
 export type ExtendedCategoriesType = ExtendedCategory[];
 
 export interface Model {
-  modelId: number;
+  modelId: string;
   modelName: string;
   brandName: string;
 }
@@ -56,14 +60,14 @@ export interface Model {
 export type ModelsType = Model[];
 
 export interface Car {
-  categoryId: number;
-  carId: number;
-  brandId: number;
+  categoryId: string;
+  carId: string;
+  brandId: string;
   brandName?: string;
-  modelId: number;
+  modelId: string;
   modelName?: string;
   launchedYear: number;
-  fuels?: FuelsType | Fuel;
+  fuels?: FuelsType;
   imagePath?: string;
   price?: string;
   fuelEfficiency?: string;

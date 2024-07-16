@@ -3,9 +3,9 @@ import {
   AdminPageTypes,
   CREATE_RESULT_ITEMS,
   EDIT_RESULT_ITEMS,
-  SubjectType,
   ResponseTypes,
   ResponseTypeValue,
+  SubjectType,
 } from '@src/common/constants.ts';
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
@@ -17,25 +17,30 @@ import SaveComponent from '@src/components/admin/SaveComponent.tsx';
 import ResponseDialog from '@src/components/admin/ResponseDialog.tsx';
 import {useInputErrors, useInputValues} from '@src/context/AdminCreateEditContext.tsx';
 
-interface CreateEditLayoutProps<T> {
+interface CreateEditLayoutProps {
   subject: SubjectType;
-  requiredFields: RequiredFieldType<T>[];
+  requiredFields: RequiredFieldType[];
   view: typeof AdminPageTypes.Create | typeof AdminPageTypes.Edit;
   handleSendData: (data: InputValuesType) => void; // TODO: fix the type later
 }
 
 // Helper function to initialize input values with default values
-const initializeInputValues = <T,>(fields: RequiredFieldType<T>[]): InputValuesType => {
+const initializeInputValues = (fields: RequiredFieldType[]): InputValuesType => {
   const initialValues: InputValuesType = {};
   fields.forEach((field) => {
     if (field.defaultValue) {
-      initialValues[field.name] = field.defaultValue;
+      if (Array.isArray(field.defaultValue)) {
+        // map the default value with index
+        initialValues[field.name] = field.defaultValue.map((v) => v.key);
+      } else {
+        initialValues[field.name] = field.defaultValue;
+      }
     }
   });
   return initialValues;
 };
 
-export default function CreateEditLayout<T>({subject, requiredFields, view, handleSendData}: CreateEditLayoutProps<T>) {
+export default function CreateEditLayout({subject, requiredFields, view, handleSendData}: CreateEditLayoutProps) {
   const [openDialog, setOpenDialog] = useState(false);
   const [result, setResult] = useState<ResponseTypeValue>(ResponseTypes.Unknown);
   const navigate = useNavigate();

@@ -1,18 +1,26 @@
-import {Category, InputValuesType, RequiredFieldType} from '@src/common/types.ts';
+import {InputValuesType, RequiredFieldType, SubjectOptions} from '@src/common/types.ts';
 import {AdminPageTypes, FieldTypes, PARENT_CATEGORIES, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import AdminCreateEditProvider from '@src/context/AdminCreateEditContext.tsx';
 
 export default function CreateCategoryPage() {
-  const REQUIRED_FIELDS: RequiredFieldType<Category>[] = [
+  // TODO: Get the real parent categories
+
+  // Map
+  const parentCategoryOptions: SubjectOptions[] = PARENT_CATEGORIES.map((opt) => {
+    return {
+      key: opt.categoryId,
+      name: opt.categoryName,
+    };
+  });
+
+  const REQUIRED_FIELDS: RequiredFieldType[] = [
     {
       name: 'parentId',
       label: '부모 분류',
-      required: true,
+      required: false,
       type: FieldTypes.Dropdown,
-      selections: PARENT_CATEGORIES,
-      selectionIndex: 'categoryId',
-      selectionLabel: ['categoryName'],
+      options: parentCategoryOptions,
     },
     {
       name: 'categoryName',

@@ -1,16 +1,22 @@
-import {FormControl, FormHelperText, InputLabel, MenuItem, Select} from '@mui/material';
+import {FormControl, FormHelperText, InputLabel, MenuItem, Select, SelectChangeEvent} from '@mui/material';
 import {useInputErrors, useInputValues} from '@src/context/AdminCreateEditContext.tsx';
 import {RequiredFieldType} from '@src/common/types.ts';
 
-interface DropdownComponentProps<T> {
+interface DropdownComponentProps {
   width: number;
-  field: RequiredFieldType<T>;
-  handleChange: (name: string, value: string | number) => void;
+  field: RequiredFieldType;
+  handleChange: (name: string, value: string | number | string[]) => void;
 }
 
-export default function DropdownComponent<T>({width, field, handleChange}: DropdownComponentProps<T>) {
+export default function DropdownComponent({width, field, handleChange}: DropdownComponentProps) {
   const {inputValues} = useInputValues();
   const {inputErrors} = useInputErrors();
+
+  const value = inputValues[field.name] ?? (field.multipleOptions ? [] : '');
+
+  const handleInputChange = (e: SelectChangeEvent<string | number | string[]>) => {
+    handleChange(field.name, e.target.value);
+  };
 
   return (
     <FormControl
@@ -21,18 +27,19 @@ export default function DropdownComponent<T>({width, field, handleChange}: Dropd
       <InputLabel>{field.required ? '필수 *' : '선택'}</InputLabel>
       <Select
         displayEmpty
+        multiple={field.multipleOptions}
         id="demo-simple-select"
         labelId={field.required ? 'demo-simple-select-required' : 'demo-simple-select-filled-label'}
-        value={inputValues[field.name] || field.defaultValue || ''}
-        onChange={(e) => handleChange(field.name, e.target.value)}
+        value={value}
+        onChange={handleInputChange}
       >
-        {field.selections?.map((selection) => (
+        {field.options?.map((selection) => (
           <MenuItem
-            // selected={field.defaultValue === selection.parentId}
-            key={selection[field.selectionIndex!] as number}
-            value={selection[field.selectionIndex!] as number}
+            selected={inputValues[field.name] === selection.key}
+            key={selection.key}
+            value={selection.key}
           >
-            {field.selectionLabel!.map((label) => selection[label]).join(' ')}
+            {selection.name}
           </MenuItem>
         ))}
       </Select>

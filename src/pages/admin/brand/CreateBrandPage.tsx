@@ -4,7 +4,7 @@ import {InputValuesType, RequiredFieldType} from '@src/common/types.ts';
 import AdminCreateEditProvider from '@src/context/AdminCreateEditContext.tsx';
 
 export default function CreateBrandPage() {
-  const REQUIRED_INPUTS: RequiredFieldType<never>[] = [
+  const REQUIRED_INPUTS: RequiredFieldType[] = [
     {
       name: 'brandName',
       label: '브랜드',

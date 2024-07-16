@@ -1,38 +1,26 @@
-import {
-  Brand,
-  BrandsType,
-  CategoriesType,
-  Category,
-  ExtendedCategory,
-  Fuel,
-  FuelsType,
-  InputValuesType,
-  Model,
-  ModelsType,
-  RequiredFieldType,
-} from '@src/common/types.ts';
-import {AdminPageTypes, FieldTypes, PARENT_CATEGORIES, Subjects} from '@src/common/constants.ts';
-import {useState} from 'react';
+import {BrandsType, CategoriesType, FuelsType, InputValuesType, ModelsType, RequiredFieldType, SubjectOptions} from '@src/common/types.ts';
+import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import AdminCreateEditProvider, {useInputValues} from '@src/context/AdminCreateEditContext.tsx';
 import {mapParentCategoryNames} from '@src/common/mapping-utils.ts';
-import {useQuery} from '@tanstack/react-query';
+import {useQuery, useSuspenseQuery} from '@tanstack/react-query';
+import {getBrands} from '@src/api/admin-api.ts';
 
 const DUMMY_FUELS: FuelsType = [
   {
-    fuelId: 1,
+    fuelId: '1',
     fuelName: '가솔린',
   },
   {
-    fuelId: 2,
+    fuelId: '2',
     fuelName: '디젤',
   },
   {
-    fuelId: 3,
+    fuelId: '3',
     fuelName: '전기',
   },
   {
-    fuelId: 4,
+    fuelId: '4',
     fuelName: '하이브리드',
   },
 ];
@@ -40,95 +28,93 @@ const DUMMY_FUELS: FuelsType = [
 const DUMMY_CATEGORIES: CategoriesType = [
   {
     parentId: null,
-    categoryId: 1,
+    categoryId: '1',
     categoryName: '경형',
   },
   {
     parentId: null,
-    categoryId: 2,
+    categoryId: '2',
     categoryName: '대형',
   },
   {
     parentId: null,
-    categoryId: 3,
+    categoryId: '3',
     categoryName: '소형',
   },
   {
     parentId: null,
-    categoryId: 4,
+    categoryId: '4',
     categoryName: '스포츠카',
   },
   {
     parentId: null,
-    categoryId: 5,
+    categoryId: '5',
     categoryName: '준대형',
   },
   {
     parentId: null,
-    categoryId: 6,
+    categoryId: '6',
     categoryName: '준중형',
   },
   {
     parentId: null,
-    categoryId: 7,
+    categoryId: '7',
     categoryName: '중형',
   },
   {
-    parentId: 1,
-    categoryId: 8,
+    parentId: '1',
+    categoryId: '8',
     categoryName: 'RV',
   },
   {
-    parentId: 1,
-    categoryId: 9,
+    parentId: '1',
+    categoryId: '9',
     categoryName: 'SUV',
   },
   {
-    parentId: 1,
-    categoryId: 10,
+    parentId: '1',
+    categoryId: '10',
     categoryName: '밴',
   },
 ];
 
 const DUMMY_MODELS: ModelsType = [
   {
-    modelId: 1,
+    modelId: '1',
     modelName: 'X1',
     brandName: 'BMW',
   },
   {
-    modelId: 2,
+    modelId: '2',
     modelName: '아이오닉',
     brandName: 'Hyundai',
   },
   {
-    modelId: 3,
+    modelId: '3',
     modelName: 'porsche',
     brandName: 'Porsche',
   },
 ];
 
-type DropdownSelectionTypes = Fuel | ExtendedCategory | Brand | Model;
-
 const DUMMY_BRANDS: BrandsType = [
   {
-    brandId: 1,
+    brandId: '1',
     brandName: 'Hyundai',
   },
   {
-    brandId: 2,
+    brandId: '2',
     brandName: 'Kia',
   },
   {
-    brandId: 3,
+    brandId: '3',
     brandName: 'Audi',
   },
   {
-    brandId: 4,
+    brandId: '4',
     brandName: 'Porsche',
   },
   {
-    brandId: 5,
+    brandId: '5',
     brandName: 'BMW',
   },
 ];
@@ -142,14 +128,51 @@ function CreateCarPageContent() {
   // TODO: Load actual fuels
 
   // TODO: Load actual brands
+  const {
+    data: brands,
+    isLoading: brandsLoading,
+    isError: brandsError,
+  } = useSuspenseQuery({
+    queryKey: ['BRANDS'],
+    queryFn: () => getBrands(),
+  });
+  console.log(brands);
 
   // TODO: Load the models from the selected brands
 
   // Map the parent's category name for display
   const fullCategoryMapping = mapParentCategoryNames(DUMMY_CATEGORIES);
-  const categorySelection = fullCategoryMapping.filter((category) => category.parentId !== null);
+  const categoryOptions: SubjectOptions[] = fullCategoryMapping
+    .filter((category) => category.parentId !== null)
+    .map((cat) => {
+      return {
+        key: cat.categoryId,
+        name: `${cat.parentCategoryName} ${cat.categoryName}`,
+      };
+    });
 
-  const REQUIRED_FIELDS: RequiredFieldType<DropdownSelectionTypes>[] = [
+  const brandOptions: SubjectOptions[] = brands.map((brand) => {
+    return {
+      key: brand.brandId,
+      name: `${brand.brandName}`,
+    };
+  });
+
+  const modelOptions: SubjectOptions[] = DUMMY_MODELS.map((model) => {
+    return {
+      key: model.modelId,
+      name: `${model.modelName}`,
+    };
+  });
+
+  const fuelOptions: SubjectOptions[] = DUMMY_FUELS.map((fuel) => {
+    return {
+      key: fuel.fuelId,
+      name: fuel.fuelName,
+    };
+  });
+
+  const REQUIRED_FIELDS: RequiredFieldType[] = [
     {
       name: 'imagePath',
       label: '이미지',
@@ -161,27 +184,21 @@ function CreateCarPageContent() {
       label: '분류',
       required: true,
       type: FieldTypes.Autocomplete,
-      selections: categorySelection,
-      selectionIndex: 'categoryId',
-      selectionLabel: ['parentCategoryName', 'categoryName'],
+      options: categoryOptions,
     },
     {
       name: 'brandId',
       label: '브랜드',
       required: true,
       type: FieldTypes.Autocomplete,
-      selections: DUMMY_BRANDS,
-      selectionIndex: 'brandId',
-      selectionLabel: ['brandName'],
+      options: brandOptions,
     },
     {
       name: 'modelId',
       label: '모델',
       required: true,
       type: FieldTypes.Autocomplete,
-      selections: DUMMY_MODELS,
-      selectionIndex: 'modelId',
-      selectionLabel: ['modelName'],
+      options: modelOptions,
     },
     {
       name: 'launchedYear',
@@ -194,9 +211,8 @@ function CreateCarPageContent() {
       label: '연료',
       required: true,
       type: FieldTypes.Dropdown,
-      selections: fuels,
-      selectionIndex: 'fuelId',
-      selectionLabel: ['fuelName'],
+      multipleOptions: true,
+      options: fuelOptions,
     },
     {
       name: 'price',

@@ -3,13 +3,13 @@ import {TextField} from '@mui/material';
 import {RequiredFieldType} from '@src/common/types.ts';
 import {useInputErrors, useInputValues} from '@src/context/AdminCreateEditContext.tsx';
 
-interface TextFieldComponentProps<T> {
+interface TextFieldComponentProps {
   width: number;
-  field: RequiredFieldType<T>;
-  handleChange: (name: string, value: string | number) => void;
+  field: RequiredFieldType;
+  handleChange: (name: string, value: string | number | string[]) => void;
 }
 
-export default function TextFieldComponent<T>({width, field, handleChange}: TextFieldComponentProps<T>) {
+export default function TextFieldComponent({width, field, handleChange}: TextFieldComponentProps) {
   const {inputValues} = useInputValues();
   const {inputErrors} = useInputErrors();
 
@@ -21,7 +21,7 @@ export default function TextFieldComponent<T>({width, field, handleChange}: Text
       label={field.required ? '필수' : '선택'}
       error={!!inputErrors[field.name]}
       helperText={inputErrors[field.name]}
-      value={inputValues[field.name] || field.defaultValue || ''}
+      value={inputValues[field.name] || ''}
       onChange={(e) => handleChange(field.name, e.target.value)}
       type={field.type === FieldTypes.Number ? 'number' : 'text'}
     />

@@ -1,8 +1,9 @@
-import {Category, InputValuesType, RequiredFieldType} from '@src/common/types.ts';
+import {Category, InputValuesType, RequiredFieldType, SubjectOptions} from '@src/common/types.ts';
 import {AdminPageTypes, FieldTypes, PARENT_CATEGORIES, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import {useParams} from 'react-router-dom';
 import {useState} from 'react';
+import AdminCreateEditProvider from '@src/context/AdminCreateEditContext.tsx';
 
 export default function EditCategoryPage() {
   const {categoryId} = useParams();
@@ -11,16 +12,25 @@ export default function EditCategoryPage() {
 
   // TODO: Load actual information here
 
-  const REQUIRED_FIELDS: RequiredFieldType<Category>[] = [
+  // TODO: Get the parent category
+
+  // Map the parent category
+  const parentCategoryOptions: SubjectOptions[] = PARENT_CATEGORIES.map((cat) => {
+    return {
+      key: cat.categoryId,
+      name: cat.categoryName,
+    };
+  });
+
+  const REQUIRED_FIELDS: RequiredFieldType[] = [
     {
       name: 'parentId',
       label: '부모 분류',
       required: true,
       type: FieldTypes.Dropdown,
-      selections: PARENT_CATEGORIES,
+      options: parentCategoryOptions,
+      multipleOptions: false,
       defaultValue: parentId,
-      selectionLabel: 'categoryName',
-      selectionIndex: 'categoryId',
     },
     {
       name: 'categoryName',
@@ -38,11 +48,13 @@ export default function EditCategoryPage() {
   };
 
   return (
-    <CreateEditLayout
-      subject={Subjects.Category}
-      requiredFields={REQUIRED_FIELDS}
-      view={AdminPageTypes.Edit}
-      handleSendData={handleSendData}
-    />
+    <AdminCreateEditProvider>
+      <CreateEditLayout
+        subject={Subjects.Category}
+        requiredFields={REQUIRED_FIELDS}
+        view={AdminPageTypes.Edit}
+        handleSendData={handleSendData}
+      />
+    </AdminCreateEditProvider>
   );
 }

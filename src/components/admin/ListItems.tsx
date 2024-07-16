@@ -3,50 +3,50 @@ import {Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemTe
 import React from 'react';
 import {DeleteRounded, Edit} from '@mui/icons-material';
 import {useAdminContext} from '@src/context/AdminGeneralContext.tsx';
+import {SubjectOptions} from '@src/common/types.ts';
 
-interface ListProps<T> {
-  items: T[];
-  itemKey: keyof T;
-  itemPrimaryText: Array<keyof T>;
-  // itemSecondaryText?: Array<keyof T>;
+interface ListProps {
+  items: SubjectOptions[];
   baseItemUrl: string;
 }
 
-export default function ListItems<T>({items, itemKey, itemPrimaryText, baseItemUrl}: ListProps<T>) {
+export default function ListItems({items, baseItemUrl}: ListProps) {
   const navigate = useNavigate();
   const {setItemToDelete, setDeletePopup} = useAdminContext();
 
-  const handleEditClick = (id: T[keyof T]) => {
+  const handleEditClick = (id: string) => {
     navigate(`${baseItemUrl}/${id}`);
   };
 
-  const handleDeleteClick = (id: T[keyof T]) => {
-    setItemToDelete(id as number);
+  const handleDeleteClick = (id: string) => {
+    setItemToDelete(id);
     setDeletePopup(true);
   };
+
+  console.log(items);
 
   return (
     <List>
       {items.map((item, index) => (
-        <React.Fragment key={item[itemKey] as number}>
-          <ListItem>
+        <React.Fragment key={item.key}>
+          <ListItem key={item.key}>
             <ListItemText
-              primary={`${itemPrimaryText.map((key) => item[key]).join(' ')}`}
-              secondary={item[itemKey] as string}
+              primary={item.name}
+              secondary={`ID: ${item.key}`}
             />
             <ListItemSecondaryAction>
               {/*    Edit*/}
               <IconButton
                 style={{marginRight: 6}}
                 aria-label={'edit'}
-                onClick={() => handleEditClick(item[itemKey])}
+                onClick={() => handleEditClick(item.key)}
               >
                 <Edit />
               </IconButton>
               {/*Delete*/}
               <IconButton
                 aria-label={'delete'}
-                onClick={() => handleDeleteClick(item[itemKey])}
+                onClick={() => handleDeleteClick(item.key)}
               >
                 <DeleteRounded />
               </IconButton>

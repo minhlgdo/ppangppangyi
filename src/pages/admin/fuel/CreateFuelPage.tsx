@@ -4,10 +4,10 @@ import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
 import AdminCreateEditProvider from '@src/context/AdminCreateEditContext.tsx';
 
 export default function CreateFuelPage() {
-  const REQUIRED_FIELDS: RequiredFieldType<never>[] = [
+  const REQUIRED_FIELDS: RequiredFieldType[] = [
     {
       name: 'fuelName',
-      label: '연류',
+      label: '연료',
       required: true,
       type: FieldTypes.Text,
     },

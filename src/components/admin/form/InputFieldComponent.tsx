@@ -3,15 +3,16 @@ import {FieldTypes} from '@src/common/constants.ts';
 import TextFieldComponent from '@src/components/admin/form/TextFieldComponent.tsx';
 import DropdownComponent from '@src/components/admin/form/DropdownComponent.tsx';
 import ImageUploadComponent from '@src/components/admin/form/ImageUploadComponent.tsx';
+import AutocompleteComponent from '@src/components/admin/form/AutocompleteComponent.tsx';
 
-interface InputFieldComponentProps<T> {
-  field: RequiredFieldType<T>;
-  handleChange: (name: string, value: string | number) => void;
+interface InputFieldComponentProps {
+  field: RequiredFieldType;
+  handleChange: (name: string, value: string | number | string[]) => void;
 }
 
 const FIELD_WIDTH = 300;
 
-export default function InputFieldComponent<T>({field, handleChange}: InputFieldComponentProps<T>) {
+export default function InputFieldComponent({field, handleChange}: InputFieldComponentProps) {
   switch (field.type) {
     case FieldTypes.Text:
     case FieldTypes.Number:
@@ -39,7 +40,7 @@ export default function InputFieldComponent<T>({field, handleChange}: InputField
       );
     case FieldTypes.Autocomplete:
       return (
-        <DropdownComponent
+        <AutocompleteComponent
           width={FIELD_WIDTH}
           field={field}
           handleChange={handleChange}

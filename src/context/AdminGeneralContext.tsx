@@ -1,8 +1,8 @@
 import {createContext, FC, ReactNode, useContext, useState} from 'react';
 
 interface AdminContextValue {
-  itemToDelete?: number;
-  setItemToDelete: (item: number | undefined) => void;
+  itemToDelete?: string;
+  setItemToDelete: (item: string | undefined) => void;
   deletePopup: boolean;
   setDeletePopup: (val: boolean) => void;
 }
@@ -12,13 +12,10 @@ interface AdminGeneralProviderProps {
   children: ReactNode;
 }
 
-// initial state
-const INITIAL_DELETE_POPUP_STATE = false;
-
 const AdminGeneralContext = createContext<AdminContextValue>({
   itemToDelete: undefined,
   setItemToDelete: () => {},
-  deletePopup: INITIAL_DELETE_POPUP_STATE,
+  deletePopup: false,
   setDeletePopup: () => {},
 });
 
@@ -26,7 +23,7 @@ export const useAdminContext = () => useContext(AdminGeneralContext);
 
 const AdminGeneralContextProvider: FC<AdminGeneralProviderProps> = ({children}) => {
   const [deletePopup, setDeletePopup] = useState(false);
-  const [itemToDelete, setItemToDelete] = useState<number | undefined>(undefined);
+  const [itemToDelete, setItemToDelete] = useState<string | undefined>(undefined);
 
   return (
     <AdminGeneralContext.Provider

@@ -9,7 +9,7 @@ export default function EditFuelPage() {
   const {fueldId} = useParams();
   const [fuelName, setFuelName] = useState('');
 
-  const REQUIRED_INPUTS: RequiredFieldType<never>[] = [
+  const REQUIRED_INPUTS: RequiredFieldType[] = [
     {
       name: 'fuelName',
       label: '연류',

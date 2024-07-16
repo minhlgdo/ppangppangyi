@@ -10,7 +10,8 @@ interface InputFormProps<T> {
 function InputForm<T>({fields}: InputFormProps<T>) {
   const {inputValues, setInputValues} = useInputValues();
 
-  const handleChange = (name: string, value: string | number) => {
+  const handleChange = (name: string, value: string | number | string[]) => {
+    console.log(name, value);
     setInputValues({...inputValues, [name]: value});
   };
 
