@@ -8,11 +8,10 @@ import {
   ModelsType,
   SubjectOptions,
 } from '@src/common/types.ts';
-import {SubjectType} from '@src/common/constants.ts';
 
 export const mapParentCategoryNames = (categories: CategoriesType): ExtendedCategoriesType => {
   // Create a lookup table
-  const categoryMap: {[key: number]: Category} = {};
+  const categoryMap: {[key: string]: Category} = {};
   categories.map((category) => {
     categoryMap[category.categoryId] = category;
   });
