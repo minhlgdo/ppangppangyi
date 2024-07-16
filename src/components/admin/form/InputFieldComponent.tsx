@@ -2,7 +2,7 @@ import {RequiredFieldType} from '@src/common/types.ts';
 import {FieldTypes} from '@src/common/constants.ts';
 import TextFieldComponent from '@src/components/admin/form/TextFieldComponent.tsx';
 import DropdownComponent from '@src/components/admin/form/DropdownComponent.tsx';
-import ImageUploadComponent from '@src/components/admin/form/ImageUploadComponent.tsx';
+import ImageComponent from '@src/components/admin/form/ImageComponent.tsx';
 import AutocompleteComponent from '@src/components/admin/form/AutocompleteComponent.tsx';
 
 interface InputFieldComponentProps {
@@ -24,12 +24,7 @@ export default function InputFieldComponent({field, handleChange}: InputFieldCom
         />
       );
     case FieldTypes.Image:
-      return (
-        <ImageUploadComponent
-          field={field}
-          handleChange={handleChange}
-        />
-      );
+      return <ImageComponent field={field} />;
     case FieldTypes.Dropdown:
       return (
         <DropdownComponent

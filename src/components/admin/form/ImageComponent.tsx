@@ -1,36 +1,14 @@
-import {CloudUpload} from '@mui/icons-material';
-import {Box, Button, styled, Typography} from '@mui/material';
+import {Box, Typography} from '@mui/material';
 import {RequiredFieldType} from '@src/common/types.ts';
 import {useInputErrors, useInputValues} from '@src/context/AdminCreateEditContext.tsx';
-import {ChangeEvent} from 'react';
-
-const VisuallyHiddenInput = styled('input')({
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1,
-});
 
 interface ImageUploadComponentProps {
   field: RequiredFieldType;
-  handleChange: (name: string, value: string | number | string[]) => void;
 }
 
-export default function ImageUploadComponent({field, handleChange}: ImageUploadComponentProps) {
+export default function ImageComponent({field}: ImageUploadComponentProps) {
   const {inputValues} = useInputValues();
   const {inputErrors} = useInputErrors();
-
-  const handleImageSelection = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      handleChange(field.name, imageUrl); // TODO: Fix it later
-    }
-  };
 
   return (
     <Box
