@@ -55,19 +55,6 @@ export default function ImageUploadComponent({field, handleChange}: ImageUploadC
           src={inputValues.imagePath as string}
         />
       )}
-      <Button
-        component={'label'}
-        variant={'contained'}
-        tabIndex={-1}
-        startIcon={<CloudUpload />}
-      >
-        이미지 업로드
-        <VisuallyHiddenInput
-          type="file"
-          accept="image/*"
-          onChange={(e) => handleImageSelection(e)}
-        />
-      </Button>
       <Typography color={'red'}>{inputErrors[field.name]}</Typography>
     </Box>
   );

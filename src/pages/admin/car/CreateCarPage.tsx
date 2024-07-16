@@ -174,12 +174,6 @@ function CreateCarPageContent() {
 
   const REQUIRED_FIELDS: RequiredFieldType[] = [
     {
-      name: 'imagePath',
-      label: '이미지',
-      required: true,
-      type: FieldTypes.Image,
-    },
-    {
       name: 'categoryId',
       label: '분류',
       required: true,
