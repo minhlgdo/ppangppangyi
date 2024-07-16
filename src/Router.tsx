@@ -4,20 +4,26 @@ import ErrorPage from './pages/user/ErrorPage.tsx';
 import Homepage from './pages/user/Homepage.tsx';
 import DetailPage from './pages/user/DetailPage.tsx';
 import AdminRoot from './pages/admin/AdminRoot.tsx';
-import BrandPage from './pages/admin/brand/BrandPage.tsx';
-import React from 'react';
-import AdminPage from './pages/admin/AdminPage.tsx';
-import EditBrandPage from './pages/admin/brand/EditBrandPage.tsx';
-import CreateBrandPage from './pages/admin/brand/CreateBrandPage.tsx';
-import FuelPage from '@src/pages/admin/fuel/FuelPage.tsx';
-import EditFuelPage from '@src/pages/admin/fuel/EditFuelPage.tsx';
-import CreateFuelPage from '@src/pages/admin/fuel/CreateFuelPage.tsx';
-import CategoryPage from '@src/pages/admin/category/CategoryPage.tsx';
-import EditCategoryPage from '@src/pages/admin/category/EditCategoryPage.tsx';
-import CreateCategoryPage from '@src/pages/admin/category/CreateCategoryPage.tsx';
-import ModelPage from '@src/pages/admin/model/ModelPage.tsx';
-import EditModelPage from '@src/pages/admin/model/EditModelPage.tsx';
-import CreateModelPage from '@src/pages/admin/model/CreateModelPage.tsx';
+import React, {lazy} from 'react';
+
+// Lazy load admin pages
+const AdminPage = lazy(() => import('./pages/admin/AdminPage.tsx'));
+const BrandPage = lazy(() => import('./pages/admin/brand/BrandPage.tsx'));
+const EditBrandPage = lazy(() => import('./pages/admin/brand/EditBrandPage.tsx'));
+const CreateBrandPage = lazy(() => import('./pages/admin/brand/CreateBrandPage.tsx'));
+const FuelPage = lazy(() => import('@src/pages/admin/fuel/FuelPage.tsx'));
+const EditFuelPage = lazy(() => import('@src/pages/admin/fuel/EditFuelPage.tsx'));
+const CreateFuelPage = lazy(() => import('@src/pages/admin/fuel/CreateFuelPage.tsx'));
+const CategoryPage = lazy(() => import('@src/pages/admin/category/CategoryPage.tsx'));
+const EditCategoryPage = lazy(() => import('@src/pages/admin/category/EditCategoryPage.tsx'));
+const CreateCategoryPage = lazy(() => import('@src/pages/admin/category/CreateCategoryPage.tsx'));
+const ModelPage = lazy(() => import('@src/pages/admin/model/ModelPage.tsx'));
+const EditModelPage = lazy(() => import('@src/pages/admin/model/EditModelPage.tsx'));
+const CreateModelPage = lazy(() => import('@src/pages/admin/model/CreateModelPage.tsx'));
+const CreateCarPage = lazy(() => import('@src/pages/admin/car/CreateCarPage.tsx'));
+const EditCarPage = lazy(() => import('@src/pages/admin/car/EditCarPage.tsx'));
+const CarPage = lazy(() => import('@src/pages/admin/car/CarPage.tsx'));
+
 import {
   BRAND_CREATE_PATH,
   BRAND_EDIT_PATH,
@@ -35,9 +41,6 @@ import {
   MODEL_EDIT_PATH,
   MODEL_MAIN_PATH,
 } from '@src/common/navigation.ts';
-import CreateCarPage from '@src/pages/admin/car/CreateCarPage.tsx';
-import EditCarPage from '@src/pages/admin/car/EditCarPage.tsx';
-import CarPage from '@src/pages/admin/car/CarPage.tsx';
 
 const router = createBrowserRouter([
   {

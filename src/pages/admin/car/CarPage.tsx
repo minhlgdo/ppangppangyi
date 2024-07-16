@@ -21,7 +21,7 @@ function CarPageContent() {
   } = useQuery({
     queryKey: ['cars', page],
     queryFn: () => getCars(),
-    refetchInterval: 3000,
+    refetchInterval: 6000,
   });
 
   // convert cars
