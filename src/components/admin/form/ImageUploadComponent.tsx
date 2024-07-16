@@ -1,7 +1,7 @@
 import {CloudUpload} from '@mui/icons-material';
-import {Box, Button, styled} from '@mui/material';
+import {Box, Button, styled, Typography} from '@mui/material';
 import {RequiredFieldType} from '@src/common/types.ts';
-import {useInputValues} from '@src/context/AdminCreateEditContext.tsx';
+import {useInputErrors, useInputValues} from '@src/context/AdminCreateEditContext.tsx';
 import {ChangeEvent} from 'react';
 
 const VisuallyHiddenInput = styled('input')({
@@ -15,13 +15,14 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-interface ImageUploadComponentProps<T> {
-  field: RequiredFieldType<T>;
-  handleChange: (name: string, value: string | number) => void;
+interface ImageUploadComponentProps {
+  field: RequiredFieldType;
+  handleChange: (name: string, value: string | number | string[]) => void;
 }
 
-export default function ImageUploadComponent<T>({field, handleChange}: ImageUploadComponentProps<T>) {
+export default function ImageUploadComponent({field, handleChange}: ImageUploadComponentProps) {
   const {inputValues} = useInputValues();
+  const {inputErrors} = useInputErrors();
 
   const handleImageSelection = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -67,6 +68,7 @@ export default function ImageUploadComponent<T>({field, handleChange}: ImageUplo
           onChange={(e) => handleImageSelection(e)}
         />
       </Button>
+      <Typography color={'red'}>{inputErrors[field.name]}</Typography>
     </Box>
   );
 }
