@@ -1,7 +1,7 @@
 import {ResponseTypes, Subjects} from '@src/common/constants.ts';
 import {FUEL_CREATE_PATH, FUEL_MAIN_PATH} from '@src/common/navigation.ts';
-import React, {ChangeEvent, useState} from 'react';
-import AdminGeneralContextProvider, {useDeleteResponse} from '@src/context/AdminGeneralContext.tsx';
+import React, {ChangeEvent, useEffect, useState} from 'react';
+import AdminGeneralContextProvider, {useDeleteResponse, useFetchError} from '@src/context/AdminGeneralContext.tsx';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {mapFuels} from '@src/common/mapping-utils.ts';
 import {keepPreviousData, useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
@@ -12,6 +12,7 @@ function FuelPageContent() {
   const [page, setPage] = useState(1);
   const queryClient = useQueryClient();
   const {setResponse} = useDeleteResponse();
+  const {setFetchError} = useFetchError();
 
   const {
     data: fuelData,
@@ -22,6 +23,10 @@ function FuelPageContent() {
     queryFn: () => getFuels(page),
     placeholderData: keepPreviousData,
   });
+
+  useEffect(() => {
+    setFetchError(isFetchingError);
+  }, [isFetchingError, setFetchError]);
 
   const mutation = useMutation({
     mutationFn: (fuelId: string) => deleteFuel(fuelId),
@@ -55,7 +60,6 @@ function FuelPageContent() {
       totalItems={totalItems}
       items={fuelOptions}
       isLoadingItems={isFetchingFuels}
-      isFetchingError={isFetchingError}
       basePagePath={FUEL_MAIN_PATH}
       totalPages={totalPages}
       page={page}

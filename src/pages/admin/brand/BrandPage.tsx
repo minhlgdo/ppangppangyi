@@ -1,6 +1,6 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import {deleteBrand, getBrands} from '@src/api/admin-api.ts';
-import AdminGeneralContextProvider, {useDeleteResponse} from '@src/context/AdminGeneralContext.tsx';
+import AdminGeneralContextProvider, {useDeleteResponse, useFetchError} from '@src/context/AdminGeneralContext.tsx';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {BRAND_CREATE_PATH, BRAND_MAIN_PATH} from '@src/common/navigation.ts';
 import {ResponseTypes, Subjects} from '@src/common/constants.ts';
@@ -11,6 +11,7 @@ function BrandPageContent() {
   const [page, setPage] = useState(1);
   const queryClient = useQueryClient();
   const {setResponse} = useDeleteResponse();
+  const {setFetchError} = useFetchError();
 
   const {
     data: brandData,
@@ -21,6 +22,10 @@ function BrandPageContent() {
     queryFn: () => getBrands(page),
     placeholderData: keepPreviousData,
   });
+
+  useEffect(() => {
+    setFetchError(isFetchingError);
+  }, [isFetchingError, setFetchError]);
 
   const brands = brandData?.content;
   const totalPages = brandData?.page.totalPages ?? 1;
@@ -53,7 +58,6 @@ function BrandPageContent() {
       totalItems={totalItems}
       items={brandOptions}
       isLoadingItems={isLoadingBrands}
-      isFetchingError={isFetchingError}
       basePagePath={BRAND_MAIN_PATH}
       totalPages={totalPages}
       page={page}

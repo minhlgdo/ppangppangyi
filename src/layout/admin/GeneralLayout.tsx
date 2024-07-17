@@ -5,7 +5,7 @@ import {AdminPageTypes, DELETE_RESULT_ITEMS, ResponseTypes, SubjectType} from '@
 import React, {ChangeEvent} from 'react';
 import ListItems from '@src/components/admin/ListItems.tsx';
 import DeleteDialog from '@src/components/admin/DeleteDialog.tsx';
-import {useAdminContext, useDeleteResponse} from '@src/context/AdminGeneralContext.tsx';
+import {useAdminContext, useDeleteResponse, useFetchError} from '@src/context/AdminGeneralContext.tsx';
 import {SubjectOptions} from '@src/common/types.ts';
 import ResponseDialog from '@src/components/admin/ResponseDialog.tsx';
 
@@ -15,7 +15,6 @@ interface GeneralLayoutProps {
   totalItems: string;
   items: SubjectOptions[];
   isLoadingItems: boolean;
-  isFetchingError: boolean;
   basePagePath: string;
   totalPages: number;
   page: number;
@@ -29,7 +28,6 @@ export default function GeneralLayout({
   totalItems,
   items,
   isLoadingItems,
-  isFetchingError,
   basePagePath,
   totalPages,
   page,
@@ -39,6 +37,7 @@ export default function GeneralLayout({
   const navigate = useNavigate();
   const {itemToDelete, setItemToDelete, deletePopup, setDeletePopup} = useAdminContext();
   const {response, setResponse} = useDeleteResponse();
+  const {fetchError, setFetchError} = useFetchError();
 
   const handleCreateClick = () => {
     navigate(createPagePath);
@@ -61,10 +60,11 @@ export default function GeneralLayout({
 
   const handleResponseDialogClose = () => {
     setResponse(ResponseTypes.Unknown);
+    setFetchError(false);
   };
 
   const getMessage = (): string => {
-    if (isFetchingError) {
+    if (fetchError) {
       return '데이터 조회가 실패합니다. 다시 시도하십시오.';
     }
     return DELETE_RESULT_ITEMS[response];
@@ -98,7 +98,7 @@ export default function GeneralLayout({
         handleDelete={handleDelete}
       />
       <ResponseDialog
-        isOpened={isFetchingError || response !== ResponseTypes.Unknown}
+        isOpened={fetchError || response !== ResponseTypes.Unknown}
         text={getMessage()}
         handleClose={handleResponseDialogClose}
       />

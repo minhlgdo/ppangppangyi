@@ -8,6 +8,8 @@ interface AdminContextValue {
   setDeletePopup: (val: boolean) => void;
   deleteResponse: ResponseTypeValue;
   setDeleteResponse: (response: ResponseTypeValue) => void;
+  fetchError: boolean;
+  setFetchError: (val: boolean) => void;
 }
 
 // props for context provider
@@ -22,6 +24,8 @@ const AdminGeneralContext = createContext<AdminContextValue>({
   setDeletePopup: () => {},
   deleteResponse: ResponseTypes.Unknown,
   setDeleteResponse: () => {},
+  fetchError: false,
+  setFetchError: () => {},
 });
 
 export const useAdminContext = () => useContext(AdminGeneralContext);
@@ -30,6 +34,7 @@ const AdminGeneralContextProvider: FC<AdminGeneralProviderProps> = ({children}) 
   const [deletePopup, setDeletePopup] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<string | undefined>(undefined);
   const [responseType, setResponseType] = useState<ResponseTypeValue>(ResponseTypes.Unknown);
+  const [fetchError, setFetchError] = useState(false);
 
   return (
     <AdminGeneralContext.Provider
@@ -40,6 +45,8 @@ const AdminGeneralContextProvider: FC<AdminGeneralProviderProps> = ({children}) 
         setDeletePopup: setDeletePopup,
         deleteResponse: responseType,
         setDeleteResponse: setResponseType,
+        fetchError: fetchError,
+        setFetchError: setFetchError,
       }}
     >
       {children}
@@ -54,5 +61,13 @@ export const useDeleteResponse = () => {
   return {
     response: deleteResponse,
     setResponse: setDeleteResponse,
+  };
+};
+
+export const useFetchError = () => {
+  const {fetchError, setFetchError} = useAdminContext();
+  return {
+    fetchError: fetchError,
+    setFetchError: setFetchError,
   };
 };

@@ -1,5 +1,5 @@
-import AdminGeneralContextProvider, {useDeleteResponse} from '@src/context/AdminGeneralContext.tsx';
-import {ChangeEvent, useState} from 'react';
+import AdminGeneralContextProvider, {useDeleteResponse, useFetchError} from '@src/context/AdminGeneralContext.tsx';
+import {ChangeEvent, Suspense, useEffect, useState} from 'react';
 import {mapExtendedCategories, mapParentCategoryNames} from '@src/common/mapping-utils.ts';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {ResponseTypes, Subjects} from '@src/common/constants.ts';
@@ -12,11 +12,12 @@ function CategoryPageContent() {
   const [page, setPage] = useState(1);
   const queryClient = useQueryClient();
   const {setResponse} = useDeleteResponse();
+  const {setFetchError} = useFetchError();
 
-  // TODO: Load the real category list here
+  // Load the real category list here
   const {
     data: categoriesData,
-    isError: isFetchingError,
+    isError: isFetchDataError,
     isLoading: isLoadingCategories,
   } = useQuery({
     queryKey: ['categories', page],
@@ -24,14 +25,14 @@ function CategoryPageContent() {
     placeholderData: keepPreviousData,
   });
 
-  const {
-    data: parentCategories,
-    isError,
-    isLoading,
-  } = useQuery({
+  const {data: parentCategories, isError: isFetchParentError} = useQuery({
     queryKey: ['parent-categories'],
     queryFn: () => getParentCategories(),
   });
+
+  useEffect(() => {
+    setFetchError(isFetchDataError || isFetchDataError);
+  }, [isFetchDataError, isFetchParentError, setFetchError]);
 
   const categories = categoriesData?.content;
   const totalPages = categoriesData?.page.totalPages ?? 1;
@@ -67,7 +68,6 @@ function CategoryPageContent() {
       createPagePath={CATEGORY_CREATE_PATH}
       totalItems={totalItems}
       items={categoryOptions}
-      isFetchingError={isFetchingError}
       isLoadingItems={isLoadingCategories}
       basePagePath={CATEGORY_MAIN_PATH}
       totalPages={totalPages}
