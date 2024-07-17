@@ -2,7 +2,7 @@ import {Category, InputValuesType, RequiredFieldType} from '@src/common/types.ts
 import {AdminPageTypes, FieldTypes, ResponseTypes, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import AdminCreateEditProvider, {useDialogOpen, useResponseType} from '@src/context/AdminCreateEditContext.tsx';
-import {useMutation, useSuspenseQuery} from '@tanstack/react-query';
+import {useMutation, useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
 import {createCategory, getParentCategories} from '@src/api/admin-api.ts';
 import {mapParentCategories} from '@src/common/mapping-utils.ts';
 import {useEffect} from 'react';
@@ -31,7 +31,7 @@ function CreateCategoryPageContent() {
 
   const REQUIRED_FIELDS: RequiredFieldType[] = [
     {
-      name: 'parentId',
+      name: 'parentCategoryId',
       label: '부모 분류',
       required: false,
       type: FieldTypes.Dropdown,
@@ -45,10 +45,12 @@ function CreateCategoryPageContent() {
     },
   ];
 
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (cat: Category) => createCategory(cat),
     onSuccess: () => {
       setResponseType(ResponseTypes.Success);
+      queryClient.invalidateQueries({queryKey: ['parent-categories']});
     },
     onError: () => {
       setResponseType(ResponseTypes.Failure);
@@ -59,8 +61,9 @@ function CreateCategoryPageContent() {
   });
 
   const handleSendData = (data: InputValuesType) => {
+    console.log(data.parentId);
     const newCategory: Category = {
-      parentId: data.parentId ? (data.parentId as string) : null,
+      parentCategoryId: data.parentCategoryId ? (data.parentCategoryId as string) : null,
       categoryName: data.categoryName as string,
     };
     mutation.mutate(newCategory);

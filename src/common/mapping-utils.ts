@@ -13,11 +13,11 @@ export const mapParentCategoryNames = (categories: CategoriesType, parentCategor
   // Create a lookup table
   const parentCategoryMap: {[key: string]: Category} = {};
   parentCategories.map((parentCategory) => {
-    parentCategoryMap[parentCategory.categoryId] = parentCategory;
+    parentCategoryMap[parentCategory.categoryId!] = parentCategory;
   });
 
   return categories.map((category) => {
-    const parentCategoryName = category.parentId ? parentCategoryMap[category.parentId]?.categoryName : '';
+    const parentCategoryName = category.parentCategoryId ? parentCategoryMap[category.parentCategoryId]?.categoryName : '';
     return {
       ...category,
       parentCategoryName: parentCategoryName,

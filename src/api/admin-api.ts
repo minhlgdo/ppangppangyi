@@ -80,6 +80,11 @@ export async function createCategory(category: Category): Promise<Category> {
   return data;
 }
 
+export async function editCategory(categoryId: string, category: Category): Promise<Category> {
+  const {data} = await adminApiClient.put(`/categories/${categoryId}`, category);
+  return data;
+}
+
 export async function deleteCategory(categoryId: string): Promise<number> {
   const {status} = await adminApiClient.delete(`/categories/${categoryId}`);
   return status;

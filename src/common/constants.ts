@@ -54,13 +54,13 @@ export const Subjects = {
 export type SubjectType = (typeof Subjects)[keyof typeof Subjects];
 
 export const PARENT_CATEGORIES: CategoriesType = [
-  {parentId: null, categoryId: '1', categoryName: '경형'},
-  {parentId: null, categoryId: '2', categoryName: '대형'},
-  {parentId: null, categoryId: '3', categoryName: '소형'},
-  {parentId: null, categoryId: '4', categoryName: '스포츠카'},
-  {parentId: null, categoryId: '5', categoryName: '준대형'},
-  {parentId: null, categoryId: '6', categoryName: '준중형'},
-  {parentId: null, categoryId: '7', categoryName: '중형'},
+  {parentCategoryId: null, categoryId: '1', categoryName: '경형'},
+  {parentCategoryId: null, categoryId: '2', categoryName: '대형'},
+  {parentCategoryId: null, categoryId: '3', categoryName: '소형'},
+  {parentCategoryId: null, categoryId: '4', categoryName: '스포츠카'},
+  {parentCategoryId: null, categoryId: '5', categoryName: '준대형'},
+  {parentCategoryId: null, categoryId: '6', categoryName: '준중형'},
+  {parentCategoryId: null, categoryId: '7', categoryName: '중형'},
 ];
 
 export const BASE_SERVICE_URL = 'http://rookie-alb-863346530.ap-northeast-2.elb.amazonaws.com';

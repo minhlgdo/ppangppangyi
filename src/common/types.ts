@@ -38,7 +38,7 @@ export interface Fuel {
 export type FuelsType = Fuel[];
 
 export interface Category {
-  parentId: string | null;
+  parentCategoryId: string | null;
   categoryId?: string;
   categoryName: string;
 }

@@ -1,60 +1,100 @@
-import {Category, InputValuesType, RequiredFieldType, SubjectOptions} from '@src/common/types.ts';
-import {AdminPageTypes, FieldTypes, PARENT_CATEGORIES, Subjects} from '@src/common/constants.ts';
+import {Category, InputValuesType, RequiredFieldType} from '@src/common/types.ts';
+import {AdminPageTypes, FieldTypes, ResponseTypes, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import {useParams} from 'react-router-dom';
-import {useState} from 'react';
-import AdminCreateEditProvider from '@src/context/AdminCreateEditContext.tsx';
+import AdminCreateEditProvider, {useDialogOpen, useResponseType} from '@src/context/AdminCreateEditContext.tsx';
+import {useMutation, useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
+import {editCategory, getCategory, getParentCategories} from '@src/api/admin-api.ts';
+import {mapParentCategories} from '@src/common/mapping-utils.ts';
+import {useEffect} from 'react';
 
-export default function EditCategoryPage() {
+function EditCategoryPageContent() {
   const {categoryId} = useParams();
-  const [parentId, setParentId] = useState(0);
-  const [categoryName, setCategoryName] = useState('');
+  const {setResponseType} = useResponseType();
+  const {setDialogOpen} = useDialogOpen();
 
-  // TODO: Load actual information here
+  // Load actual information here
+  const {data: category, isError: fetchInfoError} = useSuspenseQuery({
+    queryKey: ['category', categoryId],
+    queryFn: () => getCategory(categoryId!),
+  });
 
-  // TODO: Get the parent category
+  // Get the parent category
+  const {data: parentCategories, isError: fetchParentCatError} = useSuspenseQuery({
+    queryKey: ['parent-categories'],
+    queryFn: () => getParentCategories(),
+  });
+
+  useEffect(() => {
+    if (fetchInfoError || fetchParentCatError) {
+      setDialogOpen(true);
+      setResponseType(ResponseTypes.Unknown);
+    } else {
+      setDialogOpen(false);
+    }
+  }, [fetchInfoError, fetchParentCatError, setDialogOpen, setResponseType]);
 
   // Map the parent category
-  const parentCategoryOptions: SubjectOptions[] = PARENT_CATEGORIES.map((cat) => {
-    return {
-      key: cat.categoryId,
-      name: cat.categoryName,
-    };
-  });
+  const parentCategoryOptions = mapParentCategories(parentCategories);
 
   const REQUIRED_FIELDS: RequiredFieldType[] = [
     {
-      name: 'parentId',
+      name: 'parentCategoryId',
       label: '부모 분류',
-      required: true,
+      required: false,
       type: FieldTypes.Dropdown,
       options: parentCategoryOptions,
       multipleOptions: false,
-      defaultValue: parentId,
+      defaultValue: category.parentCategoryId ?? '',
     },
     {
       name: 'categoryName',
       label: '분류',
       required: true,
       type: FieldTypes.Text,
-      defaultValue: categoryName,
+      defaultValue: category.categoryName,
     },
   ];
 
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (cat: Category) => editCategory(categoryId!, cat),
+    onSuccess: () => {
+      setResponseType(ResponseTypes.Success);
+      queryClient.invalidateQueries({queryKey: ['category', categoryId]});
+      queryClient.invalidateQueries({queryKey: ['parent-categories']});
+    },
+    onError: () => {
+      setResponseType(ResponseTypes.Failure);
+    },
+    onSettled: () => {
+      setDialogOpen(true);
+    },
+  });
+
   // TODO: Handle sending data
   const handleSendData = (data: InputValuesType) => {
-    // Test input data
-    console.log(data);
+    const cat: Category = {
+      parentCategoryId: data.parentId as string,
+      categoryName: data.categoryName as string,
+    };
+    mutation.mutate(cat);
   };
 
   return (
+    <CreateEditLayout
+      subject={Subjects.Category}
+      requiredFields={REQUIRED_FIELDS}
+      view={AdminPageTypes.Edit}
+      handleSendData={handleSendData}
+    />
+  );
+}
+
+export default function EditCategoryPage() {
+  return (
     <AdminCreateEditProvider>
-      <CreateEditLayout
-        subject={Subjects.Category}
-        requiredFields={REQUIRED_FIELDS}
-        view={AdminPageTypes.Edit}
-        handleSendData={handleSendData}
-      />
+      <EditCategoryPageContent />
     </AdminCreateEditProvider>
   );
 }
