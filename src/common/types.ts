@@ -1,6 +1,6 @@
 import {FieldType} from '@src/common/constants.ts';
 
-// Generic interface for required input field, with T being the selection dropdown types, e.g., Category, Fuel
+// Generic interface for required input field
 interface RequiredFieldInterface {
   name: string;
   label: string; // label text

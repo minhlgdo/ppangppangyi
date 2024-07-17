@@ -54,6 +54,11 @@ export async function editFuel(fuelId: string, fuel: Fuel): Promise<Fuel> {
   return data;
 }
 
+export async function deleteFuel(fuelId: string): Promise<number> {
+  const {status} = await adminApiClient.delete(`/fuels/${fuelId}`);
+  return status;
+}
+
 // CAR FUNCTIONS
 export async function getCar(carId: string): Promise<Car> {
   const {data} = await adminApiClient.get(`/cars/${carId}`);

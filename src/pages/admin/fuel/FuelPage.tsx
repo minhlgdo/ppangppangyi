@@ -1,15 +1,17 @@
-import {Subjects} from '@src/common/constants.ts';
+import {ResponseTypes, Subjects} from '@src/common/constants.ts';
 import {FUEL_CREATE_PATH, FUEL_MAIN_PATH} from '@src/common/navigation.ts';
 import React, {ChangeEvent, useState} from 'react';
-import AdminGeneralContextProvider from '@src/context/AdminGeneralContext.tsx';
+import AdminGeneralContextProvider, {useDeleteResponse} from '@src/context/AdminGeneralContext.tsx';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {mapFuels} from '@src/common/mapping-utils.ts';
-import {keepPreviousData, useQuery} from '@tanstack/react-query';
-import {getFuels} from '@src/api/admin-api.ts';
+import {keepPreviousData, useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {deleteFuel, getFuels} from '@src/api/admin-api.ts';
 
 function FuelPageContent() {
   // Variables
   const [page, setPage] = useState(1);
+  const queryClient = useQueryClient();
+  const {setResponse} = useDeleteResponse();
 
   const {
     data: fuelData,
@@ -21,9 +23,19 @@ function FuelPageContent() {
     placeholderData: keepPreviousData,
   });
 
+  const mutation = useMutation({
+    mutationFn: (fuelId: string) => deleteFuel(fuelId),
+    onSuccess: () => {
+      setResponse(ResponseTypes.Success);
+      queryClient.invalidateQueries({queryKey: ['fuels', page]});
+    },
+    onError: () => {
+      setResponse(ResponseTypes.Failure);
+    },
+  });
+
   const handleDeleteItem = (id: string) => {
-    console.log(`Delete item ${id}`);
-    // TODO: Call the items here
+    mutation.mutate(id);
   };
 
   const handlePageChange = (event: ChangeEvent<unknown>, page: number) => {

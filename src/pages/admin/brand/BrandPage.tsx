@@ -31,7 +31,7 @@ function BrandPageContent() {
     mutationFn: (brandId: string) => deleteBrand(brandId),
     onSuccess: () => {
       setResponse(ResponseTypes.Success);
-      queryClient.invalidateQueries({queryKey: ['brands']});
+      queryClient.invalidateQueries({queryKey: ['brands', page]});
     },
     onError: () => {
       setResponse(ResponseTypes.Failure);
