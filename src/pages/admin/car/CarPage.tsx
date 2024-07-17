@@ -1,35 +1,54 @@
-import React, {ChangeEvent, Suspense, useState} from 'react';
-import AdminGeneralContextProvider from '@src/context/AdminGeneralContext.tsx';
+import React, {ChangeEvent, Suspense, useEffect, useState} from 'react';
+import AdminGeneralContextProvider, {useDeleteResponse, useFetchError} from '@src/context/AdminGeneralContext.tsx';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
-import {Subjects} from '@src/common/constants.ts';
+import {ResponseTypes, Subjects} from '@src/common/constants.ts';
 import {CAR_CREATE_PATH, CAR_MAIN_PATH} from '@src/common/navigation.ts';
-import {useQuery} from '@tanstack/react-query';
-import {getCars} from '@src/api/admin-api.ts';
+import {keepPreviousData, useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {deleteCar, getCars} from '@src/api/admin-api.ts';
 import {mapCars} from '@src/common/mapping-utils.ts';
 
 function CarPageContent() {
   // Variables
-  const [totalItems, setTotalItems] = useState('0');
-  const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
+  const {setResponse} = useDeleteResponse();
+  const {setFetchError} = useFetchError();
 
-  // TODO: Load the real cars
+  // Load the real cars
   const {
-    data: cars,
+    data: carsData,
     isLoading: isCarLoading,
     isError: isFetchingError,
   } = useQuery({
     queryKey: ['cars', page],
     queryFn: () => getCars(),
-    refetchInterval: 6000,
+    placeholderData: keepPreviousData,
   });
+
+  useEffect(() => {
+    setFetchError(isFetchingError);
+    // eslint-disable-next-line
+  }, [isFetchingError]);
+
+  const cars = carsData?.content;
+  const totalItems = carsData?.page.totalElements ?? '0';
+  const totalPages = carsData?.page.totalPages ?? 1;
 
   // convert cars
   const carOptions = cars ? mapCars(cars) : [];
 
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (carId: string) => deleteCar(carId),
+    onSuccess: () => {
+      setResponse(ResponseTypes.Success);
+      queryClient.invalidateQueries({queryKey: ['cars', page]});
+    },
+    onError: () => {
+      setResponse(ResponseTypes.Failure);
+    },
+  });
   const handleDeleteItem = (id: string) => {
-    console.log(`Delete item ${id}`);
-    // TODO: Call the items here
+    mutation.mutate(id);
   };
 
   const handlePageChange = (event: ChangeEvent<unknown>, page: number) => {
@@ -40,10 +59,9 @@ function CarPageContent() {
     <GeneralLayout
       subject={Subjects.Car}
       createPagePath={CAR_CREATE_PATH}
-      totalItems={carOptions.length.toString()}
+      totalItems={totalItems}
       items={carOptions}
       isLoadingItems={isCarLoading}
-      isFetchingError={isFetchingError}
       basePagePath={CAR_MAIN_PATH}
       totalPages={totalPages}
       page={page}

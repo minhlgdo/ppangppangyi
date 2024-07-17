@@ -144,7 +144,12 @@ export async function getCar(carId: string): Promise<Car> {
   return data;
 }
 
-export async function getCars(): Promise<CarsType> {
+export async function getCars(): Promise<ApiGetAllResponses<CarsType>> {
   const {data} = await adminApiClient.get(`/cars`);
   return data;
+}
+
+export async function deleteCar(carId: string) {
+  const {status} = await adminApiClient.delete(`/cars/${carId}`);
+  return status;
 }

@@ -62,7 +62,6 @@ function CategoryPageContent() {
     setPage(page);
   };
 
-  // Map category with
   return (
     <GeneralLayout
       subject={Subjects.Category}
