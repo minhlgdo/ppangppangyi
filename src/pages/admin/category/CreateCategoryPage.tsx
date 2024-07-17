@@ -1,18 +1,33 @@
-import {InputValuesType, RequiredFieldType, SubjectOptions} from '@src/common/types.ts';
-import {AdminPageTypes, FieldTypes, PARENT_CATEGORIES, Subjects} from '@src/common/constants.ts';
+import {Category, InputValuesType, RequiredFieldType} from '@src/common/types.ts';
+import {AdminPageTypes, FieldTypes, ResponseTypes, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
-import AdminCreateEditProvider from '@src/context/AdminCreateEditContext.tsx';
+import AdminCreateEditProvider, {useDialogOpen, useResponseType} from '@src/context/AdminCreateEditContext.tsx';
+import {useMutation, useSuspenseQuery} from '@tanstack/react-query';
+import {createCategory, getParentCategories} from '@src/api/admin-api.ts';
+import {mapParentCategories} from '@src/common/mapping-utils.ts';
+import {useEffect} from 'react';
 
-export default function CreateCategoryPage() {
-  // TODO: Get the real parent categories
+function CreateCategoryPageContent() {
+  const {setResponseType} = useResponseType();
+  const {setDialogOpen} = useDialogOpen();
+
+  // Get the real parent categories
+  const {data: parentCategories, isError: fetchError} = useSuspenseQuery({
+    queryKey: ['parent-categories'],
+    queryFn: () => getParentCategories(),
+  });
+
+  useEffect(() => {
+    if (fetchError) {
+      setDialogOpen(true);
+      setResponseType(ResponseTypes.Unknown);
+    } else {
+      setDialogOpen(false);
+    }
+  }, [fetchError, setDialogOpen, setResponseType]);
 
   // Map
-  const parentCategoryOptions: SubjectOptions[] = PARENT_CATEGORIES.map((opt) => {
-    return {
-      key: opt.categoryId,
-      name: opt.categoryName,
-    };
-  });
+  const parentCategoryOptions = mapParentCategories(parentCategories);
 
   const REQUIRED_FIELDS: RequiredFieldType[] = [
     {
@@ -30,20 +45,41 @@ export default function CreateCategoryPage() {
     },
   ];
 
-  // TODO: Handle sending data
+  const mutation = useMutation({
+    mutationFn: (cat: Category) => createCategory(cat),
+    onSuccess: () => {
+      setResponseType(ResponseTypes.Success);
+    },
+    onError: () => {
+      setResponseType(ResponseTypes.Failure);
+    },
+    onSettled: () => {
+      setDialogOpen(true);
+    },
+  });
+
   const handleSendData = (data: InputValuesType) => {
-    // Test input data
-    console.log(data);
+    const newCategory: Category = {
+      parentId: data.parentId ? (data.parentId as string) : null,
+      categoryName: data.categoryName as string,
+    };
+    mutation.mutate(newCategory);
   };
 
   return (
+    <CreateEditLayout
+      subject={Subjects.Category}
+      requiredFields={REQUIRED_FIELDS}
+      view={AdminPageTypes.Create}
+      handleSendData={handleSendData}
+    />
+  );
+}
+
+export default function CreateCategoryPage() {
+  return (
     <AdminCreateEditProvider>
-      <CreateEditLayout
-        subject={Subjects.Category}
-        requiredFields={REQUIRED_FIELDS}
-        view={AdminPageTypes.Create}
-        handleSendData={handleSendData}
-      />
+      <CreateCategoryPageContent />
     </AdminCreateEditProvider>
   );
 }

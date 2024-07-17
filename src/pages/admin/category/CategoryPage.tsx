@@ -1,5 +1,4 @@
 import AdminGeneralContextProvider, {useDeleteResponse} from '@src/context/AdminGeneralContext.tsx';
-import {CategoriesType} from '@src/common/types.ts';
 import {ChangeEvent, useState} from 'react';
 import {mapExtendedCategories, mapParentCategoryNames} from '@src/common/mapping-utils.ts';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
