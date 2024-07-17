@@ -20,7 +20,7 @@ function CarPageContent() {
     isError: isFetchingError,
   } = useQuery({
     queryKey: ['cars', page],
-    queryFn: () => getCars(),
+    queryFn: () => getCars(page),
     placeholderData: keepPreviousData,
   });
 

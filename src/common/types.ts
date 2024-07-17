@@ -69,7 +69,7 @@ export interface Car {
   modelId: string;
   modelName?: string;
   launchedYear: string;
-  fuelId?: number[];
+  fuelId?: string[];
   fuels?: FuelsType;
   imagePath?: string;
   price?: string;

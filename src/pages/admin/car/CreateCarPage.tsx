@@ -6,6 +6,7 @@ import {mapBrands, mapExtendedCategories, mapFuels, mapModels, mapParentCategory
 import {useMutation, useSuspenseQuery} from '@tanstack/react-query';
 import {createCar, getAllBrands, getAllCategory, getFuels, getModelsByBrand} from '@src/api/admin-api.ts';
 import {useEffect} from 'react';
+import ErrorBoundaryWrapper from '@src/pages/ErrorBoundaryWrapper.tsx';
 
 function CreateCarPageContent() {
   const {inputValues} = useInputValues();
@@ -44,7 +45,8 @@ function CreateCarPageContent() {
     } else {
       setDialogOpen(false);
     }
-  });
+    // eslint-disable-next-line
+  }, [categoriesError, fuelsError, brandsError, modelsError]);
 
   // Map the parent's category name for display
   const fullCategoryMapping = mapParentCategoryNames(categories, categories).filter((category) => category.parentCategoryId !== null);
@@ -169,6 +171,7 @@ function CreateCarPageContent() {
   const mutation = useMutation({
     mutationFn: (car: Car) => createCar(car),
     onSuccess: () => {
+      console.log('success');
       setResponseType(ResponseTypes.Success);
     },
     onError: () => {
@@ -184,21 +187,23 @@ function CreateCarPageContent() {
     // Test input data
     console.log(data);
     const car: Car = {
+      imagePath: '',
       categoryId: data.categoryId as string,
       modelId: data.modelId as string,
+      fuelId: data.fuelId as string[],
       launchedYear: data.launchedYear as string,
       price: data.price as string,
-      fuelEfficiency: data.fuelEfficiency ? (data.fuelEfficiency as string) : null,
-      maxPower: data.maxPower ? (data.maxPower as string) : null,
-      torque: data.torque ? (data.torque as string) : null,
-      capacity: data.capacity ? (data.capacity as string) : null,
-      engine: data.engine ? (data.engine as string) : null,
-      drivingSystem: data.drivingSystem ? (data.drivingSystem as string) : null,
-      transmission: data.transmission ? (data.transmission as string) : null,
-      length: data.length ? (data.length as string) : null,
-      height: data.height ? (data.height as string) : null,
-      width: data.width ? (data.width as string) : null,
-      wheelbase: data.wheelbase ? (data.wheelbase as string) : null,
+      fuelEfficiency: data.fuelEfficiency ? (data.fuelEfficiency as string) : '',
+      maxPower: data.maxPower ? (data.maxPower as string) : '',
+      torque: data.torque ? (data.torque as string) : '',
+      capacity: data.capacity ? (data.capacity as string) : '',
+      engine: data.engine ? (data.engine as string) : '',
+      drivingSystem: data.drivingSystem ? (data.drivingSystem as string) : '',
+      transmission: data.transmission ? (data.transmission as string) : '',
+      length: data.length ? (data.length as string) : '',
+      height: data.height ? (data.height as string) : '',
+      width: data.width ? (data.width as string) : '',
+      wheelbase: data.wheelbase ? (data.wheelbase as string) : '',
     };
     mutation.mutate(car);
   };
@@ -216,7 +221,9 @@ function CreateCarPageContent() {
 export default function CreateCarPage() {
   return (
     <AdminCreateEditProvider>
-      <CreateCarPageContent />
+      <ErrorBoundaryWrapper>
+        <CreateCarPageContent />
+      </ErrorBoundaryWrapper>
     </AdminCreateEditProvider>
   );
 }

@@ -1,167 +1,52 @@
-import {
-  Brand,
-  BrandsType,
-  CategoriesType,
-  ExtendedCategory,
-  Fuel,
-  FuelsType,
-  InputValuesType,
-  Model,
-  ModelsType,
-  RequiredFieldType,
-  SubjectOptions,
-} from '@src/common/types.ts';
-import AdminCreateEditProvider, {useInputValues} from '@src/context/AdminCreateEditContext.tsx';
-import {mapBrands, mapCategoriesWithParentName, mapFuels, mapModels, mapParentCategoryNames} from '@src/common/mapping-utils.ts';
-import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
+import {Car, InputValuesType, RequiredFieldType} from '@src/common/types.ts';
+import AdminCreateEditProvider, {useDialogOpen, useResponseType} from '@src/context/AdminCreateEditContext.tsx';
+import {mapExtendedCategories, mapFuels, mapParentCategoryNames} from '@src/common/mapping-utils.ts';
+import {AdminPageTypes, FieldTypes, ResponseTypes, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import {useParams} from 'react-router-dom';
-import {useQuery} from '@tanstack/react-query';
-import {getBrands, getCar} from '@src/api/admin-api.ts';
-
-const DUMMY_FUELS: FuelsType = [
-  {
-    fuelId: '1',
-    fuelName: '가솔린',
-  },
-  {
-    fuelId: '2',
-    fuelName: '디젤',
-  },
-  {
-    fuelId: '3',
-    fuelName: '전기',
-  },
-  {
-    fuelId: '4',
-    fuelName: '하이브리드',
-  },
-];
-
-const DUMMY_CATEGORIES: CategoriesType = [
-  {
-    parentId: null,
-    categoryId: '1',
-    categoryName: '경형',
-  },
-  {
-    parentId: null,
-    categoryId: '2',
-    categoryName: '대형',
-  },
-  {
-    parentId: null,
-    categoryId: '3',
-    categoryName: '소형',
-  },
-  {
-    parentId: null,
-    categoryId: '4',
-    categoryName: '스포츠카',
-  },
-  {
-    parentId: null,
-    categoryId: '5',
-    categoryName: '준대형',
-  },
-  {
-    parentId: null,
-    categoryId: '6',
-    categoryName: '준중형',
-  },
-  {
-    parentId: null,
-    categoryId: '7',
-    categoryName: '중형',
-  },
-  {
-    parentId: '1',
-    categoryId: '8',
-    categoryName: 'RV',
-  },
-  {
-    parentId: '1',
-    categoryId: '9',
-    categoryName: 'SUV',
-  },
-  {
-    parentId: '1',
-    categoryId: '10',
-    categoryName: '밴',
-  },
-];
-
-const DUMMY_MODELS: ModelsType = [
-  {
-    modelId: '1',
-    modelName: 'X1',
-    brandName: 'BMW',
-  },
-  {
-    modelId: '2',
-    modelName: '아이오닉',
-    brandName: 'Hyundai',
-  },
-  {
-    modelId: '3',
-    modelName: 'porsche',
-    brandName: 'Porsche',
-  },
-];
-
-const DUMMY_BRANDS: BrandsType = [
-  {
-    brandId: '1',
-    brandName: 'Hyundai',
-  },
-  {
-    brandId: '2',
-    brandName: 'Kia',
-  },
-  {
-    brandId: '3',
-    brandName: 'Audi',
-  },
-  {
-    brandId: '4',
-    brandName: 'Porsche',
-  },
-  {
-    brandId: '5',
-    brandName: 'BMW',
-  },
-];
+import {useMutation, useSuspenseQuery} from '@tanstack/react-query';
+import {editCar, getAllCategory, getCar, getFuels} from '@src/api/admin-api.ts';
+import ErrorBoundaryWrapper from '@src/pages/ErrorBoundaryWrapper.tsx';
+import {useEffect} from 'react';
 
 function EditCarPageContent() {
   const {carId} = useParams();
-  const fuels = DUMMY_FUELS;
-  const {inputValues} = useInputValues();
+  const {setResponseType} = useResponseType();
+  const {setDialogOpen} = useDialogOpen();
 
-  // TODO: Load the saved information
-  const {
-    data: carInfo,
-    isLoading: carInfoLoading,
-    isError: carInfoError,
-  } = useQuery({
-    queryKey: ['EDIT_CAR_CAR_INFO', carId],
+  // Load the saved information
+  const {data: carInfo, isError: carInfoError} = useSuspenseQuery({
+    queryKey: ['car', carId],
     queryFn: () => getCar(carId as string),
   });
 
-  // TODO: Load categories
+  // Load categories
+  const {data: categories, isError: categoriesError} = useSuspenseQuery({
+    queryKey: ['all-categories'],
+    queryFn: () => getAllCategory(),
+  });
 
-  // TODO: Load actual fuels
+  // Load actual fuels
+  const {data: fuelsData, isError: fuelsError} = useSuspenseQuery({
+    queryKey: ['all-fuels'],
+    queryFn: () => getFuels(1), // currently there is only one page
+  });
 
-  // TODO: Load actual brands
-
-  // TODO: Load the models from the selected brands
+  useEffect(() => {
+    if (categoriesError || fuelsError || carInfoError) {
+      setDialogOpen(true);
+      setResponseType(ResponseTypes.Unknown);
+    } else {
+      setDialogOpen(false);
+    }
+    // eslint-disable-next-line
+  }, [categoriesError, fuelsError, carInfoError]);
 
   // Map the parent's category name for display
-  // Map the parent's category name for display
-  const fullCategoryMapping = mapParentCategoryNames(DUMMY_CATEGORIES).filter((category) => category.parentId !== null);
-  const categoryOptions = mapCategoriesWithParentName(fullCategoryMapping);
-  const brandOptions = mapBrands(DUMMY_BRANDS);
-  const modelOptions = mapModels(DUMMY_MODELS);
-  const fuelOptions = mapFuels(DUMMY_FUELS);
+  const fullCategoryMapping = mapParentCategoryNames(categories, categories).filter((category) => category.parentCategoryId !== null);
+  const categoryOptions = mapExtendedCategories(fullCategoryMapping);
+  const fuelOptions = mapFuels(fuelsData.content);
+  const selectedFuels = mapFuels(carInfo.fuels!);
 
   const REQUIRED_FIELDS: RequiredFieldType[] = [
     {
@@ -175,25 +60,26 @@ function EditCarPageContent() {
       name: 'categoryId',
       label: '분류',
       required: true,
+      disable: true,
       type: FieldTypes.Autocomplete,
       options: categoryOptions,
       defaultValue: carInfo?.categoryId,
     },
     {
-      name: 'brandId',
+      name: 'brandName',
       label: '브랜드',
       required: true,
-      type: FieldTypes.Autocomplete,
-      options: brandOptions,
-      defaultValue: carInfo?.brandId,
+      disable: true,
+      type: FieldTypes.Text,
+      defaultValue: carInfo?.brandName,
     },
     {
       name: 'modelId',
       label: '모델',
       required: true,
-      type: FieldTypes.Autocomplete,
-      options: modelOptions,
-      defaultValue: carInfo?.modelId,
+      disable: true,
+      type: FieldTypes.Text,
+      defaultValue: carInfo?.modelName,
     },
     {
       name: 'launchedYear',
@@ -209,7 +95,7 @@ function EditCarPageContent() {
       type: FieldTypes.Dropdown,
       multipleOptions: true,
       options: fuelOptions,
-      defaultValue: fuelOptions,
+      defaultValue: selectedFuels,
     },
     {
       name: 'price',
@@ -297,10 +183,42 @@ function EditCarPageContent() {
     },
   ];
 
-  // TODO: Handle sending data (using useMutation())
+  const mutation = useMutation({
+    mutationFn: (car: Car) => editCar(carId!, car),
+    onSuccess: () => {
+      setResponseType(ResponseTypes.Success);
+    },
+    onError: () => {
+      setResponseType(ResponseTypes.Failure);
+    },
+    onSettled: () => {
+      setDialogOpen(true);
+    },
+  });
+
+  // Handle sending data
   const handleSendData = (data: InputValuesType) => {
     // Test input data
     console.log(data);
+    const car: Car = {
+      imagePath: data.imagePath as string,
+      categoryId: data.categoryId as string,
+      modelId: data.modelId as string,
+      launchedYear: data.launchedYear as string,
+      price: data.price as string,
+      fuelEfficiency: data.fuelEfficiency ? (data.fuelEfficiency as string) : '',
+      maxPower: data.maxPower ? (data.maxPower as string) : '',
+      torque: data.torque ? (data.torque as string) : '',
+      capacity: data.capacity ? (data.capacity as string) : '',
+      engine: data.engine ? (data.engine as string) : '',
+      drivingSystem: data.drivingSystem ? (data.drivingSystem as string) : '',
+      transmission: data.transmission ? (data.transmission as string) : '',
+      length: data.length ? (data.length as string) : '',
+      height: data.height ? (data.height as string) : '',
+      width: data.width ? (data.width as string) : '',
+      wheelbase: data.wheelbase ? (data.wheelbase as string) : '',
+    };
+    mutation.mutate(car);
   };
 
   return (
@@ -316,7 +234,9 @@ function EditCarPageContent() {
 export default function EditCarPage() {
   return (
     <AdminCreateEditProvider>
-      <EditCarPageContent />
+      <ErrorBoundaryWrapper>
+        <EditCarPageContent />
+      </ErrorBoundaryWrapper>
     </AdminCreateEditProvider>
   );
 }

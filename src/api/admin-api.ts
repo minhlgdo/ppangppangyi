@@ -149,8 +149,8 @@ export async function getCar(carId: string): Promise<Car> {
   return data;
 }
 
-export async function getCars(): Promise<ApiGetAllResponses<CarsType>> {
-  const {data} = await adminApiClient.get(`/cars`);
+export async function getCars(page: number): Promise<ApiGetAllResponses<CarsType>> {
+  const {data} = await adminApiClient.get(`/cars?page=${page - 1}`);
   return data;
 }
 

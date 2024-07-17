@@ -31,6 +31,7 @@ export default function AutocompleteComponent({width, field, handleChange}: Auto
       error={!!inputErrors[field.name]}
     >
       <Autocomplete
+        disabled={field.disable}
         id={`autocomplete-${field.name}`}
         autoHighlight={true}
         autoSelect={true}
