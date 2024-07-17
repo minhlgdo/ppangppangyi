@@ -107,6 +107,11 @@ export async function deleteCategory(categoryId: string): Promise<number> {
   return status;
 }
 
+export async function getAllCategory(): Promise<CategoriesType> {
+  const {data} = await adminApiClient.get(`/categories/all`);
+  return data;
+}
+
 // MODEL FUNCTIONS
 export async function getModels(page: number): Promise<ApiGetAllResponses<ModelsType>> {
   const {data} = await adminApiClient.get(`/models?page=${page - 1}`);
@@ -152,4 +157,9 @@ export async function getCars(): Promise<ApiGetAllResponses<CarsType>> {
 export async function deleteCar(carId: string) {
   const {status} = await adminApiClient.delete(`/cars/${carId}`);
   return status;
+}
+
+export async function createCar(car: Car) {
+  const {data} = await adminApiClient.post(`/cars`, car);
+  return data;
 }

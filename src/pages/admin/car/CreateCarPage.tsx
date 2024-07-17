@@ -1,153 +1,60 @@
-import {BrandsType, CategoriesType, FuelsType, InputValuesType, ModelsType, RequiredFieldType, SubjectOptions} from '@src/common/types.ts';
-import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
+import {Car, InputValuesType, RequiredFieldType} from '@src/common/types.ts';
+import {AdminPageTypes, FieldTypes, ResponseTypes, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
-import AdminCreateEditProvider, {useInputValues} from '@src/context/AdminCreateEditContext.tsx';
-import {mapBrands, mapCategoriesWithParentName, mapFuels, mapModels, mapParentCategoryNames} from '@src/common/mapping-utils.ts';
-import {useQuery, useSuspenseQuery} from '@tanstack/react-query';
-import {getBrands} from '@src/api/admin-api.ts';
-
-const DUMMY_FUELS: FuelsType = [
-  {
-    fuelId: '1',
-    fuelName: '가솔린',
-  },
-  {
-    fuelId: '2',
-    fuelName: '디젤',
-  },
-  {
-    fuelId: '3',
-    fuelName: '전기',
-  },
-  {
-    fuelId: '4',
-    fuelName: '하이브리드',
-  },
-];
-
-const DUMMY_CATEGORIES: CategoriesType = [
-  {
-    parentId: null,
-    categoryId: '1',
-    categoryName: '경형',
-  },
-  {
-    parentId: null,
-    categoryId: '2',
-    categoryName: '대형',
-  },
-  {
-    parentId: null,
-    categoryId: '3',
-    categoryName: '소형',
-  },
-  {
-    parentId: null,
-    categoryId: '4',
-    categoryName: '스포츠카',
-  },
-  {
-    parentId: null,
-    categoryId: '5',
-    categoryName: '준대형',
-  },
-  {
-    parentId: null,
-    categoryId: '6',
-    categoryName: '준중형',
-  },
-  {
-    parentId: null,
-    categoryId: '7',
-    categoryName: '중형',
-  },
-  {
-    parentId: '1',
-    categoryId: '8',
-    categoryName: 'RV',
-  },
-  {
-    parentId: '1',
-    categoryId: '9',
-    categoryName: 'SUV',
-  },
-  {
-    parentId: '1',
-    categoryId: '10',
-    categoryName: '밴',
-  },
-];
-
-const DUMMY_MODELS: ModelsType = [
-  {
-    modelId: '1',
-    modelName: 'X1',
-    brandName: 'BMW',
-  },
-  {
-    modelId: '2',
-    modelName: '아이오닉',
-    brandName: 'Hyundai',
-  },
-  {
-    modelId: '3',
-    modelName: 'porsche',
-    brandName: 'Porsche',
-  },
-];
-
-const DUMMY_BRANDS: BrandsType = [
-  {
-    brandId: '1',
-    brandName: 'Hyundai',
-  },
-  {
-    brandId: '2',
-    brandName: 'Kia',
-  },
-  {
-    brandId: '3',
-    brandName: 'Audi',
-  },
-  {
-    brandId: '4',
-    brandName: 'Porsche',
-  },
-  {
-    brandId: '5',
-    brandName: 'BMW',
-  },
-];
+import AdminCreateEditProvider, {useDialogOpen, useInputValues, useResponseType} from '@src/context/AdminCreateEditContext.tsx';
+import {mapBrands, mapExtendedCategories, mapFuels, mapModels, mapParentCategoryNames} from '@src/common/mapping-utils.ts';
+import {useMutation, useSuspenseQuery} from '@tanstack/react-query';
+import {createCar, getAllBrands, getAllCategory, getFuels, getModelsByBrand} from '@src/api/admin-api.ts';
+import {useEffect} from 'react';
 
 function CreateCarPageContent() {
-  const fuels = DUMMY_FUELS;
   const {inputValues} = useInputValues();
+  const selectedBrandId = inputValues.brandId;
+  const {setResponseType} = useResponseType();
+  const {setDialogOpen} = useDialogOpen();
 
-  // TODO: Load categories
-
-  // TODO: Load actual fuels
-
-  // TODO: Load actual brands
-  const {
-    data: brands,
-    isLoading: brandsLoading,
-    isError: brandsError,
-  } = useSuspenseQuery({
-    queryKey: ['BRANDS'],
-    queryFn: () => getBrands(),
+  // Load categories
+  const {data: categories, isError: categoriesError} = useSuspenseQuery({
+    queryKey: ['all-categories'],
+    queryFn: () => getAllCategory(),
   });
 
-  // TODO: Load the models from the selected brands
+  // Load actual fuels
+  const {data: fuelsData, isError: fuelsError} = useSuspenseQuery({
+    queryKey: ['all-fuels'],
+    queryFn: () => getFuels(1), // currently there is only one page
+  });
+
+  // Load actual brands
+  const {data: brands, isError: brandsError} = useSuspenseQuery({
+    queryKey: ['all-brands'],
+    queryFn: () => getAllBrands(),
+  });
+
+  // Load the models from the selected brands
+  const {data: models, isError: modelsError} = useSuspenseQuery({
+    queryKey: ['all-models', selectedBrandId],
+    queryFn: () => (selectedBrandId ? getModelsByBrand(selectedBrandId as string) : []),
+  });
+
+  useEffect(() => {
+    if (categoriesError || fuelsError || brandsError || modelsError) {
+      setDialogOpen(true);
+      setResponseType(ResponseTypes.Unknown);
+    } else {
+      setDialogOpen(false);
+    }
+  });
 
   // Map the parent's category name for display
-  const fullCategoryMapping = mapParentCategoryNames(DUMMY_CATEGORIES).filter((category) => category.parentId !== null);
-  const categoryOptions = mapCategoriesWithParentName(fullCategoryMapping);
+  const fullCategoryMapping = mapParentCategoryNames(categories, categories).filter((category) => category.parentCategoryId !== null);
+  const categoryOptions = mapExtendedCategories(fullCategoryMapping);
 
-  const brandOptions = mapBrands(DUMMY_BRANDS);
+  const brandOptions = mapBrands(brands);
 
-  const modelOptions = mapModels(DUMMY_MODELS);
+  const modelOptions = mapModels(models);
 
-  const fuelOptions = mapFuels(DUMMY_FUELS);
+  const fuelOptions = mapFuels(fuelsData.content);
 
   const REQUIRED_FIELDS: RequiredFieldType[] = [
     {
@@ -259,10 +166,41 @@ function CreateCarPageContent() {
     },
   ];
 
+  const mutation = useMutation({
+    mutationFn: (car: Car) => createCar(car),
+    onSuccess: () => {
+      setResponseType(ResponseTypes.Success);
+    },
+    onError: () => {
+      setResponseType(ResponseTypes.Failure);
+    },
+    onSettled: () => {
+      setDialogOpen(true);
+    },
+  });
+
   // TODO: Handle sending data (using useMutation())
   const handleSendData = (data: InputValuesType) => {
     // Test input data
     console.log(data);
+    const car: Car = {
+      categoryId: data.categoryId as string,
+      modelId: data.modelId as string,
+      launchedYear: data.launchedYear as string,
+      price: data.price as string,
+      fuelEfficiency: data.fuelEfficiency ? (data.fuelEfficiency as string) : null,
+      maxPower: data.maxPower ? (data.maxPower as string) : null,
+      torque: data.torque ? (data.torque as string) : null,
+      capacity: data.capacity ? (data.capacity as string) : null,
+      engine: data.engine ? (data.engine as string) : null,
+      drivingSystem: data.drivingSystem ? (data.drivingSystem as string) : null,
+      transmission: data.transmission ? (data.transmission as string) : null,
+      length: data.length ? (data.length as string) : null,
+      height: data.height ? (data.height as string) : null,
+      width: data.width ? (data.width as string) : null,
+      wheelbase: data.wheelbase ? (data.wheelbase as string) : null,
+    };
+    mutation.mutate(car);
   };
 
   return (

@@ -16,7 +16,7 @@ export default function AutocompleteComponent({width, field, handleChange}: Auto
 
   const handleValueChange = (value: SubjectOptions | null) => {
     console.log('Selected value:', value);
-    const val = value ? value.key : '';
+    const val = value?.key ?? '';
     handleChange(field.name, val);
   };
 
