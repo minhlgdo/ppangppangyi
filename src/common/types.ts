@@ -5,6 +5,7 @@ interface RequiredFieldInterface {
   name: string;
   label: string; // label text
   required: boolean;
+  disable?: boolean;
   type: FieldType;
   defaultValue?: string | number | SubjectOptions[]; // string for text values, number for dropdown
   options?: SubjectOptions[];

@@ -1,61 +1,86 @@
-import {RequiredFieldType} from '@src/common/types.ts';
-import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
+import {InputValuesType, Model, RequiredFieldType} from '@src/common/types.ts';
+import {AdminPageTypes, FieldTypes, ResponseTypes, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import {useParams} from 'react-router-dom';
-import {useState} from 'react';
-import AdminCreateEditProvider from '@src/context/AdminCreateEditContext.tsx';
-import {useSuspenseQuery} from '@tanstack/react-query';
-import {getBrands} from '@src/api/admin-api.ts';
-import {mapBrands} from '@src/common/mapping-utils.ts';
+import {useEffect} from 'react';
+import AdminCreateEditProvider, {useDialogOpen, useResponseType} from '@src/context/AdminCreateEditContext.tsx';
+import {useMutation, useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
+import {editModel, getModel} from '@src/api/admin-api.ts';
 
-export default function EditModelPage() {
+function EditModelPageContent() {
   const {modelId} = useParams();
-  const [modelName, setModelName] = useState('');
-  const [brandName, setBrandName] = useState('');
+  const {setResponseType} = useResponseType();
+  const {setDialogOpen} = useDialogOpen();
 
-  // Load the brands
-  const {
-    data: brands,
-    isLoading: brandsLoading,
-    isError: brandsError,
-  } = useSuspenseQuery({
-    queryKey: ['brands'],
-    queryFn: () => getBrands(),
-    refetchInterval: 10000,
+  // Load saved information
+  const {data: model, isError: isModelError} = useSuspenseQuery({
+    queryKey: ['model', modelId],
+    queryFn: () => getModel(modelId!),
   });
 
-  // Mapping
-  const brandsOptions = mapBrands(brands);
+  useEffect(() => {
+    if (isModelError) {
+      setDialogOpen(true);
+      setResponseType(ResponseTypes.Unknown);
+    } else {
+      setDialogOpen(false);
+    }
+    // eslint-disable-next-line
+  }, [isModelError]);
 
   const REQUIRED_INPUTS: RequiredFieldType[] = [
     {
-      name: 'brandName',
+      name: 'brandId',
       label: '브랜드',
       required: true,
-      type: FieldTypes.Autocomplete,
-      options: brandsOptions,
-      defaultValue: brandName,
+      type: FieldTypes.Text,
+      disable: true,
+      defaultValue: model.brandName,
     },
     {
       name: 'modelName',
       label: '모델',
       required: true,
       type: FieldTypes.Text,
-      defaultValue: modelName,
+      defaultValue: model.modelName,
     },
   ];
 
-  // TODO: Handle sending data to the API
-  const handleSendData = () => {};
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (model: Model) => editModel(modelId!, model),
+    onSuccess: () => {
+      setResponseType(ResponseTypes.Success);
+      queryClient.invalidateQueries({queryKey: ['model', modelId]});
+    },
+    onError: () => {
+      setResponseType(ResponseTypes.Failure);
+    },
+    onSettled: () => {
+      setDialogOpen(true);
+    },
+  });
+  const handleSendData = (data: InputValuesType) => {
+    const model: Model = {
+      modelName: data.modelName as string,
+    };
+    mutation.mutate(model);
+  };
 
   return (
+    <CreateEditLayout
+      subject={Subjects.Model}
+      requiredFields={REQUIRED_INPUTS}
+      view={AdminPageTypes.Edit}
+      handleSendData={handleSendData}
+    />
+  );
+}
+
+export default function EditModelPage() {
+  return (
     <AdminCreateEditProvider>
-      <CreateEditLayout
-        subject={Subjects.Model}
-        requiredFields={REQUIRED_INPUTS}
-        view={AdminPageTypes.Edit}
-        handleSendData={handleSendData}
-      />
+      <EditModelPageContent />
     </AdminCreateEditProvider>
   );
 }

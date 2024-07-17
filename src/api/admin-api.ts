@@ -123,6 +123,21 @@ export async function createModel(model: Model): Promise<Model> {
   return data;
 }
 
+export async function getModel(modelId: string): Promise<Model> {
+  const {data} = await adminApiClient.get(`/models/${modelId}`);
+  return data;
+}
+
+export async function editModel(modelId: string, model: Model): Promise<Model> {
+  const {data} = await adminApiClient.put(`/models/${modelId}`, model);
+  return data;
+}
+
+export async function getModelsByBrand(brandId: string): Promise<ModelsType> {
+  const {data} = await adminApiClient.get(`/models/brand?id=${brandId}`);
+  return data;
+}
+
 // CAR FUNCTIONS
 export async function getCar(carId: string): Promise<Car> {
   const {data} = await adminApiClient.get(`/cars/${carId}`);

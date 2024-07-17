@@ -15,6 +15,7 @@ export default function TextFieldComponent({width, field, handleChange}: TextFie
 
   return (
     <TextField
+      disabled={field.disable}
       sx={{width: width}}
       variant={'filled'}
       required={field.required}
