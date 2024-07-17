@@ -11,7 +11,7 @@ import {keepPreviousData, useQuery} from '@tanstack/react-query';
 import {getCarsUsingCategory} from '@src/api/user-api.ts';
 import {CarsType} from '@src/common/types.ts';
 
-export default function Homepage() {
+function HomepageContent() {
   const {searchCategory} = useSearchCategory();
   const [page, setPage] = useState(1);
 
@@ -30,24 +30,30 @@ export default function Homepage() {
   };
 
   return (
+    <Stack
+      spacing={4}
+      sx={{ml: 2, mr: 2, p: 2, marginTop: 4, marginBottom: 20}}
+    >
+      <Typography variant={'h4'}>오늘 어떤 모델을 찾고 계시나요?</Typography>
+      <Filter />
+      {isLoading ? <CircularProgress /> : <CarContentList items={cars} />}
+      <Pagination
+        count={totalPages}
+        page={page}
+        onChange={handlePageChange}
+        color={'primary'}
+      />
+      <CompareBottomSheet />
+    </Stack>
+  );
+}
+
+export default function Homepage() {
+  return (
     <CompareContextProvider>
       <HomeContextProvider>
         <ErrorBoundaryWrapper>
-          <Stack
-            spacing={4}
-            sx={{ml: 2, mr: 2, p: 2, marginTop: 4, marginBottom: 20}}
-          >
-            <Typography variant={'h4'}>오늘 어떤 모델을 찾고 계시나요?</Typography>
-            <Filter />
-            {isLoading ? <CircularProgress /> : <CarContentList items={cars} />}
-            <Pagination
-              count={totalPages}
-              page={page}
-              onChange={handlePageChange}
-              color={'primary'}
-            />
-            <CompareBottomSheet />
-          </Stack>
+          <HomepageContent />
         </ErrorBoundaryWrapper>
       </HomeContextProvider>
     </CompareContextProvider>

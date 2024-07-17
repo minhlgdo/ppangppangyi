@@ -12,7 +12,7 @@ interface HomeProviderProps {
 }
 
 // Initial state
-const INITIAL_CATEGORY_STATE = '경형';
+const INITIAL_CATEGORY_STATE = '8';
 
 const HomeContext = createContext<HomeContextValue>({
   searchCategory: INITIAL_CATEGORY_STATE,

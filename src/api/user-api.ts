@@ -8,6 +8,6 @@ const homeApiClient = axios.create({
 });
 
 export async function getCarsUsingCategory(categoryId: string, page: number): Promise<ApiGetAllResponses<CarsType>> {
-  const {data} = await homeApiClient.get(`/cars?category=${categoryId}&page=${page}`);
+  const {data} = await homeApiClient.get(`/cars?category=${categoryId}&page=${page - 1}`);
   return data;
 }
