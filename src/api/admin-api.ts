@@ -1,6 +1,18 @@
 import axios from 'axios';
 import {BASE_SERVICE_URL} from '@src/common/constants.ts';
-import {ApiGetAllResponses, Brand, BrandsType, Car, CarsType, CategoriesType, Category, Fuel, FuelsType} from '@src/common/types.ts';
+import {
+  ApiGetAllResponses,
+  Brand,
+  BrandsType,
+  Car,
+  CarsType,
+  CategoriesType,
+  Category,
+  Fuel,
+  FuelsType,
+  Model,
+  ModelsType,
+} from '@src/common/types.ts';
 
 const adminApiClient = axios.create({
   baseURL: BASE_SERVICE_URL + '/admin',
@@ -87,6 +99,17 @@ export async function editCategory(categoryId: string, category: Category): Prom
 
 export async function deleteCategory(categoryId: string): Promise<number> {
   const {status} = await adminApiClient.delete(`/categories/${categoryId}`);
+  return status;
+}
+
+// MODEL FUNCTIONS
+export async function getModels(page: number): Promise<ApiGetAllResponses<ModelsType>> {
+  const {data} = await adminApiClient.get(`/models?page=${page - 1}`);
+  return data;
+}
+
+export async function deleteModel(modelId: string): Promise<number> {
+  const {status} = await adminApiClient.delete(`/models/${modelId}`);
   return status;
 }
 

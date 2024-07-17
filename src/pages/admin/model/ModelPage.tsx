@@ -1,43 +1,52 @@
-import AdminGeneralContextProvider from '@src/context/AdminGeneralContext.tsx';
-import {ChangeEvent, useState} from 'react';
-import {ModelsType} from '@src/common/types.ts';
+import AdminGeneralContextProvider, {useDeleteResponse, useFetchError} from '@src/context/AdminGeneralContext.tsx';
+import {ChangeEvent, useEffect, useState} from 'react';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
-import {Subjects} from '@src/common/constants.ts';
+import {ResponseTypes, Subjects} from '@src/common/constants.ts';
 import {MODEL_CREATE_PATH, MODEL_MAIN_PATH} from '@src/common/navigation.ts';
 import {mapModels} from '@src/common/mapping-utils.ts';
-
-const DUMMY_MODELS: ModelsType = [
-  {
-    modelId: 1,
-    modelName: 'X1',
-    brandName: 'BMW',
-  },
-  {
-    modelId: 2,
-    modelName: '아이오닉',
-    brandName: 'Hyundai',
-  },
-  {
-    modelId: 3,
-    modelName: 'porsche',
-    brandName: 'Porsche',
-  },
-];
+import {keepPreviousData, useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {deleteModel, getModels} from '@src/api/admin-api.ts';
 
 function ModelPageContent() {
-  const [totalItems, setTotalItems] = useState(DUMMY_MODELS.length);
-  const [modelList, setModelList] = useState<ModelsType>(DUMMY_MODELS);
-
-  const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
+  const queryClient = useQueryClient();
+  const {setResponse} = useDeleteResponse();
+  const {setFetchError} = useFetchError();
 
-  // TODO: Load all models
+  // Load all models
+  const {
+    data: modelsData,
+    isError: isFetchError,
+    isLoading,
+  } = useQuery({
+    queryKey: ['models', page],
+    queryFn: () => getModels(page),
+    placeholderData: keepPreviousData,
+  });
 
-  const modelOptions = mapModels(DUMMY_MODELS);
+  useEffect(() => {
+    setFetchError(isFetchError);
+  }, [isFetchError, setFetchError]);
+
+  const models = modelsData?.content;
+  const totalPages = modelsData?.page.totalPages ?? 1;
+  const totalItems = modelsData?.page.totalElements ?? '0';
+
+  const modelOptions = models ? mapModels(models) : [];
+
+  const mutation = useMutation({
+    mutationFn: (modelId: string) => deleteModel(modelId),
+    onSuccess: () => {
+      setResponse(ResponseTypes.Success);
+      queryClient.invalidateQueries({queryKey: ['models', page]});
+    },
+    onError: () => {
+      setResponse(ResponseTypes.Failure);
+    },
+  });
 
   const handleDeleteItem = (id: string) => {
-    console.log(`Delete item ${id}`);
-    // TODO: Call the items here
+    mutation.mutate(id);
   };
 
   const handlePageChange = (event: ChangeEvent<unknown>, page: number) => {
@@ -48,10 +57,9 @@ function ModelPageContent() {
     <GeneralLayout
       subject={Subjects.Model}
       createPagePath={MODEL_CREATE_PATH}
-      totalItems={totalItems.toString()}
+      totalItems={totalItems}
       items={modelOptions}
-      isLoadingItems={false}
-      isFetchingError={false}
+      isLoadingItems={isLoading}
       basePagePath={MODEL_MAIN_PATH}
       totalPages={totalPages}
       page={page}
