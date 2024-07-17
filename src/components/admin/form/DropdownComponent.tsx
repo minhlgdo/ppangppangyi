@@ -11,7 +11,6 @@ interface DropdownComponentProps {
 export default function DropdownComponent({width, field, handleChange}: DropdownComponentProps) {
   const {inputValues} = useInputValues();
   const {inputErrors} = useInputErrors();
-
   const value = inputValues[field.name] ?? (field.multipleOptions ? [] : '');
 
   const handleInputChange = (e: SelectChangeEvent<string | number | string[]>) => {
@@ -23,6 +22,7 @@ export default function DropdownComponent({width, field, handleChange}: Dropdown
       variant={'filled'}
       sx={{m: 1, minWidth: width}}
       error={!!inputErrors[field.name]}
+      disabled={field.disable}
     >
       <InputLabel>{field.required ? '필수 *' : '선택'}</InputLabel>
       <Select

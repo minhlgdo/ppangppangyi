@@ -43,6 +43,7 @@ function EditCategoryPageContent() {
       name: 'parentCategoryId',
       label: '부모 분류',
       required: false,
+      disable: true,
       type: FieldTypes.Dropdown,
       options: parentCategoryOptions,
       multipleOptions: false,
