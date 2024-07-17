@@ -14,7 +14,7 @@ interface RequiredFieldInterface {
 export type RequiredFieldType = RequiredFieldInterface;
 
 export interface SubjectOptions {
-  key: string;
+  key?: string;
   name: string;
 }
 
@@ -39,7 +39,7 @@ export type FuelsType = Fuel[];
 
 export interface Category {
   parentId: string | null;
-  categoryId: string;
+  categoryId?: string;
   categoryName: string;
 }
 

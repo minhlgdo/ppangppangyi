@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {BASE_SERVICE_URL} from '@src/common/constants.ts';
-import {ApiGetAllResponses, Brand, BrandsType, Car, CarsType, Fuel, FuelsType} from '@src/common/types.ts';
+import {ApiGetAllResponses, Brand, BrandsType, Car, CarsType, CategoriesType, Category, Fuel, FuelsType} from '@src/common/types.ts';
 
 const adminApiClient = axios.create({
   baseURL: BASE_SERVICE_URL + '/admin',
@@ -56,6 +56,32 @@ export async function editFuel(fuelId: string, fuel: Fuel): Promise<Fuel> {
 
 export async function deleteFuel(fuelId: string): Promise<number> {
   const {status} = await adminApiClient.delete(`/fuels/${fuelId}`);
+  return status;
+}
+
+// CATEGORY FUNCTIONS
+export async function getCategories(page: number): Promise<ApiGetAllResponses<CategoriesType>> {
+  const {data} = await adminApiClient.get(`/categories?page=${page - 1}`);
+  return data;
+}
+
+export async function getParentCategories(): Promise<CategoriesType> {
+  const {data} = await adminApiClient.get(`/categories/parents`);
+  return data;
+}
+
+export async function getCategory(categoryId: string): Promise<Category> {
+  const {data} = await adminApiClient.get(`/categories/${categoryId}`);
+  return data;
+}
+
+export async function createCategory(category: Category): Promise<Category> {
+  const {data} = await adminApiClient.post(`/categories`, category);
+  return data;
+}
+
+export async function deleteCategory(categoryId: string): Promise<number> {
+  const {status} = await adminApiClient.delete(`/categories/${categoryId}`);
   return status;
 }
 

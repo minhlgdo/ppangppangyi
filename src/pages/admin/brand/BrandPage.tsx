@@ -39,7 +39,6 @@ function BrandPageContent() {
   });
 
   const handleDeleteItem = (id: string) => {
-    console.log(`Delete item ${id}`);
     mutation.mutate(id);
   };
 

@@ -9,15 +9,15 @@ import {
   SubjectOptions,
 } from '@src/common/types.ts';
 
-export const mapParentCategoryNames = (categories: CategoriesType): ExtendedCategoriesType => {
+export const mapParentCategoryNames = (categories: CategoriesType, parentCategories: CategoriesType): ExtendedCategoriesType => {
   // Create a lookup table
-  const categoryMap: {[key: string]: Category} = {};
-  categories.map((category) => {
-    categoryMap[category.categoryId] = category;
+  const parentCategoryMap: {[key: string]: Category} = {};
+  parentCategories.map((parentCategory) => {
+    parentCategoryMap[parentCategory.categoryId] = parentCategory;
   });
 
   return categories.map((category) => {
-    const parentCategoryName = category.parentId ? categoryMap[category.parentId]?.categoryName : '';
+    const parentCategoryName = category.parentId ? parentCategoryMap[category.parentId]?.categoryName : '';
     return {
       ...category,
       parentCategoryName: parentCategoryName,
@@ -52,7 +52,16 @@ export const mapCars = (cars: CarsType): SubjectOptions[] => {
   });
 };
 
-export const mapCategoriesWithParentName = (categories: ExtendedCategoriesType): SubjectOptions[] => {
+export const mapParentCategories = (parentCategories: CategoriesType) => {
+  return parentCategories.map((opt) => {
+    return {
+      key: opt.categoryId,
+      name: opt.categoryName,
+    };
+  });
+};
+
+export const mapExtendedCategories = (categories: ExtendedCategoriesType): SubjectOptions[] => {
   return categories.map((cat) => {
     return {
       key: cat.categoryId,
