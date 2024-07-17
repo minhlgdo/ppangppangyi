@@ -84,3 +84,15 @@ export interface Car {
 }
 
 export type CarsType = Car[];
+
+interface PageResponse {
+  size: string;
+  number: string;
+  totalElements: string;
+  totalPages: number;
+}
+
+export interface ApiGetAllResponses<T> {
+  content: T;
+  page: PageResponse;
+}

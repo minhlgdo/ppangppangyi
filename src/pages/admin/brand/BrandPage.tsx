@@ -4,24 +4,27 @@ import AdminGeneralContextProvider, {useDeleteResponse} from '@src/context/Admin
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {BRAND_CREATE_PATH, BRAND_MAIN_PATH} from '@src/common/navigation.ts';
 import {ResponseTypes, Subjects} from '@src/common/constants.ts';
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {keepPreviousData, useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {mapBrands} from '@src/common/mapping-utils.ts';
 
 function BrandPageContent() {
-  const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
   const queryClient = useQueryClient();
   const {setResponse} = useDeleteResponse();
 
   const {
-    data: brands,
+    data: brandData,
     isError: isFetchingError,
     isLoading: isLoadingBrands,
   } = useQuery({
     queryKey: ['brands', page],
-    queryFn: () => getBrands(),
+    queryFn: () => getBrands(page),
+    placeholderData: keepPreviousData,
   });
 
+  const brands = brandData?.content;
+  const totalPages = brandData?.page.totalPages ?? 1;
+  const totalItems = brandData?.page.totalElements ?? '0';
   const brandOptions = brands ? mapBrands(brands) : [];
 
   const mutation = useMutation({
@@ -48,7 +51,7 @@ function BrandPageContent() {
     <GeneralLayout
       subject={Subjects.Brand}
       createPagePath={BRAND_CREATE_PATH}
-      totalItems={brandOptions.length.toString()}
+      totalItems={totalItems}
       items={brandOptions}
       isLoadingItems={isLoadingBrands}
       isFetchingError={isFetchingError}
