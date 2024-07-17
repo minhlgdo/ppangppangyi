@@ -1,9 +1,14 @@
-import {AdminPageTypes, FieldTypes, Subjects} from '@src/common/constants.ts';
+import {AdminPageTypes, FieldTypes, ResponseTypes, Subjects} from '@src/common/constants.ts';
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
-import {InputValuesType, RequiredFieldType} from '@src/common/types.ts';
-import AdminCreateEditProvider from '@src/context/AdminCreateEditContext.tsx';
+import {Brand, InputValuesType, RequiredFieldType} from '@src/common/types.ts';
+import AdminCreateEditProvider, {useDialogOpen, useResponseType} from '@src/context/AdminCreateEditContext.tsx';
+import {useMutation} from '@tanstack/react-query';
+import {createBrand} from '@src/api/admin-api.ts';
 
-export default function CreateBrandPage() {
+function CreateBrandContent() {
+  const {setResponseType} = useResponseType();
+  const {setDialogOpen} = useDialogOpen();
+
   const REQUIRED_INPUTS: RequiredFieldType[] = [
     {
       name: 'brandName',
@@ -13,20 +18,41 @@ export default function CreateBrandPage() {
     },
   ];
 
+  const mutation = useMutation({
+    mutationFn: (brand: Brand) => createBrand(brand),
+    onSuccess: () => {
+      setResponseType(ResponseTypes.Success);
+    },
+    onError: () => {
+      setResponseType(ResponseTypes.Failure);
+    },
+    onSettled: () => {
+      setDialogOpen(true);
+    },
+  });
+
   // TODO: Handle sending data to the API
   const handleSendData = (data: InputValuesType) => {
-    // Test
-    console.log(data);
+    const newBrand: Brand = {
+      brandName: data.brandName as string,
+    };
+    mutation.mutate(newBrand);
   };
 
   return (
+    <CreateEditLayout
+      subject={Subjects.Brand}
+      requiredFields={REQUIRED_INPUTS}
+      view={AdminPageTypes.Create}
+      handleSendData={handleSendData}
+    />
+  );
+}
+
+export default function CreateBrandPage() {
+  return (
     <AdminCreateEditProvider>
-      <CreateEditLayout
-        subject={Subjects.Brand}
-        requiredFields={REQUIRED_INPUTS}
-        view={AdminPageTypes.Create}
-        handleSendData={handleSendData}
-      />
+      <CreateBrandContent />
     </AdminCreateEditProvider>
   );
 }

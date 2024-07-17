@@ -7,7 +7,7 @@ import {
   ResponseTypeValue,
   SubjectType,
 } from '@src/common/constants.ts';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {isFormValid, validateFields} from '@src/common/validation-utils.ts';
 import {Box} from '@mui/material';
@@ -15,7 +15,7 @@ import {PageHeader} from '@src/components/admin/PageHeader.tsx';
 import InputForm from '@src/components/admin/InputForm.tsx';
 import SaveComponent from '@src/components/admin/SaveComponent.tsx';
 import ResponseDialog from '@src/components/admin/ResponseDialog.tsx';
-import {useInputErrors, useInputValues} from '@src/context/AdminCreateEditContext.tsx';
+import {useDialogOpen, useInputErrors, useInputValues, useResponseType} from '@src/context/AdminCreateEditContext.tsx';
 
 interface CreateEditLayoutProps {
   subject: SubjectType;
@@ -41,11 +41,11 @@ const initializeInputValues = (fields: RequiredFieldType[]): InputValuesType => 
 };
 
 export default function CreateEditLayout({subject, requiredFields, view, handleSendData}: CreateEditLayoutProps) {
-  const [openDialog, setOpenDialog] = useState(false);
-  const [result, setResult] = useState<ResponseTypeValue>(ResponseTypes.Unknown);
   const navigate = useNavigate();
   const {inputValues, setInputValues} = useInputValues();
   const {setInputErrors} = useInputErrors();
+  const {response} = useResponseType();
+  const {isDialogOpen, setDialogOpen} = useDialogOpen();
 
   // Initialize the values of inputValues using requiredFields. only load when the component mounts
   useEffect(() => {
@@ -60,11 +60,7 @@ export default function CreateEditLayout({subject, requiredFields, view, handleS
     setInputErrors(validationErrors);
 
     if (isFormValid(validationErrors)) {
-      // TODO: Send the received data to the server
       handleSendData(inputValues);
-      // TODO: Depending on the receiving result, save the corresponding result
-      setResult(ResponseTypes.Success);
-      setOpenDialog(true);
     }
   };
 
@@ -73,8 +69,8 @@ export default function CreateEditLayout({subject, requiredFields, view, handleS
   };
 
   const handleDialogClose = () => {
-    setOpenDialog(false);
-    if (result === ResponseTypes.Success && view === AdminPageTypes.Create) {
+    setDialogOpen(false);
+    if (response === ResponseTypes.Success && view === AdminPageTypes.Create) {
       navigate(-1); // Go back to the previous page if the view is Create
     }
   };
@@ -99,8 +95,8 @@ export default function CreateEditLayout({subject, requiredFields, view, handleS
         onCancel={handleCancelClick}
       />
       <ResponseDialog
-        isOpened={openDialog}
-        text={getMessage(result)}
+        isOpened={isDialogOpen}
+        text={getMessage(response)}
         handleClose={handleDialogClose}
       />
     </Box>

@@ -24,14 +24,14 @@ export interface InputValuesType {
 
 // Object structures
 export interface Brand {
-  brandId: string;
+  brandId?: string;
   brandName: string;
 }
 
 export type BrandsType = Brand[];
 
 export interface Fuel {
-  fuelId: string;
+  fuelId?: string;
   fuelName: string;
 }
 

@@ -11,7 +11,6 @@ function InputForm({fields}: InputFormProps) {
   const {inputValues, setInputValues} = useInputValues();
 
   const handleChange = (name: string, value: string | number | string[]) => {
-    console.log(name, value);
     setInputValues({...inputValues, [name]: value});
   };
 
