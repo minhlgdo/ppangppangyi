@@ -2,13 +2,12 @@ import {AdminPageTypes, FieldTypes, ResponseTypes, Subjects} from '@src/common/c
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import {Brand, InputValuesType, RequiredFieldType} from '@src/common/types.ts';
 import AdminCreateEditProvider, {useDialogOpen, useResponseType} from '@src/context/AdminCreateEditContext.tsx';
-import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {useMutation} from '@tanstack/react-query';
 import {createBrand} from '@src/api/admin-api.ts';
 
 function CreateBrandContent() {
   const {setResponseType} = useResponseType();
   const {setDialogOpen} = useDialogOpen();
-  const queryClient = useQueryClient();
 
   const REQUIRED_INPUTS: RequiredFieldType[] = [
     {
@@ -23,7 +22,6 @@ function CreateBrandContent() {
     mutationFn: (brand: Brand) => createBrand(brand),
     onSuccess: () => {
       setResponseType(ResponseTypes.Success);
-      queryClient.invalidateQueries({queryKey: ['brands']});
     },
     onError: () => {
       setResponseType(ResponseTypes.Failure);

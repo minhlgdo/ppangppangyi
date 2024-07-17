@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {BASE_SERVICE_URL} from '@src/common/constants.ts';
-import {ApiGetAllResponses, Brand, BrandsType, Car, CarsType} from '@src/common/types.ts';
+import {ApiGetAllResponses, Brand, BrandsType, Car, CarsType, Fuel, FuelsType} from '@src/common/types.ts';
 
 const adminApiClient = axios.create({
   baseURL: BASE_SERVICE_URL + '/admin',
@@ -34,7 +34,20 @@ export async function deleteBrand(brandId: string): Promise<number> {
 }
 
 // FUEL FUNCTIONS
-export async function getFuels();
+export async function getFuels(page: number): Promise<ApiGetAllResponses<FuelsType>> {
+  const {data} = await adminApiClient.get(`/fuels?page=${page - 1}`);
+  return data;
+}
+
+export async function getFuel(fuelId: string): Promise<Fuel> {
+  const {data} = await adminApiClient.get(`/fuels/${fuelId}`);
+  return data;
+}
+
+export async function createFuel(fuel: Fuel): Promise<Fuel> {
+  const {data} = await adminApiClient.post(`/fuels`, fuel);
+  return data;
+}
 
 // CAR FUNCTIONS
 export async function getCar(carId: string): Promise<Car> {
