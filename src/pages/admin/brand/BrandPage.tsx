@@ -25,7 +25,8 @@ function BrandPageContent() {
 
   useEffect(() => {
     setFetchError(isFetchingError);
-  }, [isFetchingError, setFetchError]);
+    // eslint-disable-next-line
+  }, [isFetchingError]);
 
   const brands = brandData?.content;
   const totalPages = brandData?.page.totalPages ?? 1;

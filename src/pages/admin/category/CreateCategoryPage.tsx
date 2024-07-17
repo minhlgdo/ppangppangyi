@@ -24,7 +24,8 @@ function CreateCategoryPageContent() {
     } else {
       setDialogOpen(false);
     }
-  }, [fetchError, setDialogOpen, setResponseType]);
+    // eslint-disable-next-line
+  }, [fetchError]);
 
   // Map
   const parentCategoryOptions = mapParentCategories(parentCategories);

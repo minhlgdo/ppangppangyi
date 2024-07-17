@@ -26,7 +26,8 @@ function ModelPageContent() {
 
   useEffect(() => {
     setFetchError(isFetchError);
-  }, [isFetchError, setFetchError]);
+    // eslint-disable-next-line
+  }, [isFetchError]);
 
   const models = modelsData?.content;
   const totalPages = modelsData?.page.totalPages ?? 1;

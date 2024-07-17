@@ -26,7 +26,8 @@ function FuelPageContent() {
 
   useEffect(() => {
     setFetchError(isFetchingError);
-  }, [isFetchingError, setFetchError]);
+    // eslint-disable-next-line
+  }, [isFetchingError]);
 
   const mutation = useMutation({
     mutationFn: (fuelId: string) => deleteFuel(fuelId),

@@ -32,7 +32,8 @@ function EditCategoryPageContent() {
     } else {
       setDialogOpen(false);
     }
-  }, [fetchInfoError, fetchParentCatError, setDialogOpen, setResponseType]);
+    // eslint-disable-next-line
+  }, [fetchInfoError, fetchParentCatError]);
 
   // Map the parent category
   const parentCategoryOptions = mapParentCategories(parentCategories);

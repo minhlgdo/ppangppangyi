@@ -32,7 +32,8 @@ function CategoryPageContent() {
 
   useEffect(() => {
     setFetchError(isFetchDataError || isFetchDataError);
-  }, [isFetchDataError, isFetchParentError, setFetchError]);
+    // eslint-disable-next-line
+  }, [isFetchDataError, isFetchParentError]);
 
   const categories = categoriesData?.content;
   const totalPages = categoriesData?.page.totalPages ?? 1;
