@@ -43,7 +43,6 @@ function EditBrandPageContent() {
     mutationFn: (brand: Brand) => updateBrand(brandId!, brand),
     onSuccess: () => {
       setResponseType(ResponseTypes.Success);
-      queryClient.invalidateQueries({queryKey: ['brands']});
       queryClient.invalidateQueries({queryKey: ['brand', brandId]});
     },
     onError: () => {

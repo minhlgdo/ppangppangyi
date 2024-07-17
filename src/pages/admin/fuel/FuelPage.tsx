@@ -3,34 +3,23 @@ import {FUEL_CREATE_PATH, FUEL_MAIN_PATH} from '@src/common/navigation.ts';
 import React, {ChangeEvent, useState} from 'react';
 import AdminGeneralContextProvider from '@src/context/AdminGeneralContext.tsx';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
-import {Fuel, FuelsType} from '@src/common/types.ts';
 import {mapFuels} from '@src/common/mapping-utils.ts';
-
-const DUMMY_FUELS: FuelsType = [
-  {
-    fuelId: 1,
-    fuelName: '가솔린',
-  },
-  {
-    fuelId: 2,
-    fuelName: '디젤',
-  },
-  {
-    fuelId: 3,
-    fuelName: '전기',
-  },
-  {
-    fuelId: 4,
-    fuelName: '하이브리드',
-  },
-];
+import {keepPreviousData, useQuery} from '@tanstack/react-query';
+import {getFuels} from '@src/api/admin-api.ts';
 
 function FuelPageContent() {
   // Variables
-  const [fuelList, setFuelList] = useState(DUMMY_FUELS);
-  const [totalItems, setTotalItems] = useState(DUMMY_FUELS.length);
-  const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
+
+  const {
+    data: fuelData,
+    isLoading: isFetchingFuels,
+    isError: isFetchingError,
+  } = useQuery({
+    queryKey: ['fuels', page],
+    queryFn: () => getFuels(page),
+    placeholderData: keepPreviousData,
+  });
 
   const handleDeleteItem = (id: string) => {
     console.log(`Delete item ${id}`);
@@ -42,16 +31,19 @@ function FuelPageContent() {
   };
 
   // TODO: Load the real fuel list here
-  const fuelOptions = mapFuels(DUMMY_FUELS);
+  const fuels = fuelData?.content;
+  const fuelOptions = fuels ? mapFuels(fuels) : [];
+  const totalItems = fuelData?.page.totalElements ?? '0';
+  const totalPages = fuelData?.page.totalPages ?? 1;
 
   return (
     <GeneralLayout
       subject={Subjects.Fuel}
       createPagePath={FUEL_CREATE_PATH}
-      totalItems={fuelOptions.length.toString()}
+      totalItems={totalItems}
       items={fuelOptions}
-      isLoadingItems={false}
-      isFetchingError={false}
+      isLoadingItems={isFetchingFuels}
+      isFetchingError={isFetchingError}
       basePagePath={FUEL_MAIN_PATH}
       totalPages={totalPages}
       page={page}
