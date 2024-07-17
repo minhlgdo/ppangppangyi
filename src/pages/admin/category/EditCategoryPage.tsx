@@ -7,6 +7,7 @@ import {useMutation, useQueryClient, useSuspenseQuery} from '@tanstack/react-que
 import {editCategory, getCategory, getParentCategories} from '@src/api/admin-api.ts';
 import {mapParentCategories} from '@src/common/mapping-utils.ts';
 import {useEffect} from 'react';
+import ErrorBoundaryWrapper from '@src/pages/ErrorBoundaryWrapper.tsx';
 
 function EditCategoryPageContent() {
   const {categoryId} = useParams();
@@ -96,7 +97,9 @@ function EditCategoryPageContent() {
 export default function EditCategoryPage() {
   return (
     <AdminCreateEditProvider>
-      <EditCategoryPageContent />
+      <ErrorBoundaryWrapper>
+        <EditCategoryPageContent />
+      </ErrorBoundaryWrapper>
     </AdminCreateEditProvider>
   );
 }

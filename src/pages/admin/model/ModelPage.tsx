@@ -6,6 +6,7 @@ import {MODEL_CREATE_PATH, MODEL_MAIN_PATH} from '@src/common/navigation.ts';
 import {mapModels} from '@src/common/mapping-utils.ts';
 import {keepPreviousData, useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {deleteModel, getModels} from '@src/api/admin-api.ts';
+import ErrorBoundaryWrapper from '@src/pages/ErrorBoundaryWrapper.tsx';
 
 function ModelPageContent() {
   const [page, setPage] = useState(1);
@@ -73,7 +74,9 @@ function ModelPageContent() {
 export default function ModelPage() {
   return (
     <AdminGeneralContextProvider>
-      <ModelPageContent />
+      <ErrorBoundaryWrapper>
+        <ModelPageContent />
+      </ErrorBoundaryWrapper>
     </AdminGeneralContextProvider>
   );
 }

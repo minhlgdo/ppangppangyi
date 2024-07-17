@@ -6,6 +6,7 @@ import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import AdminCreateEditProvider, {useDialogOpen, useResponseType} from '@src/context/AdminCreateEditContext.tsx';
 import {useMutation, useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
 import {editFuel, getFuel} from '@src/api/admin-api.ts';
+import ErrorBoundaryWrapper from '@src/pages/ErrorBoundaryWrapper.tsx';
 
 function EditFuelPageContent() {
   const {fuelId} = useParams();
@@ -73,7 +74,9 @@ function EditFuelPageContent() {
 export default function EditFuelPage() {
   return (
     <AdminCreateEditProvider>
-      <EditFuelPageContent />
+      <ErrorBoundaryWrapper>
+        <EditFuelPageContent />
+      </ErrorBoundaryWrapper>
     </AdminCreateEditProvider>
   );
 }

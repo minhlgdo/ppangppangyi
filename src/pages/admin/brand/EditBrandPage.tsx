@@ -6,6 +6,7 @@ import AdminCreateEditProvider, {useDialogOpen, useResponseType} from '@src/cont
 import {useMutation, useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
 import {getBrand, updateBrand} from '@src/api/admin-api.ts';
 import {useEffect} from 'react';
+import ErrorBoundaryWrapper from '@src/pages/ErrorBoundaryWrapper.tsx';
 
 function EditBrandPageContent() {
   const {brandId} = useParams();
@@ -75,7 +76,9 @@ function EditBrandPageContent() {
 export default function EditBrandPage() {
   return (
     <AdminCreateEditProvider>
-      <EditBrandPageContent />
+      <ErrorBoundaryWrapper>
+        <EditBrandPageContent />
+      </ErrorBoundaryWrapper>
     </AdminCreateEditProvider>
   );
 }

@@ -6,6 +6,7 @@ import {useMutation, useSuspenseQuery} from '@tanstack/react-query';
 import {createModel, getAllBrands} from '@src/api/admin-api.ts';
 import {mapBrands} from '@src/common/mapping-utils.ts';
 import {useEffect} from 'react';
+import ErrorBoundaryWrapper from '@src/pages/ErrorBoundaryWrapper.tsx';
 
 function CreateModelPageContent() {
   const {setResponseType} = useResponseType();
@@ -82,7 +83,9 @@ function CreateModelPageContent() {
 export default function CreateModelPage() {
   return (
     <AdminCreateEditProvider>
-      <CreateModelPageContent />
+      <ErrorBoundaryWrapper>
+        <CreateModelPageContent />
+      </ErrorBoundaryWrapper>
     </AdminCreateEditProvider>
   );
 }

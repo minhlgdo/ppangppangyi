@@ -6,6 +6,7 @@ import {CAR_CREATE_PATH, CAR_MAIN_PATH} from '@src/common/navigation.ts';
 import {keepPreviousData, useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {deleteCar, getCars} from '@src/api/admin-api.ts';
 import {mapCars} from '@src/common/mapping-utils.ts';
+import ErrorBoundaryWrapper from '@src/pages/ErrorBoundaryWrapper.tsx';
 
 function CarPageContent() {
   // Variables
@@ -74,7 +75,9 @@ function CarPageContent() {
 export default function CarPage() {
   return (
     <AdminGeneralContextProvider>
-      <CarPageContent />
+      <ErrorBoundaryWrapper>
+        <CarPageContent />
+      </ErrorBoundaryWrapper>
     </AdminGeneralContextProvider>
   );
 }

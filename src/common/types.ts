@@ -7,7 +7,7 @@ interface RequiredFieldInterface {
   required: boolean;
   disable?: boolean;
   type: FieldType;
-  defaultValue?: string | number | SubjectOptions[] | null; // string for text values, number for dropdown
+  defaultValue?: string | number | SubjectOptions[]; // string for text values, number for dropdown
   options?: SubjectOptions[];
   multipleOptions?: boolean;
 }

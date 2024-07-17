@@ -6,6 +6,7 @@ import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {mapFuels} from '@src/common/mapping-utils.ts';
 import {keepPreviousData, useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {deleteFuel, getFuels} from '@src/api/admin-api.ts';
+import ErrorBoundaryWrapper from '@src/pages/ErrorBoundaryWrapper.tsx';
 
 function FuelPageContent() {
   // Variables
@@ -73,7 +74,9 @@ function FuelPageContent() {
 export default function FuelPage() {
   return (
     <AdminGeneralContextProvider>
-      <FuelPageContent />
+      <ErrorBoundaryWrapper>
+        <FuelPageContent />
+      </ErrorBoundaryWrapper>
     </AdminGeneralContextProvider>
   );
 }

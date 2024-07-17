@@ -6,6 +6,7 @@ import {ResponseTypes, Subjects} from '@src/common/constants.ts';
 import {CATEGORY_CREATE_PATH, CATEGORY_MAIN_PATH} from '@src/common/navigation.ts';
 import {keepPreviousData, useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {deleteCategory, getCategories, getParentCategories} from '@src/api/admin-api.ts';
+import ErrorBoundaryWrapper from '@src/pages/ErrorBoundaryWrapper.tsx';
 
 function CategoryPageContent() {
   // Variables
@@ -81,7 +82,9 @@ function CategoryPageContent() {
 export default function CategoryPage() {
   return (
     <AdminGeneralContextProvider>
-      <CategoryPageContent />
+      <ErrorBoundaryWrapper>
+        <CategoryPageContent />
+      </ErrorBoundaryWrapper>
     </AdminGeneralContextProvider>
   );
 }
