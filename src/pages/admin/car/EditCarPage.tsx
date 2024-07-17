@@ -5,7 +5,7 @@ import {AdminPageTypes, FieldTypes, ResponseTypes, Subjects} from '@src/common/c
 import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import {useParams} from 'react-router-dom';
 import {useMutation, useSuspenseQuery} from '@tanstack/react-query';
-import {editCar, getAllCategory, getCar, getFuels} from '@src/api/admin-api.ts';
+import {editCar, getAllCategories, getCar, getFuels} from '@src/api/admin-api.ts';
 import ErrorBoundaryWrapper from '@src/pages/ErrorBoundaryWrapper.tsx';
 import {useEffect} from 'react';
 
@@ -23,7 +23,7 @@ function EditCarPageContent() {
   // Load categories
   const {data: categories, isError: categoriesError} = useSuspenseQuery({
     queryKey: ['all-categories'],
-    queryFn: () => getAllCategory(),
+    queryFn: () => getAllCategories(),
   });
 
   // Load actual fuels

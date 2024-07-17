@@ -33,6 +33,12 @@ function BrandPageContent() {
   const totalItems = brandData?.page.totalElements ?? '0';
   const brandOptions = brands ? mapBrands(brands) : [];
 
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [page, totalPages]);
+
   const mutation = useMutation({
     mutationFn: (brandId: string) => deleteBrand(brandId),
     onSuccess: () => {

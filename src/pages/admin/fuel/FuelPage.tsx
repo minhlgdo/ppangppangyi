@@ -55,6 +55,12 @@ function FuelPageContent() {
   const totalItems = fuelData?.page.totalElements ?? '0';
   const totalPages = fuelData?.page.totalPages ?? 1;
 
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [page, totalPages]);
+
   return (
     <GeneralLayout
       subject={Subjects.Fuel}

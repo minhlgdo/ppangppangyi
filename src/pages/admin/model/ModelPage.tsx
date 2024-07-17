@@ -34,6 +34,12 @@ function ModelPageContent() {
   const totalPages = modelsData?.page.totalPages ?? 1;
   const totalItems = modelsData?.page.totalElements ?? '0';
 
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [page, totalPages]);
+
   const modelOptions = models ? mapModels(models) : [];
 
   const mutation = useMutation({

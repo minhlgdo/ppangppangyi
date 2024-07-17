@@ -4,7 +4,7 @@ import CreateEditLayout from '@src/layout/admin/CreateEditLayout.tsx';
 import AdminCreateEditProvider, {useDialogOpen, useInputValues, useResponseType} from '@src/context/AdminCreateEditContext.tsx';
 import {mapBrands, mapExtendedCategories, mapFuels, mapModels, mapParentCategoryNames} from '@src/common/mapping-utils.ts';
 import {useMutation, useSuspenseQuery} from '@tanstack/react-query';
-import {createCar, getAllBrands, getAllCategory, getFuels, getModelsByBrand} from '@src/api/admin-api.ts';
+import {createCar, getAllBrands, getAllCategories, getFuels, getModelsByBrand} from '@src/api/admin-api.ts';
 import {useEffect} from 'react';
 import ErrorBoundaryWrapper from '@src/pages/ErrorBoundaryWrapper.tsx';
 
@@ -17,7 +17,7 @@ function CreateCarPageContent() {
   // Load categories
   const {data: categories, isError: categoriesError} = useSuspenseQuery({
     queryKey: ['all-categories'],
-    queryFn: () => getAllCategory(),
+    queryFn: () => getAllCategories(),
   });
 
   // Load actual fuels

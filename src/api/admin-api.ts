@@ -107,7 +107,7 @@ export async function deleteCategory(categoryId: string): Promise<number> {
   return status;
 }
 
-export async function getAllCategory(): Promise<CategoriesType> {
+export async function getAllCategories(): Promise<CategoriesType> {
   const {data} = await adminApiClient.get(`/categories/all`);
   return data;
 }

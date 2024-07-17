@@ -40,6 +40,13 @@ function CategoryPageContent() {
   const totalPages = categoriesData?.page.totalPages ?? 1;
   const totalItems = categoriesData?.page.totalElements ?? '0';
 
+  // Redirect after deleting the last item of the page
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [page, totalPages]);
+
   // Map the parent's category name for display
   const displayCategoryList = categories && parentCategories ? mapParentCategoryNames(categories, parentCategories) : [];
   const categoryOptions = mapExtendedCategories(displayCategoryList);

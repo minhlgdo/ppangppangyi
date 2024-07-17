@@ -34,6 +34,12 @@ function CarPageContent() {
   const totalItems = carsData?.page.totalElements ?? '0';
   const totalPages = carsData?.page.totalPages ?? 1;
 
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [page, totalPages]);
+
   // convert cars
   const carOptions = cars ? mapCars(cars) : [];
 
