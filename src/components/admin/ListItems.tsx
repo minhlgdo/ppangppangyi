@@ -37,14 +37,14 @@ export default function ListItems({items, baseItemUrl}: ListProps) {
               <IconButton
                 style={{marginRight: 6}}
                 aria-label={'edit'}
-                onClick={() => handleEditClick(item.key)}
+                onClick={() => handleEditClick(item.key!)}
               >
                 <Edit />
               </IconButton>
               {/*Delete*/}
               <IconButton
                 aria-label={'delete'}
-                onClick={() => handleDeleteClick(item.key)}
+                onClick={() => handleDeleteClick(item.key!)}
               >
                 <DeleteRounded />
               </IconButton>

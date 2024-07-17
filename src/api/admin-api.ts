@@ -163,3 +163,8 @@ export async function createCar(car: Car) {
   const {data} = await adminApiClient.post(`/cars`, car);
   return data;
 }
+
+export async function editCar(carId: string, car: Car): Promise<Car> {
+  const {data} = await adminApiClient.put(`/cars/${carId}`, car);
+  return data;
+}

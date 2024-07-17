@@ -1,4 +1,4 @@
-import React, {ChangeEvent, Suspense, useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import AdminGeneralContextProvider, {useDeleteResponse, useFetchError} from '@src/context/AdminGeneralContext.tsx';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {ResponseTypes, Subjects} from '@src/common/constants.ts';

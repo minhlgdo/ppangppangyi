@@ -31,7 +31,7 @@ const initializeInputValues = (fields: RequiredFieldType[]): InputValuesType => 
     if (field.defaultValue) {
       if (Array.isArray(field.defaultValue)) {
         // map the default value with index
-        initialValues[field.name] = field.defaultValue.map((v) => v.key);
+        initialValues[field.name] = field.defaultValue?.map((v) => v.key!);
       } else {
         initialValues[field.name] = field.defaultValue;
       }
