@@ -1,5 +1,5 @@
 import AdminGeneralContextProvider, {useDeleteResponse, useFetchError} from '@src/context/AdminGeneralContext.tsx';
-import {ChangeEvent, Suspense, useEffect, useState} from 'react';
+import {ChangeEvent, useEffect, useState} from 'react';
 import {mapExtendedCategories, mapParentCategoryNames} from '@src/common/mapping-utils.ts';
 import GeneralLayout from '@src/layout/admin/GeneralLayout.tsx';
 import {ResponseTypes, Subjects} from '@src/common/constants.ts';

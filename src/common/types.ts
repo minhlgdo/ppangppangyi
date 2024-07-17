@@ -52,9 +52,10 @@ export interface ExtendedCategory extends Category {
 export type ExtendedCategoriesType = ExtendedCategory[];
 
 export interface Model {
-  modelId: string;
+  modelId?: string;
   modelName: string;
-  brandName: string;
+  brandName?: string;
+  brandId?: string;
 }
 
 export type ModelsType = Model[];

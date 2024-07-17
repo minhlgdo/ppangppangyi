@@ -45,6 +45,11 @@ export async function deleteBrand(brandId: string): Promise<number> {
   return status;
 }
 
+export async function getAllBrands(): Promise<BrandsType> {
+  const {data} = await adminApiClient.get(`/brands/all`);
+  return data;
+}
+
 // FUEL FUNCTIONS
 export async function getFuels(page: number): Promise<ApiGetAllResponses<FuelsType>> {
   const {data} = await adminApiClient.get(`/fuels?page=${page - 1}`);
@@ -111,6 +116,11 @@ export async function getModels(page: number): Promise<ApiGetAllResponses<Models
 export async function deleteModel(modelId: string): Promise<number> {
   const {status} = await adminApiClient.delete(`/models/${modelId}`);
   return status;
+}
+
+export async function createModel(model: Model): Promise<Model> {
+  const {data} = await adminApiClient.post(`/models`, model);
+  return data;
 }
 
 // CAR FUNCTIONS
