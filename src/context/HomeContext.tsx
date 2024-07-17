@@ -19,7 +19,7 @@ const HomeContext = createContext<HomeContextValue>({
   setSearchCategory: () => {},
 });
 
-export const useHome = () => useContext(HomeContext);
+const useHome = () => useContext(HomeContext);
 
 const HomeContextProvider: FC<HomeProviderProps> = ({children}) => {
   const [searchCategory, setSearchCategory] = useState(INITIAL_CATEGORY_STATE);
@@ -30,3 +30,11 @@ const HomeContextProvider: FC<HomeProviderProps> = ({children}) => {
 };
 
 export default HomeContextProvider;
+
+export const useSearchCategory = () => {
+  const {searchCategory, setSearchCategory} = useHome();
+  return {
+    searchCategory: searchCategory,
+    setSearchCategory: setSearchCategory,
+  };
+};

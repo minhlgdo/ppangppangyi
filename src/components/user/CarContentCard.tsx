@@ -2,12 +2,13 @@ import React from 'react';
 import {Box, Button, Card, CardActions, CardContent, CardMedia, Divider, Typography} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import {useCompare} from '@src/context/CompareContext.tsx';
+import {mapRealImagePath} from '@src/common/mapping-utils.ts';
 
 interface CarContentCardProps {
-  id: number;
+  id: string;
   name: string;
   brand: string;
-  year: number;
+  year: string;
   imageSrc: string;
 }
 
@@ -19,6 +20,8 @@ function CarContentCard({id, name, brand, year, imageSrc}: CarContentCardProps) 
   const onCardClick = () => {
     navigate(`/details/${id}`);
   };
+
+  const imagePath = imageSrc !== '' ? mapRealImagePath(imageSrc) : '/assets/react.svg';
 
   const onCompareClick = () => {
     if (isCompared) {
@@ -35,7 +38,7 @@ function CarContentCard({id, name, brand, year, imageSrc}: CarContentCardProps) 
       <CardMedia
         component={'img'}
         height={'200'}
-        image={imageSrc}
+        image={imagePath}
       />
       <CardContent
         sx={{p: 2}}
@@ -61,6 +64,7 @@ function CarContentCard({id, name, brand, year, imageSrc}: CarContentCardProps) 
           sx={{width: 1}}
           variant={isCompared ? 'contained' : 'outlined'}
           onClick={() => onCompareClick()}
+          disabled={compareCars.length >= 3}
         >
           {isCompared ? '추가함' : '비교하기'}
         </Button>

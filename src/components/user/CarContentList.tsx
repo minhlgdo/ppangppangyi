@@ -1,12 +1,17 @@
 import React from 'react';
-import {Box, Grid} from '@mui/material';
+import {Box, Grid, Typography} from '@mui/material';
 import CarContentCard from './CarContentCard.tsx';
+import {CarsType} from '@src/common/types.ts';
 
 interface CarContentListProps {
-  items: {carId: number; image: string; year: number; brandName: string; modelName: string}[];
+  items: CarsType;
 }
 
 function CarContentList({items}: CarContentListProps) {
+  if (items.length === 0) {
+    return <Typography>데이터가 없습니다</Typography>;
+  }
+
   return (
     <Box sx={{flexGrow: 1}}>
       <Grid
@@ -23,11 +28,11 @@ function CarContentList({items}: CarContentListProps) {
             key={item.carId}
           >
             <CarContentCard
-              id={item.carId}
-              name={item.modelName}
-              brand={item.brandName}
-              year={item.year}
-              imageSrc={item.image}
+              id={item.carId!}
+              name={item.modelName!}
+              brand={item.brandName!}
+              year={item.launchedYear}
+              imageSrc={item.imagePath!}
             />
           </Grid>
         ))}

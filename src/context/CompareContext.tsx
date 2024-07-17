@@ -2,7 +2,7 @@ import {createContext, FC, ReactNode, useContext, useReducer} from 'react';
 
 // Structure of a selected car
 interface SelectedCar {
-  carId: number;
+  carId: string;
   imageSrc: string;
 }
 
@@ -11,8 +11,8 @@ type SelectedCarsState = SelectedCar[];
 // define the CompareContextValue
 interface CompareContextValue {
   compareCars: SelectedCarsState;
-  handleAddCar: (car: {id: number; imageSrc: string}) => void;
-  handleDeleteCar: (id: number) => void;
+  handleAddCar: (car: {id: string; imageSrc: string}) => void;
+  handleDeleteCar: (id: string) => void;
   handleResetList: () => void;
 }
 
@@ -32,7 +32,7 @@ interface AddCarAction {
 interface RemoveCarAction {
   type: 'REMOVE';
   payload: {
-    itemId: number;
+    itemId: string;
   };
 }
 
@@ -77,7 +77,7 @@ const CompareContext = createContext<CompareContextValue>({
 const CompareContextProvider: FC<CompareProviderProps> = ({children}) => {
   const [compareCars, dispatch] = useReducer(compareCarReducer, initialCarState);
 
-  const handleAddCar = ({id, imageSrc}: {id: number; imageSrc: string}) => {
+  const handleAddCar = ({id, imageSrc}: {id: string; imageSrc: string}) => {
     dispatch({
       type: 'ADD',
       payload: {
@@ -86,7 +86,7 @@ const CompareContextProvider: FC<CompareProviderProps> = ({children}) => {
     });
   };
 
-  const handleDeleteCar = (id: number) => {
+  const handleDeleteCar = (id: string) => {
     dispatch({
       type: 'REMOVE',
       payload: {
