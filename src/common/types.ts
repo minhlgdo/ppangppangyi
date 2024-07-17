@@ -73,17 +73,17 @@ export interface Car {
   fuels?: FuelsType;
   imagePath?: string;
   price?: string;
-  fuelEfficiency?: string | null;
-  maxPower?: string | null;
-  torque?: string | null;
-  capacity?: string | null;
-  engine?: string | null;
-  drivingSystem?: string | null;
-  transmission?: string | null;
-  length?: string | null;
-  height?: string | null;
-  width?: string | null;
-  wheelbase?: string | null;
+  fuelEfficiency?: string;
+  maxPower?: string;
+  torque?: string;
+  capacity?: string;
+  engine?: string;
+  drivingSystem?: string;
+  transmission?: string;
+  length?: string;
+  height?: string;
+  width?: string;
+  wheelbase?: string;
 }
 
 export type CarsType = Car[];
