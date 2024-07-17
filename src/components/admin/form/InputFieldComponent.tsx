@@ -24,7 +24,7 @@ export default function InputFieldComponent({field, handleChange}: InputFieldCom
         />
       );
     case FieldTypes.Image:
-      return <ImageComponent field={field} />;
+      return <ImageComponent />;
     case FieldTypes.Dropdown:
       return (
         <DropdownComponent

@@ -1,14 +1,13 @@
-import {Box, Typography} from '@mui/material';
-import {RequiredFieldType} from '@src/common/types.ts';
-import {useInputErrors, useInputValues} from '@src/context/AdminCreateEditContext.tsx';
+import {Box} from '@mui/material';
+import {useInputValues} from '@src/context/AdminCreateEditContext.tsx';
+import {mapRealImagePath} from '@src/common/mapping-utils.ts';
 
-interface ImageUploadComponentProps {
-  field: RequiredFieldType;
-}
-
-export default function ImageComponent({field}: ImageUploadComponentProps) {
+export default function ImageComponent() {
   const {inputValues} = useInputValues();
-  const {inputErrors} = useInputErrors();
+  const imagePath = inputValues.imagePath ? mapRealImagePath(inputValues.imagePath as string) : '/assets/react.svg';
+
+  console.log(`Input Image Path: ${inputValues.imagePath}`);
+  console.log(`Mapped Image Path: ${imagePath}`);
 
   return (
     <Box
@@ -22,18 +21,15 @@ export default function ImageComponent({field}: ImageUploadComponentProps) {
         mx: 'auto',
       }}
     >
-      {inputValues.imagePath && (
-        <Box
-          component="img"
-          sx={{
-            width: '100%',
-            maxHeight: '300px',
-            objectFit: 'contain',
-          }}
-          src={inputValues.imagePath as string}
-        />
-      )}
-      <Typography color={'red'}>{inputErrors[field.name]}</Typography>
+      <Box
+        component="img"
+        sx={{
+          width: '100%',
+          maxHeight: '300px',
+          objectFit: 'contain',
+        }}
+        src={imagePath}
+      />
     </Box>
   );
 }

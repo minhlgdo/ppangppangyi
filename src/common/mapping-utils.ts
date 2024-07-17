@@ -25,6 +25,10 @@ export const mapParentCategoryNames = (categories: CategoriesType, parentCategor
   });
 };
 
+export const mapRealImagePath = (imagePath: string) => {
+  return imagePath.replace('./images/', '/assets/images/');
+};
+
 export const mapBrands = (brands: BrandsType): SubjectOptions[] => {
   return brands.map((brand) => {
     return {
