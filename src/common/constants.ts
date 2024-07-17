@@ -22,7 +22,11 @@ export const CREATE_RESULT_ITEMS = {
   UNKNOWN: '오류가 발생되었습니다. 다시 시도하십시오',
 } as const;
 
-export const ITEMS_PER_PAGE = 10;
+export const DELETE_RESULT_ITEMS = {
+  SUCCESS: '삭제가 완료되었습니다.',
+  FAILURE: '삭제가 실패되었습니다. 다시 시도하십시오.',
+  UNKNOWN: '오류가 발생되었습니다. 다시 시도하십시오',
+} as const;
 
 export const AdminPageTypes = {
   Create: '등록',

@@ -1,12 +1,13 @@
 import {Box, CircularProgress, Pagination, Typography} from '@mui/material';
 import {PageHeader} from '@src/components/admin/PageHeader.tsx';
 import {useNavigate} from 'react-router-dom';
-import {AdminPageTypes, SubjectType} from '@src/common/constants.ts';
+import {AdminPageTypes, DELETE_RESULT_ITEMS, ResponseTypes, SubjectType} from '@src/common/constants.ts';
 import React, {ChangeEvent} from 'react';
 import ListItems from '@src/components/admin/ListItems.tsx';
 import DeleteDialog from '@src/components/admin/DeleteDialog.tsx';
-import {useAdminContext} from '@src/context/AdminGeneralContext.tsx';
+import {useAdminContext, useDeleteResponse} from '@src/context/AdminGeneralContext.tsx';
 import {SubjectOptions} from '@src/common/types.ts';
+import ResponseDialog from '@src/components/admin/ResponseDialog.tsx';
 
 interface GeneralLayoutProps {
   subject: SubjectType;
@@ -37,22 +38,36 @@ export default function GeneralLayout({
 }: GeneralLayoutProps) {
   const navigate = useNavigate();
   const {itemToDelete, setItemToDelete, deletePopup, setDeletePopup} = useAdminContext();
+  const {response, setResponse} = useDeleteResponse();
 
   const handleCreateClick = () => {
     navigate(createPagePath);
   };
 
-  const handleClose = () => {
+  const handleDeleteDialogClose = () => {
     setItemToDelete(undefined);
     setDeletePopup(false);
   };
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
     // call handle delete from the main page?!
     if (itemToDelete) {
       handleDeleteItem(itemToDelete);
+      handleDeleteDialogClose();
+    } else {
+      handleDeleteDialogClose();
     }
-    handleClose();
+  };
+
+  const handleResponseDialogClose = () => {
+    setResponse(ResponseTypes.Unknown);
+  };
+
+  const getMessage = (): string => {
+    if (isFetchingError) {
+      return '데이터 조회가 실패합니다. 다시 시도하십시오.';
+    }
+    return DELETE_RESULT_ITEMS[response];
   };
 
   return (
@@ -71,7 +86,6 @@ export default function GeneralLayout({
           baseItemUrl={basePagePath}
         />
       )}
-
       <Pagination
         count={totalPages}
         page={page}
@@ -80,8 +94,13 @@ export default function GeneralLayout({
       />
       <DeleteDialog
         isOpened={deletePopup}
-        handleClose={handleClose}
+        handleClose={handleDeleteDialogClose}
         handleDelete={handleDelete}
+      />
+      <ResponseDialog
+        isOpened={isFetchingError || response !== ResponseTypes.Unknown}
+        text={getMessage()}
+        handleClose={handleResponseDialogClose}
       />
     </Box>
   );
