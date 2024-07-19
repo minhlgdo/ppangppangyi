@@ -4,7 +4,7 @@ import {useCompare} from '@src/context/CompareContext.tsx';
 import {mapRealImagePath} from '@src/common/mapping-utils.ts';
 
 interface CompareCarComponentProps {
-  id: number;
+  id: string;
   image: string;
 }
 

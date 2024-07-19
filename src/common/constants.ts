@@ -10,6 +10,13 @@ export const ResponseTypes = {
 type ResponseTypeKey = keyof typeof ResponseTypes;
 export type ResponseTypeValue = (typeof ResponseTypes)[ResponseTypeKey];
 
+export const SearchKeywordTypes = {
+  Brand: 'brand',
+  Category: 'category',
+  Model: 'model',
+} as const;
+export type SearchKeywordType = (typeof SearchKeywordTypes)[keyof typeof SearchKeywordTypes];
+
 export const EDIT_RESULT_ITEMS = {
   SUCCESS: '수정이 완료되었습니다.',
   FAILURE: '수정이 실패되었습니다. 다시 시도하십시오.',

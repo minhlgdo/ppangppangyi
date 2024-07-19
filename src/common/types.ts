@@ -1,4 +1,4 @@
-import {FieldType} from '@src/common/constants.ts';
+import {FieldType, SearchKeywordType} from '@src/common/constants.ts';
 
 // Generic interface for required input field
 interface RequiredFieldInterface {
@@ -99,3 +99,9 @@ export interface ApiGetAllResponses<T> {
   content: T;
   page: PageResponse;
 }
+
+export interface SearchKeyword {
+  type: SearchKeywordType;
+  value: string;
+}
+export type SearchKeywords = SearchKeyword[];

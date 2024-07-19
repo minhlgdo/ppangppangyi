@@ -1,5 +1,5 @@
-import {AppBar, Box, Button, Toolbar} from '@mui/material';
-import SearchBar from './SearchBar.tsx';
+import {AppBar, Box, Button, IconButton, Toolbar} from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function Header() {
   return (
@@ -18,7 +18,12 @@ export default function Header() {
           >
             빵빵이
           </Button>
-          <SearchBar />
+          <IconButton
+            href={'/search'}
+            target={'_self'}
+          >
+            <SearchIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
     </Box>

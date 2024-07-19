@@ -6,6 +6,7 @@ import {useMutation, useQueryClient, useSuspenseQuery} from '@tanstack/react-que
 import {createCategory, getParentCategories} from '@src/api/admin-api.ts';
 import {mapParentCategories} from '@src/common/mapping-utils.ts';
 import {useEffect} from 'react';
+import ErrorBoundaryWrapper from '@src/pages/ErrorBoundaryWrapper.tsx';
 
 function CreateCategoryPageContent() {
   const {setResponseType} = useResponseType();
@@ -83,7 +84,9 @@ function CreateCategoryPageContent() {
 export default function CreateCategoryPage() {
   return (
     <AdminCreateEditProvider>
-      <CreateCategoryPageContent />
+      <ErrorBoundaryWrapper>
+        <CreateCategoryPageContent />
+      </ErrorBoundaryWrapper>
     </AdminCreateEditProvider>
   );
 }

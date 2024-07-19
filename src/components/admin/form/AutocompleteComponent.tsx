@@ -37,6 +37,7 @@ export default function AutocompleteComponent({width, field, handleChange}: Auto
         autoSelect={true}
         sx={{width: width}}
         value={value}
+        // @ts-ignore
         onChange={(e, value) => handleValueChange(value)}
         isOptionEqualToValue={handleCompareValues}
         getOptionLabel={(option) => `${option.name}`}

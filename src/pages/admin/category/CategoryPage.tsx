@@ -66,6 +66,7 @@ function CategoryPageContent() {
     mutation.mutate(id);
   };
 
+  // @ts-ignore
   const handlePageChange = (event: ChangeEvent<unknown>, page: number) => {
     setPage(page);
   };

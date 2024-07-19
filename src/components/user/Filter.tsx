@@ -8,13 +8,13 @@ function Filter() {
   const {setSearchCategory} = useSearchCategory();
 
   // TODO: Load the actual parent categories
-  const {data: parentCategories, isError: parentsError} = useSuspenseQuery({
+  const {data: parentCategories} = useSuspenseQuery({
     queryKey: ['parent-categories'],
     queryFn: () => getParentCategories(),
   });
 
   // TODO: Load all categories
-  const {data: allCategories, isError: childsError} = useSuspenseQuery({
+  const {data: allCategories} = useSuspenseQuery({
     queryKey: ['all-categories'],
     queryFn: () => getAllCategories(),
   });
@@ -44,11 +44,6 @@ function Filter() {
     setSearchCategory(categoryId);
   };
 
-  const getButtonProps = (selectedCategory: string, category: string) => ({
-    color: selectedCategory === category ? 'primary' : 'inherit',
-    variant: selectedCategory === category ? 'contained' : 'text',
-  });
-
   return (
     <Box>
       {/*Parent Category*/}
@@ -70,7 +65,8 @@ function Filter() {
           {parentCategories.map((category) => (
             <Button
               key={category.categoryId}
-              {...getButtonProps(parentCategoryId!, category.categoryId!)}
+              color={parentCategoryId! === category.categoryId! ? 'primary' : 'inherit'}
+              variant={parentCategoryId! === category.categoryId! ? 'contained' : 'text'}
               onClick={() => onParentCategoryChange(category.categoryId!)}
             >
               {category.categoryName}
@@ -97,7 +93,8 @@ function Filter() {
           {childCategories?.map((category) => (
             <Button
               key={category.categoryId}
-              {...getButtonProps(childCategoryId, category.categoryId!)}
+              color={childCategoryId === category.categoryId! ? 'primary' : 'inherit'}
+              variant={childCategoryId === category.categoryId! ? 'contained' : 'text'}
               onClick={() => onChildCategoryChange(category.categoryId!)}
             >
               {category.categoryName}
