@@ -25,6 +25,7 @@ function HomepageContent() {
   const cars: CarsType = carsData?.content ?? [];
   const totalPages = carsData?.page.totalPages ?? 1;
 
+  // @ts-ignore
   const handlePageChange = (event: ChangeEvent<unknown>, page: number) => {
     setPage(page);
   };
