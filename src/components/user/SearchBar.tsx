@@ -1,10 +1,10 @@
 import {InputAdornment, TextField} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import {useState} from 'react';
+import {FormEvent, useState} from 'react';
 
-const SearchBar = () => {
+function SearchBar() {
   const [searchQuery, setSearchQuery] = useState('');
-  const onClickSearch = (event: React.FormEvent<HTMLFormElement>) => {
+  const onClickSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(searchQuery);
     // should direct to the search result page
@@ -21,9 +21,8 @@ const SearchBar = () => {
         onChange={(val) => setSearchQuery(val.target.value)}
         placeholder={'검색어를 입력해주세요.'}
         variant={'outlined'}
-        size={'small'}
         color={'info'}
-        sx={{width: 350, margin: '10px auto'}}
+        sx={{width: 350}}
         InputProps={{
           endAdornment: (
             <InputAdornment position={'end'}>
@@ -34,6 +33,6 @@ const SearchBar = () => {
       />
     </form>
   );
-};
+}
 
 export default SearchBar;

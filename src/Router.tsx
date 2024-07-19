@@ -41,7 +41,7 @@ import {
   MODEL_EDIT_PATH,
   MODEL_MAIN_PATH,
 } from '@src/common/navigation.ts';
-import SearchResult from '@src/pages/user/SearchResult.tsx';
+import SearchResultPage from '@src/pages/user/SearchResultPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/search',
-        element: <SearchResult />,
+        element: <SearchResultPage />,
       },
     ],
   },

@@ -99,9 +99,3 @@ export interface ApiGetAllResponses<T> {
   content: T;
   page: PageResponse;
 }
-
-export interface SearchKeyword {
-  type: SearchKeywordType;
-  value: string;
-}
-export type SearchKeywords = SearchKeyword[];

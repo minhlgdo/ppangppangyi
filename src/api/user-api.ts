@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {BASE_SERVICE_URL} from '@src/common/constants.ts';
-import {ApiGetAllResponses, CarsType, SearchKeywords} from '@src/common/types.ts';
+import {ApiGetAllResponses, CarsType, InputValuesType} from '@src/common/types.ts';
 
 const homeApiClient = axios.create({
   baseURL: BASE_SERVICE_URL + '/home',
@@ -12,8 +12,10 @@ export async function getCarsUsingCategory(categoryId: string, page: number): Pr
   return data;
 }
 
-export async function getCarsUsingKeywords(keywords: SearchKeywords, page: number): Promise<ApiGetAllResponses<CarsType>> {
-  const params = keywords.map((keyword) => `${keyword.type}=${keyword.value}`).join('&');
-  const {data} = await homeApiClient.get(`/cars?${params}&page=${page - 1}`);
+export async function getCarsUsingKeywords(keywords: InputValuesType, page: number): Promise<ApiGetAllResponses<CarsType>> {
+  const params = Object.entries(keywords)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&');
+  const {data} = await homeApiClient.get(`/cars/search?${params}&page=${page - 1}`);
   return data;
 }

@@ -28,6 +28,7 @@ function Filter() {
       setChildCategoryId(firstChildCategory);
       setSearchCategory(firstChildCategory);
     }
+    // eslint-disable-next-line
   }, []);
 
   const onParentCategoryChange = (category: string) => {
